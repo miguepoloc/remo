@@ -1,0 +1,1 @@
+web: gunicorn labima.wsgi --log-file -
