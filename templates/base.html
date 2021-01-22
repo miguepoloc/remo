@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LABIMA | Dashboard</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/logo.png' %}" />
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -23,7 +24,7 @@
     <!-- JQVMap -->
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/jqvmap/jqvmap.min.css' %}">
     <!-- Theme style -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/dist/adminlte.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dist/adminlte.css' %}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" type="text/css"
         href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
@@ -31,6 +32,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
     <!-- summernote -->
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/summernote/summernote-bs4.min.css' %}">
+    <!-- Ekko Lightbox -->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/ekko-lightbox/ekko-lightbox.css' %}">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -58,9 +61,9 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-                <img src="{% static 'img/dist/AdminLTELogo.png' %}" alt="AdminLTE Logo"
+                <img src="{% static 'img/logo.png' %}" alt="Invemar Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">Invemar</span>
             </a>
 
             <!-- Sidebar -->
@@ -68,11 +71,11 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{% static 'img/dist/user2-160x160.jpg' %}" alt="User Image"
+                        <img src="{% static 'img/labima_logo.png' %}" alt="User LabIMA"
                             class="img-circle elevation-2">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">LABIMA</a>
                     </div>
                 </div>
 
