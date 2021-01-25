@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LABIMA | Dashboard</title>
+    {% block title %} {% endblock title %}
     <link rel="shortcut icon" type="image/png" href="{% static 'img/logo.png' %}" />
 
     <!-- Google Font: Source Sans Pro -->
@@ -60,7 +60,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="{% url 'index' %}" class="brand-link">
                 <img src="{% static 'img/logo.png' %}" alt="Invemar Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">Invemar</span>
@@ -797,6 +797,15 @@
                 $('.btn[data-filter]').removeClass('active');
                 $(this).addClass('active');
             });
+        })
+
+        $(document).ready(function () {
+            $('.product-image-thumb').on('click', function () {
+                var $image_element = $(this).find('img')
+                $('.product-image').prop('src', $image_element.attr('src'))
+                $('.product-image-thumb.active').removeClass('active')
+                $(this).addClass('active')
+            })
         })
     </script>
 </body>

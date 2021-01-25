@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+<title>LABIMA | Dashboard</title>
+{% endblock title %}
+
 {% block content %}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -12,7 +16,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
             <li class="breadcrumb-item active">Punta Betín</li>
           </ol>
         </div>
@@ -62,10 +66,10 @@
               <h3 class="card-title">Acerca de:</h3>
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
+            <div class="card-body" style="text-align: justify;">
               <strong><i class="fas fa-book mr-1"></i> Descripción</strong>
 
-              <p class="text-muted" style="text-align: justify;">
+              <p class="text-muted">
                 Estacion en tierra, metereologica compacta (armada) de fabricante xxx, sin comunicacion remota, aislada
                 con malla xxxx, señalizada con YYY, sujeta a mastil 3 mets, dataloguer en gabinete XXX de 30x 50 cm,
                 piso en tierra, antena de trasmision de xx metros marca xx.
@@ -75,7 +79,7 @@
 
               <strong><i class="fas fa-map-marker-alt mr-1"></i> Ubicación</strong>
 
-              <p class="text-muted" style="text-align: justify;">
+              <p class="text-muted">
                 Punta Betín, Cima del cerro, Puerto de Santa Marta, Santa Marta DTCH, Magdalena.
                 Predio pertenenciente a XXX. </p>
               <p class="text-muted">Longitud: -74,2193869</p>
@@ -92,9 +96,9 @@
 
               <hr>
 
-              <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+              <strong><i class="far fa-file-alt mr-1"></i> Observaciones</strong>
 
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.
+              <p class="text-muted">No está funcionando debido a problemas en el sistema de carga
               </p>
 
               <hr>
@@ -509,8 +513,8 @@
                             <div class="card-body pt-0">
                               <div class="row">
                                 <div class="col-7">
-                                  <p class="text-muted text-sm"><b>Referencia: </b>HygroClip 2 HC2-S3</p>
-                                  <p class="text-muted text-sm"><b>Estado: </b> Bueno </p>
+                                  <p class="text-muted text-sm"><b>Referencia: </b>Rotronic HC2-S3</p>
+                                  <p class="text-muted text-sm"><b>Estado: </b>Activo OK</p>
                                 </div>
                                 <div class="col-5 text-center">
                                   <a href="{% static 'img/temp_PBT.png' %}" data-toggle="lightbox"
@@ -520,7 +524,8 @@
                                   </a>
                                 </div>
                                 <p class="text-muted text-sm" style="padding-left: 7.5px;"><b>Protocolo de comunicacion:
-                                  </b>SDI-12</p>
+                                  </b>UART<br>
+                                  Análogo</p>
                                 <p class="text-muted text-sm" style="padding-left: 7.5px;"><b>Número de inventario:
                                   </b>Se desconoce</p>
                               </div>
