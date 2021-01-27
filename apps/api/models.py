@@ -60,14 +60,15 @@ class Componente_Estacion(models.Model):
         'Componente', on_delete=models.SET_NULL, null=True)
     serial = models.CharField(max_length=100, blank=True, null=True)
     numero_inventario = models.IntegerField(blank=True, null=True)
-    estacion = models.CharField(max_length=200, blank=True, null=True)
+    ubicacion = models.ForeignKey(
+        'Estacion', on_delete=models.SET_NULL, null=True)
     protocolo_comunicacion_uso = models.CharField(
         max_length=100, blank=True, null=True)
     estado = models.ForeignKey(
         'Categoria_componente', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return '%s (%s)' % (self.componente.nombre, self.estacion)
+        return '%s (%s)' % (self.componente.nombre, self.ubicacion)
 
 
 class Estacion(models.Model):
@@ -82,10 +83,12 @@ class Estacion(models.Model):
     responsable = models.CharField(max_length=100, blank=True, null=True)
     protocolo_comunicacion = models.CharField(
         max_length=4000, blank=True, null=True)
-    estado = models.IntegerField()
+    estado = models.ForeignKey(
+        'Categoria_sensor', on_delete=models.SET_NULL, null=True)
     fecha_inicio_registro = models.CharField(
         max_length=2000, blank=True, null=True)
-    equipos = models.CharField(max_length=4000, blank=True, null=True)
+    componentes = models.ManyToManyField(
+        Componente_Estacion, help_text="Seleccione los componentes de la estación")
     sensores = models.CharField(max_length=4000, blank=True, null=True)
 
     def __str__(self):
