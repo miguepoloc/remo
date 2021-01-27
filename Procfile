@@ -1,1 +1,1 @@
-web: gunicorn labima.wsgi --log-file -
+web: gunicorn remo.wsgi --log-file -
