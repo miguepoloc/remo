@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Categoria_componente, Categoria_sensor, Componente, Estacion, Componente_Estacion
+from .models import Categoria_componente, Categoria_sensor, Componente, Estacion, Componente_Estacion, Sensor, Sensor_Estacion
 
 
 class Categoria_componenteSerializer(serializers.ModelSerializer):
@@ -11,6 +11,18 @@ class Categoria_componenteSerializer(serializers.ModelSerializer):
 class Categoria_sensorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categoria_sensor
+        fields = '__all__'
+
+
+class SensorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sensor
+        fields = '__all__'
+
+
+class Sensor_EstacionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sensor_Estacion
         fields = '__all__'
 
 
