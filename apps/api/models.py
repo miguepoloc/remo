@@ -73,7 +73,7 @@ class Componente(models.Model):
         max_length=500, blank=True, null=True)
 
     def __str__(self):
-        return self.nombre
+        return '%s (%s)' % (self.nombre, self.referencia)
 
 
 class Componente_Estacion(models.Model):
@@ -111,7 +111,7 @@ class Estacion(models.Model):
         max_length=4000, blank=True, null=True)
     estado = models.ForeignKey(
         'Categoria_componente', on_delete=models.SET_NULL, null=True, blank=True)
-    fecha_inicio_registro = models.CharField(
+    fecha_inicio_registro = models.DateTimeField(
         max_length=2000, blank=True, null=True)
     componentes = models.ManyToManyField(
         Componente_Estacion, help_text="Seleccione los componentes de la estación", null=True, blank=True)

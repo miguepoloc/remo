@@ -24,3 +24,5 @@ urlpatterns = [
     path('api/', include('apps.api.urls')),
     path('admin/', admin.site.urls),
 ]
+
+admin.site.site_header = 'Administración de REMO'
