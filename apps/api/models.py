@@ -15,6 +15,9 @@ class Categoria_sensor(models.Model):
     simbolo = models.CharField(max_length=100)
 
     def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
         return self.categoria
 
 
@@ -26,6 +29,9 @@ class Sensor(models.Model):
     descripcion = models.TextField(max_length=4000, blank=True, null=True)
 
     def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
         return self.nombre
 
 
@@ -41,6 +47,9 @@ class Sensor_Estacion(models.Model):
         'Categoria_sensor', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
         return '%s (%s)' % (self.sensor.nombre, self.ubicacion)
 
 
@@ -52,6 +61,9 @@ class Categoria_componente(models.Model):
     simbolo = models.CharField(max_length=100)
 
     def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
         return self.categoria
 
 
@@ -76,10 +88,23 @@ class Componente(models.Model):
         max_length=500, blank=True, null=True)
 
     def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
         return '%s (%s)' % (self.nombre, self.referencia)
 
 
+def componentes_directorio_ruta(instance, filename):
+    # Ruta donde será cargada la imagen MEDIA_ROOT/static/img/componente_estacion/<filename>
+    return 'static/img/componente_estacion/{0}.png'.format(instance.id)
+
+
 class Componente_Estacion(models.Model):
+    """
+    Una clase que define el modelo de los componentes que componen la estación.
+    """
+
+    # Campos
     id = models.AutoField(primary_key=True)
     componente = models.ForeignKey(
         'Componente', on_delete=models.SET_NULL, null=True, blank=True)
@@ -95,8 +120,24 @@ class Componente_Estacion(models.Model):
         max_length=100, blank=True, null=True)
     estado = models.ForeignKey(
         'Categoria_componente', on_delete=models.SET_NULL, null=True, blank=True)
+    upload = models.ImageField(
+        upload_to=componentes_directorio_ruta, null=True, blank=True)
+
+    # Metadata
+    class Meta:
+        ordering = ["id"]
+
+    # Métodos
+    def get_absolute_url(self):
+        """
+        Devuelve la url para acceder a una instancia particular de MyModelName.
+        """
+        return reverse('componente_estacion-detail', args=[str(self.id)])
 
     def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
         return '%s (%s)' % (self.componente.nombre, self.ubicacion)
 
 
@@ -122,4 +163,7 @@ class Estacion(models.Model):
         Sensor_Estacion, help_text="Seleccione los sensores de la estación", null=True, blank=True)
 
     def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
         return self.nombre
