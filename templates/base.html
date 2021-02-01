@@ -24,7 +24,7 @@
     <!-- JQVMap -->
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/jqvmap/jqvmap.min.css' %}">
     <!-- Theme style -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/dist/adminlte.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/adminlte.css' %}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" type="text/css"
         href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
@@ -71,7 +71,8 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{% static 'img/logo_remo_blanco.png' %}" alt="User LabIMA" class="img-circle elevation-2">
+                        <img src="{% static 'img/logo_remo_blanco.png' %}" alt="User LabIMA"
+                            class="img-circle elevation-2">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">LABIMA</a>
@@ -784,6 +785,9 @@
     <script type="text/javascript" src="{% static 'plugins/filterizr/jquery.filterizr.min.js' %}"></script>
     <!-- Page specific script -->
     <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
         $(function () {
             $(document).on('click', '[data-toggle="lightbox"]', function (event) {
                 event.preventDefault();

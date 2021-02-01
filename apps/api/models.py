@@ -12,6 +12,7 @@ class Categoria_sensor(models.Model):
         max_length=200, help_text="Ingrese la categoria de estado")
     requerimientos = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
+    simbolo = models.CharField(max_length=100)
 
     def __str__(self):
         return self.categoria
@@ -20,6 +21,7 @@ class Categoria_sensor(models.Model):
 class Sensor(models.Model):
     id = models.IntegerField(primary_key=True)
     nombre = models.CharField(max_length=500)
+    unidad = models.CharField(max_length=300, blank=True, null=True)
     abreviatura = models.CharField(max_length=300, blank=True, null=True)
     descripcion = models.TextField(max_length=4000, blank=True, null=True)
 
@@ -47,6 +49,7 @@ class Categoria_componente(models.Model):
     categoria = models.CharField(max_length=100)
     requerimientos = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
+    simbolo = models.CharField(max_length=100)
 
     def __str__(self):
         return self.categoria

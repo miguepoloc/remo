@@ -5,6 +5,7 @@ from rest_framework import routers
 from . import views
 
 urlpatterns = [
-    path('', views.componentes, name='componentes'),
+    url(r'^$', views.componentes, name='componentes'),
+    url(r'^com/$', views.Componente_EstacionListView.as_view(), name='com'),
     # url(r'^data/(?P<idx>\w+)/$', views.index2, name='index2'),
 ]
