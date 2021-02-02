@@ -8,5 +8,4 @@ urlpatterns = [
     url(r'^$', views.Componente_EstacionListView.as_view(), name='componentes'),
     url(r'^(?P<pk>\d+)$', views.Componente_EstacionDetailView.as_view(),
         name='componente_estacion_detail'),
-    url(r'^com/$', views.componentes, name='com'),
 ]

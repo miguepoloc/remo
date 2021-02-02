@@ -46,6 +46,7 @@ class Sensor_Estacion(models.Model):
         'Componente_Estacion', on_delete=models.SET_NULL, null=True, blank=True)
     estado = models.ForeignKey(
         'Categoria_sensor', on_delete=models.SET_NULL, null=True, blank=True)
+    observaciones = models.TextField(max_length=4000, blank=True, null=True)
 
     def __str__(self):
         """
@@ -74,7 +75,6 @@ class Componente(models.Model):
     funcion = models.CharField(max_length=500)
     referencia = models.CharField(max_length=500)
     descripcion = models.TextField(max_length=4000, blank=True, null=True)
-    responsable = models.CharField(max_length=100, blank=True, null=True)
     frecuencia_calibracion = models.CharField(
         max_length=100, blank=True, null=True)
     frecuencia_mantenimiento = models.CharField(
@@ -119,12 +119,15 @@ class Componente_Estacion(models.Model):
         max_length=100, blank=True, null=True)
     protocolo_comunicacion_uso = models.CharField(
         max_length=100, blank=True, null=True)
+    responsable = models.CharField(max_length=100, blank=True, null=True)
     estado = models.ForeignKey(
         'Categoria_componente', on_delete=models.SET_NULL, null=True, blank=True)
     upload = models.ImageField(
         upload_to=componentes_directorio_ruta, null=True, blank=True)
+    observaciones = models.TextField(max_length=4000, blank=True, null=True)
 
     # Metadata
+
     class Meta:
         ordering = ["id"]
 
@@ -162,6 +165,7 @@ class Estacion(models.Model):
         Componente_Estacion, help_text="Seleccione los componentes de la estación", null=True, blank=True)
     sensores = models.ManyToManyField(
         Sensor_Estacion, help_text="Seleccione los sensores de la estación", null=True, blank=True)
+    observaciones = models.TextField(max_length=4000, blank=True, null=True)
 
     def __str__(self):
         """

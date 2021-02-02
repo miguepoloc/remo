@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-<title>Termohigrómetro | LABIMA</title>
+<title>{{ componente_estacion.componente.nombre }} | LABIMA</title>
 {% endblock title %}
 
 {% block content %}
@@ -12,13 +12,13 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Termohigrómetro</h1>
+          <h1>{{ componente_estacion.componente.nombre }}</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="#">Componentes</a></li>
-            <li class="breadcrumb-item active">Termohigrómetro</li>
+            <li class="breadcrumb-item"><a href="{% url 'componentes' %}">Componentes</a></li>
+            <li class="breadcrumb-item active">{{ componente_estacion.componente.nombre }}</li>
           </ol>
         </div>
       </div>
@@ -33,22 +33,35 @@
       <div class="card-body">
         <div class="row">
           <div class="col-12 col-sm-6">
-            <h3 class="d-inline-block d-sm-none">HygroClip 2 - HC2-S3</h3>
-            <div class="col-12">
-              <img src="{% static 'img/temp_PBT.png' %}" class="product-image" alt="Product Image">
-            </div>
-            <div class="col-12 product-image-thumbs">
-              <div class="product-image-thumb active"><img src="{% static 'img/temp_PBT.png' %}" alt="Product Image">
+            <h3 class="d-inline-block d-sm-none">{{ componente_estacion.componente.referencia }}</h3>
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img class="d-block w-100" src="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
+                    alt="{{ componente_estacion.id }}">
+                </div>
+                <div class="carousel-item">
+                  <img class="d-block w-100" src="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
+                    alt="{{ componente_estacion.id }}">
+                </div>
+                <div class="carousel-item">
+                  <img class="d-block w-100" src="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
+                    alt="{{ componente_estacion.id }}">
+                </div>
               </div>
-              <div class="product-image-thumb"><img src="{% static 'img/temp_PBT1.jpg' %}" alt="Product Image"></div>
-              <div class="product-image-thumb"><img src="{% static 'img/temp_PBT2.jpg' %}" alt="Product Image"></div>
-              <div class="product-image-thumb"><img src="{% static 'img/temp_PBT3.jpg' %}" alt="Product Image"></div>
-              <div class="product-image-thumb"><img src="{% static 'img/temp_PBT4.jpg' %}" alt="Product Image"></div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
             </div>
           </div>
           <div class="col-12 col-sm-6">
-            <h3 class="my-3">Rotronic HC2-S3</h3>
-            <p>Medición de temperatura y humedad relativa (RH)</p>
+            <h3 class="my-3">{{ componente_estacion.componente.referencia }}</h3>
+            <p>{{ componente_estacion.componente.funcion }}</p>
             <div class="list-group">
               <table class="table table-striped" style="text-align:center;">
                 <thead>
@@ -59,57 +72,70 @@
                 </thead>
                 <tbody>
                   <tr>
+                    <th scope="row" style="vertical-align:middle;">Sensores</th>
+                    <td>{% for sensores in componente_estacion.sensores.all %}
+                      {{ sensores.sensor }}
+                      {% if not forloop.last %}<br>
+                      {% endif %}
+                      {% endfor %}</td>
+                  </tr>
+                  <tr>
                     <th scope="row" style="vertical-align:middle;">Frecuencia de muestreo</th>
-                    <td>Cada hora</td>
+                    <td>{{ componente_estacion.frecuencia_muestreo }}</td>
                   </tr>
                   <tr>
                     <th scope="row">Frecuencia de calibración</th>
-                    <td>1 año</td>
+                    <td>{{ componente_estacion.componente.frecuencia_calibracion }}</td>
                   </tr>
                   <tr>
                     <th scope="row">Frecuencia de mantenimiento</th>
-                    <td>1 año</td>
+                    <td>{{ componente_estacion.componente.frecuencia_mantenimiento }}</td>
                   </tr>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">Protocolo de comunicación en uso</th>
-                    <td>UART</td>
+                    <td>{{ componente_estacion.protocolo_comunicacion_uso }}</td>
                   </tr>
                   <tr>
                     <th scope="row">Observaciones</th>
-                    <td>Ninguna</td>
+                    <td>{{ componente_estacion.observaciones }}</td>
                   </tr>
 
                 </tbody>
               </table>
 
               <div class="mt-4" style="text-align:center;">
-                <div class="btn btn-danger btn-lg ">
-                  <i class="fas fa-check-circle"></i>
-                  Activo OK
-                </div>
-                <div class="btn btn-info btn-lg ">
+                <button type="button" class="btn btn-{{ componente_estacion.estado.color }}" data-container="body"
+                  data-toggle="popover" data-placement="bottom"
+                  data-content="{{ componente_estacion.estado.requerimientos }}">
+                  <i class="{{ componente_estacion.estado.simbolo }}"></i>
+                  {{ componente_estacion.estado }}
+                </button>
+                <button type="button" class="btn btn-info" data-container="body">
                   <a href="{% static 'doc/Data_PBT_THG.pdf' %}" download="PBT_THG_Datasheet.pdf" style="color:white;">
-                  <i class="fas fa-file-download"></i>
+                    <i class="fas fa-file-download"></i>
                     Datasheet
                   </a>
-                </div>
-                <div class="btn btn-info btn-lg ">
-                  <i class="fas fa-file-csv"></i>
-                  CSV
-                </div>
-                <div class="btn btn-info btn-lg ">
-                  <i class="far fa-file-pdf"></i>
-                  PDF
-                </div>
+                </button>
+                <button type="button" class="btn btn-info" data-container="body">
+                  <a href="#" style="color:white;">
+                    <i class="fas fa-file-csv"></i>
+                    CSV
+                  </a>
+                </button>
+                <button type="button" class="btn btn-info" data-container="body">
+                  <a href="#" style="color:white;">
+                    <i class="far fa-file-pdf"></i>
+                    PDF
+                  </a>
+                </button>
               </div>
-
             </div>
           </div>
           <div class="row mt-4">
             <nav class="w-100">
               <div class="nav nav-tabs" id="product-tab" role="tablist">
                 <a class="nav-item nav-link active" id="descripcion-tab" data-toggle="tab" href="#descripcion"
-                  role="tab" aria-controls="descripcion" aria-selected="true">Description</a>
+                  role="tab" aria-controls="descripcion" aria-selected="true">Descripcion</a>
                 <a class="nav-item nav-link" id="datos-invemar-tab" data-toggle="tab" href="#datos-invemar" role="tab"
                   aria-controls="datos-invemar" aria-selected="false">Datos Invemar</a>
                 <a class="nav-item nav-link" id="especificaciones-tab" data-toggle="tab" href="#especificaciones"
@@ -119,20 +145,7 @@
             <div class="tab-content p-3 mx-auto" id="nav-tabContent">
               <div class="tab-pane fade show active" id="descripcion" role="tabpanel" aria-labelledby="descripcion-tab"
                 style="text-align: justify;">
-                Sonda Rotronic HC2-S3 - Medición de temperatura y humedad relativa (RH)
-                <br>
-                Rotronic HC2-S3 es unasonda de medición de humedad relativa de alta precisióncapaz de medir tanto la
-                humedad como la temperatura, así como calcular el punto de rocío / escarcha.
-                <br>
-                Diseñado específicamente para su uso con la gama de instrumentos de medición de humedad Rotronic
-                HygroClip 2.
-                <br>
-                Con la adquisición de datos integrada y el historial de calibración, la sonda Rotronic HC2-S3 se puede
-                programar fácilmente con funciones de alarma y cuenta con funciones de calibración avanzadas y fáciles
-                de usar.
-                <br>
-                Basado en la tecnología Airchip 3000, las características únicas del Rotronic HC2-S3, como la tecnología
-                de sensor avanzada y la integración, brindan una precisión excelente y una funcionalidad de vanguardia.
+                {{ componente_estacion.componente.descripcion }}
               </div>
 
               <div class="tab-pane fade mx-auto" id="datos-invemar" role="tabpanel" aria-labelledby="datos-invemar-tab">
@@ -147,15 +160,19 @@
                     <tbody>
                       <tr>
                         <th scope="row">Número de inventario</th>
-                        <td>Se desconoce</td>
+                        <td>{{ componente_estacion.numero_inventario }}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Serial</th>
+                        <td>{{ componente_estacion.serial }}</td>
                       </tr>
                       <tr>
                         <th scope="row">Ubicación</th>
-                        <td>Estación Meteorológica de Punta Betín</td>
+                        <td>{{ componente_estacion.ubicacion }}
                       </tr>
                       <tr>
                         <th scope="row">Responsable del equipo</th>
-                        <td>Jefe del LabIMA</td>
+                        <td>{{ componente_estacion.responsable }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -164,23 +181,7 @@
 
               <div class="tab-pane fade" id="especificaciones" role="tabpanel" aria-labelledby="especificaciones-tab">
                 <table class="table table-striped" style="text-align:center;">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th colspan="2" scope="col">Sensor</th>
-                    </tr>
-                  </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">Humedad</th>
-                      <td>ROTRONIC Hygromer® IN-1</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" style="vertical-align:middle;">Temperatura</th>
-                      <td>Pt100 class A (HC2-S)
-                        <br>
-                        Pt100 1/3 class B (HC2-IC / HC2-IM / HC2-IE)
-                      </td>
-                    </tr>
                     <thead class="thead-dark">
                       <tr>
                         <th colspan="2" scope="col">Energía</th>
@@ -189,11 +190,11 @@
                   <tbody>
                     <tr>
                       <th scope="row">Voltaje de operación</th>
-                      <td>3,3 hasta 5 VDC</td>
+                      <td>{{ componente_estacion.componente.voltaje }}</td>
                     </tr>
                     <tr>
                       <th scope="row">Consumo de corriente</th>
-                      <td>4,5 mA a 3,3 VCC </td>
+                      <td>{{ componente_estacion.componente.corriente }} </td>
                     </tr>
                     <thead class="thead-dark">
                       <tr>
@@ -201,12 +202,8 @@
                       </tr>
                     </thead>
                     <tr>
-                      <th scope="row">Humedad</th>
-                      <td>0...100 %RH</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Temperatura</th>
-                      <td>-100...200 °C</td>
+                      <th scope="row">Rango</th>
+                      <td>{{ componente_estacion.componente.rango_medicion }}</td>
                     </tr>
                     <thead class="thead-dark">
                       <tr>
@@ -214,12 +211,8 @@
                       </tr>
                     </thead>
                     <tr>
-                      <th scope="row">Humedad</th>
-                      <td>0...100 %RH</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Temperatura</th>
-                      <td> -50 a 100 °C</td>
+                      <th scope="row">Rango</th>
+                      <td>{{ componente_estacion.componente.rango_operacion }}</td>
                     </tr>
                     <thead class="thead-dark">
                       <tr>
@@ -227,12 +220,8 @@
                       </tr>
                     </thead>
                     <tr>
-                      <th scope="row">Humedad</th>
-                      <td> ± 0,8 %RH</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Temperatura</th>
-                      <td>± 0,1 K</td>
+                      <th scope="row">Valor</th>
+                      <td>{{ componente_estacion.componente.exactitud }}</td>
                     </tr>
                     <thead class="thead-dark">
                       <tr>
@@ -240,33 +229,17 @@
                       </tr>
                     </thead>
                     <tr>
-                      <th scope="row">Humedad</th>
-                      <td> 0,02 %RH</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Temperatura</th>
-                      <td> ± 0,01 °C</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Salida analógica</th>
-                      <td>± 1 mV</td>
+                      <th scope="row">Valor</th>
+                      <td>{{ componente_estacion.componente.resolucion }}</td>
                     </tr>
                     <thead class="thead-dark">
                       <tr>
-                        <th colspan="2" scope="col">Señal de salida</th>
+                        <th colspan="2" scope="col">Señales de salida</th>
                       </tr>
                     </thead>
                     <tr>
-                      <th scope="row">Humedad Análoga</th>
-                      <td>0...1V = 0...100 %RH</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Temperatura análoga</th>
-                      <td>0...1V = 40...60°C </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Digital</th>
-                      <td>UART</td>
+                      <th scope="row">Comunicación</th>
+                      <td>{{ componente_estacion.componente.protocolo_comunicacion }}</td>
                     </tr>
                   </tbody>
                 </table>

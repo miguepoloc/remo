@@ -13,10 +13,6 @@ class Componente_EstacionListView(generic.ListView):
     template_name = 'componentes/componentes_estacion_list.html'
 
 
-def componentes(request):
-    return render(request, 'componentes/componentes.html')
-
-
 class Componente_EstacionDetailView(generic.DetailView):
     model = Componente_Estacion
     template_name = 'componentes/componente_estacion_detail.html'
