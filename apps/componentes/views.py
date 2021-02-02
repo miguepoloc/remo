@@ -6,10 +6,17 @@ from ..api.models import Categoria_componente, Categoria_sensor, Componente, Est
 
 class Componente_EstacionListView(generic.ListView):
     model = Componente_Estacion
-    context_object_name = 'componentes_estacion_list'   # your own name for the list as a template variable
-    queryset = Componente_Estacion.objects.order_by('id')
-    template_name = 'componentes/componentes_estacion_list.html'  # Specify your own template name/location
+    # your own name for the list as a template variable
+    context_object_name = 'componentes_estacion_list'
+    queryset = Componente_Estacion.objects.order_by('-id')
+    # Specify your own template name/location
+    template_name = 'componentes/componentes_estacion_list.html'
+
 
 def componentes(request):
     return render(request, 'componentes/componentes.html')
 
+
+class Componente_EstacionDetailView(generic.DetailView):
+    model = Componente_Estacion
+    template_name = 'componentes/componente_estacion_detail.html'

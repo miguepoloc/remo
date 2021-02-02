@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 from django.utils import timezone
 
@@ -132,7 +133,7 @@ class Componente_Estacion(models.Model):
         """
         Devuelve la url para acceder a una instancia particular de MyModelName.
         """
-        return reverse('componente_estacion-detail', args=[str(self.id)])
+        return reverse('componente_estacion_detail', args=[str(self.id)])
 
     def __str__(self):
         """

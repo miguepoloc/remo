@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>Termohigrómetro | LABIMA</title>
+{% endblock title %}
+
+{% block content %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Termohigrómetro</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="#">Componentes</a></li>
+            <li class="breadcrumb-item active">Termohigrómetro</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Default box -->
+    <div class="card card-solid">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3 class="d-inline-block d-sm-none">HygroClip 2 - HC2-S3</h3>
+            <div class="col-12">
+              <img src="{% static 'img/temp_PBT.png' %}" class="product-image" alt="Product Image">
+            </div>
+            <div class="col-12 product-image-thumbs">
+              <div class="product-image-thumb active"><img src="{% static 'img/temp_PBT.png' %}" alt="Product Image">
+              </div>
+              <div class="product-image-thumb"><img src="{% static 'img/temp_PBT1.jpg' %}" alt="Product Image"></div>
+              <div class="product-image-thumb"><img src="{% static 'img/temp_PBT2.jpg' %}" alt="Product Image"></div>
+              <div class="product-image-thumb"><img src="{% static 'img/temp_PBT3.jpg' %}" alt="Product Image"></div>
+              <div class="product-image-thumb"><img src="{% static 'img/temp_PBT4.jpg' %}" alt="Product Image"></div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <h3 class="my-3">Rotronic HC2-S3</h3>
+            <p>Medición de temperatura y humedad relativa (RH)</p>
+            <div class="list-group">
+              <table class="table table-striped" style="text-align:center;">
+                <thead>
+                  <tr>
+                    <th scope="col">Característica</th>
+                    <th scope="col">Especificación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" style="vertical-align:middle;">Frecuencia de muestreo</th>
+                    <td>Cada hora</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Frecuencia de calibración</th>
+                    <td>1 año</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Frecuencia de mantenimiento</th>
+                    <td>1 año</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="vertical-align:middle;">Protocolo de comunicación en uso</th>
+                    <td>UART</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Observaciones</th>
+                    <td>Ninguna</td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+              <div class="mt-4" style="text-align:center;">
+                <div class="btn btn-danger btn-lg ">
+                  <i class="fas fa-check-circle"></i>
+                  Activo OK
+                </div>
+                <div class="btn btn-info btn-lg ">
+                  <a href="{% static 'doc/Data_PBT_THG.pdf' %}" download="PBT_THG_Datasheet.pdf" style="color:white;">
+                  <i class="fas fa-file-download"></i>
+                    Datasheet
+                  </a>
+                </div>
+                <div class="btn btn-info btn-lg ">
+                  <i class="fas fa-file-csv"></i>
+                  CSV
+                </div>
+                <div class="btn btn-info btn-lg ">
+                  <i class="far fa-file-pdf"></i>
+                  PDF
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row mt-4">
+            <nav class="w-100">
+              <div class="nav nav-tabs" id="product-tab" role="tablist">
+                <a class="nav-item nav-link active" id="descripcion-tab" data-toggle="tab" href="#descripcion"
+                  role="tab" aria-controls="descripcion" aria-selected="true">Description</a>
+                <a class="nav-item nav-link" id="datos-invemar-tab" data-toggle="tab" href="#datos-invemar" role="tab"
+                  aria-controls="datos-invemar" aria-selected="false">Datos Invemar</a>
+                <a class="nav-item nav-link" id="especificaciones-tab" data-toggle="tab" href="#especificaciones"
+                  role="tab" aria-controls="especificaciones" aria-selected="false">Especificaciones técnicas</a>
+              </div>
+            </nav>
+            <div class="tab-content p-3 mx-auto" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="descripcion" role="tabpanel" aria-labelledby="descripcion-tab"
+                style="text-align: justify;">
+                Sonda Rotronic HC2-S3 - Medición de temperatura y humedad relativa (RH)
+                <br>
+                Rotronic HC2-S3 es unasonda de medición de humedad relativa de alta precisióncapaz de medir tanto la
+                humedad como la temperatura, así como calcular el punto de rocío / escarcha.
+                <br>
+                Diseñado específicamente para su uso con la gama de instrumentos de medición de humedad Rotronic
+                HygroClip 2.
+                <br>
+                Con la adquisición de datos integrada y el historial de calibración, la sonda Rotronic HC2-S3 se puede
+                programar fácilmente con funciones de alarma y cuenta con funciones de calibración avanzadas y fáciles
+                de usar.
+                <br>
+                Basado en la tecnología Airchip 3000, las características únicas del Rotronic HC2-S3, como la tecnología
+                de sensor avanzada y la integración, brindan una precisión excelente y una funcionalidad de vanguardia.
+              </div>
+
+              <div class="tab-pane fade mx-auto" id="datos-invemar" role="tabpanel" aria-labelledby="datos-invemar-tab">
+                <div>
+                  <table class="table table-striped" style="text-align:center;">
+                    <thead>
+                      <tr>
+                        <th scope="col">Característica</th>
+                        <th scope="col">Especificación</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Número de inventario</th>
+                        <td>Se desconoce</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Ubicación</th>
+                        <td>Estación Meteorológica de Punta Betín</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Responsable del equipo</th>
+                        <td>Jefe del LabIMA</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="especificaciones" role="tabpanel" aria-labelledby="especificaciones-tab">
+                <table class="table table-striped" style="text-align:center;">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th colspan="2" scope="col">Sensor</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Humedad</th>
+                      <td>ROTRONIC Hygromer® IN-1</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" style="vertical-align:middle;">Temperatura</th>
+                      <td>Pt100 class A (HC2-S)
+                        <br>
+                        Pt100 1/3 class B (HC2-IC / HC2-IM / HC2-IE)
+                      </td>
+                    </tr>
+                    <thead class="thead-dark">
+                      <tr>
+                        <th colspan="2" scope="col">Energía</th>
+                      </tr>
+                    </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Voltaje de operación</th>
+                      <td>3,3 hasta 5 VDC</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Consumo de corriente</th>
+                      <td>4,5 mA a 3,3 VCC </td>
+                    </tr>
+                    <thead class="thead-dark">
+                      <tr>
+                        <th colspan="2" scope="col">Rango de medición</th>
+                      </tr>
+                    </thead>
+                    <tr>
+                      <th scope="row">Humedad</th>
+                      <td>0...100 %RH</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Temperatura</th>
+                      <td>-100...200 °C</td>
+                    </tr>
+                    <thead class="thead-dark">
+                      <tr>
+                        <th colspan="2" scope="col">Rango de operación</th>
+                      </tr>
+                    </thead>
+                    <tr>
+                      <th scope="row">Humedad</th>
+                      <td>0...100 %RH</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Temperatura</th>
+                      <td> -50 a 100 °C</td>
+                    </tr>
+                    <thead class="thead-dark">
+                      <tr>
+                        <th colspan="2" scope="col">Exactitud</th>
+                      </tr>
+                    </thead>
+                    <tr>
+                      <th scope="row">Humedad</th>
+                      <td> ± 0,8 %RH</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Temperatura</th>
+                      <td>± 0,1 K</td>
+                    </tr>
+                    <thead class="thead-dark">
+                      <tr>
+                        <th colspan="2" scope="col">Resolución</th>
+                      </tr>
+                    </thead>
+                    <tr>
+                      <th scope="row">Humedad</th>
+                      <td> 0,02 %RH</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Temperatura</th>
+                      <td> ± 0,01 °C</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Salida analógica</th>
+                      <td>± 1 mV</td>
+                    </tr>
+                    <thead class="thead-dark">
+                      <tr>
+                        <th colspan="2" scope="col">Señal de salida</th>
+                      </tr>
+                    </thead>
+                    <tr>
+                      <th scope="row">Humedad Análoga</th>
+                      <td>0...1V = 0...100 %RH</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Temperatura análoga</th>
+                      <td>0...1V = 40...60°C </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Digital</th>
+                      <td>UART</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{% endblock content %}
