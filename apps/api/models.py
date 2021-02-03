@@ -69,10 +69,15 @@ class Categoria_componente(models.Model):
         return self.categoria
 
 
+def datasheet_directorio_ruta(instance, filename):
+    # Ruta donde será cargada la imagen MEDIA_ROOT/static/img/componente_estacion/<filename>
+    return 'static/doc/datasheet/{0}.pdf'.format(instance.id)
+
+
 class Componente(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=500)
-    funcion = models.CharField(max_length=500)
+    funcion = models.CharField(max_length=1000, blank=True, null=True)
     referencia = models.CharField(max_length=500)
     descripcion = models.TextField(max_length=4000, blank=True, null=True)
     frecuencia_calibracion = models.CharField(
@@ -85,6 +90,8 @@ class Componente(models.Model):
     rango_operacion = models.CharField(max_length=100, blank=True, null=True)
     exactitud = models.CharField(max_length=100, blank=True, null=True)
     resolucion = models.CharField(max_length=100, blank=True, null=True)
+    datasheet = models.FileField(
+        upload_to=datasheet_directorio_ruta, null=True, blank=True)
     protocolo_comunicacion = models.CharField(
         max_length=500, blank=True, null=True)
 
@@ -122,7 +129,7 @@ class Componente_Estacion(models.Model):
     responsable = models.CharField(max_length=100, blank=True, null=True)
     estado = models.ForeignKey(
         'Categoria_componente', on_delete=models.SET_NULL, null=True, blank=True)
-    upload = models.ImageField(
+    foto = models.ImageField(
         upload_to=componentes_directorio_ruta, null=True, blank=True)
     observaciones = models.TextField(max_length=4000, blank=True, null=True)
 

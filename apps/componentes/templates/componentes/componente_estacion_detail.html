@@ -111,7 +111,8 @@
                   {{ componente_estacion.estado }}
                 </button>
                 <button type="button" class="btn btn-info" data-container="body">
-                  <a href="{% static 'doc/Data_PBT_THG.pdf' %}" download="PBT_THG_Datasheet.pdf" style="color:white;">
+                  <a href="/static/doc/datasheet/{{ componente_estacion.componente.id }}.pdf"
+                    download="{{ componente_estacion.componente.nombre }}.pdf" style="color:white;">
                     <i class="fas fa-file-download"></i>
                     Datasheet
                   </a>
