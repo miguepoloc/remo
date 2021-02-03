@@ -6,10 +6,12 @@ from ..api.models import Categoria_componente, Categoria_sensor, Componente, Est
 
 class Componente_EstacionListView(generic.ListView):
     model = Componente_Estacion
-    # your own name for the list as a template variable
+    # Cantidadd de items a mostrar por página
+    paginate_by = 9
+    # El nombre con el que se trabajará en la plantilla html
     context_object_name = 'componentes_estacion_list'
     queryset = Componente_Estacion.objects.order_by('-id')
-    # Specify your own template name/location
+    # Especifica la localicación del template
     template_name = 'componentes/componentes_estacion_list.html'
 
 
