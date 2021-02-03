@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'apps.main',
     'apps.api',
     'apps.componentes',
+    'apps.sensores',
 ]
 
 MIDDLEWARE = [
