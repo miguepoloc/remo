@@ -1,20 +1,20 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
-from ..api.models import Categoria_componente, Categoria_sensor, Componente, Estacion, Componente_Estacion, Sensor, Sensor_Estacion
+from ..api.models import Sensor_Estacion
 
 
-class Componente_EstacionListView(generic.ListView):
-    model = Componente_Estacion
+class Sensor_EstacionListView(generic.ListView):
+    model = Sensor_Estacion
     # Cantidadd de items a mostrar por página
-    paginate_by = 9
+    paginate_by = 12
     # El nombre con el que se trabajará en la plantilla html
-    context_object_name = 'componentes_estacion_list'
-    queryset = Componente_Estacion.objects.order_by('-id')
+    context_object_name = 'sensores_estacion_list'
+    queryset = Sensor_Estacion.objects.order_by('-id')
     # Especifica la localicación del template
-    template_name = 'componentes/componentes_estacion_list.html'
+    template_name = 'sensores/sensores_estacion_list.html'
 
 
-class Componente_EstacionDetailView(generic.DetailView):
-    model = Componente_Estacion
-    template_name = 'componentes/componente_estacion_detail.html'
+class Sensor_EstacionDetailView(generic.DetailView):
+    model = Sensor_Estacion
+    template_name = 'sensores/sensor_estacion_detail.html'

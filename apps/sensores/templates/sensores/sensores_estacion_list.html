@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-<title>Componentes | LABIMA</title>
+<title>Sensores | LABIMA</title>
 {% endblock title %}
 
 {% block content %}
@@ -12,12 +12,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Componentes</h1>
+          <h1>Sensores</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
-            <li class="breadcrumb-item active">Componentes</li>
+            <li class="breadcrumb-item active">Sensores</li>
           </ol>
         </div>
       </div>
@@ -28,45 +28,36 @@
   <section class="content">
 
     <!-- Default box -->
-    {% if componentes_estacion_list %}
+    {% if sensores_estacion_list %}
     <div class="card-body pb-0">
       <div class="row d-flex align-items-stretch">
-        <!-- Nombrar componentes  -->
-        {% for componente_estacion in componentes_estacion_list %}
-        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+        <!-- Nombrar sensores  -->
+        {% for sensor_estacion in sensores_estacion_list %}
+        <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
           <div class="card bg-light">
             <div class="card-header text-muted border-bottom-0">
-              <h2 class="lead"><b>{{ componente_estacion.componente.nombre }}</b></h2>
+              <h2 class="lead"><b>{{ sensor_estacion.sensor.nombre }}</b></h2>
             </div>
             <div class="card-body pt-0">
               <div class="row">
-                <div class="col-7">
-                  <p class="text-muted text-sm"><b>Referencia: </b>{{ componente_estacion.componente.referencia }}</p>
+                <div class="col-12">
+                  <p class="text-muted text-sm"><b>Unidad: </b>{{ sensor_estacion.sensor.unidad }}</p>
                   <p class="text-muted text-sm"><b>Ubicación:
-                    </b>{{ componente_estacion.ubicacion }}</p>
+                    </b>{{ sensor_estacion.ubicacion }}</p>
                   <p class="text-muted text-sm"><b>id:
-                    </b>{{ componente_estacion.id }}</p>
-                  <button type="button" class="btn btn-{{ componente_estacion.estado.color }}" data-container="body"
+                    </b>{{ sensor_estacion.id }}</p>
+                  <button type="button" class="btn btn-{{ sensor_estacion.estado.color }}" data-container="body"
                     data-toggle="popover" data-placement="bottom"
-                    data-content="{{ componente_estacion.estado.requerimientos }}">
-                    <i class="{{ componente_estacion.estado.simbolo }}"></i>
-                    {{ componente_estacion.estado }}
+                    data-content="{{ sensor_estacion.estado.requerimientos }}">
+                    <i class="{{ sensor_estacion.estado.simbolo }}"></i>
+                    {{ sensor_estacion.estado }}
                   </button>
                 </div>
-                <div class="col-5 text-center">
-                  <a href="/static/img/componente_estacion/{{ componente_estacion.id }}.png" data-toggle="lightbox"
-                    data-title="{{ componente_estacion.componente }}"
-                    data-gallery="{{ componente_estacion.componente }}">
-                    <img src="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
-                      alt="{{ componente_estacion.componente }}" class="img-fluid">
-                  </a>
-                </div>
-
               </div>
             </div>
             <div class="card-footer">
               <div class="text-right">
-                <a href="{{ componente_estacion.get_absolute_url }}" class="btn btn-sm btn-primary">
+                <a href="{{ sensor_estacion.get_absolute_url }}" class="btn btn-sm btn-primary">
                   <i class="fas fa-info-circle"></i> Ver más
                 </a>
               </div>
@@ -107,7 +98,7 @@
       </div>
     </div>
     {% else %}
-    <p>No hay componentes</p>
+    <p>No hay sensores</p>
     {% endif %}
 
 

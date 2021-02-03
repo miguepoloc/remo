@@ -33,10 +33,15 @@ class Sensor(models.Model):
         """
         Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
         """
-        return self.nombre
+        return '%s (%s)' % (self.nombre, self.unidad)
 
 
 class Sensor_Estacion(models.Model):
+    """
+    Una clase que define el modelo de los sensores que componen la estación.
+    """
+
+    # Campos
     id = models.AutoField(primary_key=True)
     sensor = models.ForeignKey(
         'Sensor', on_delete=models.SET_NULL, null=True, blank=True)
@@ -47,6 +52,18 @@ class Sensor_Estacion(models.Model):
     estado = models.ForeignKey(
         'Categoria_sensor', on_delete=models.SET_NULL, null=True, blank=True)
     observaciones = models.TextField(max_length=4000, blank=True, null=True)
+
+    # Metadata
+
+    class Meta:
+        ordering = ["id"]
+
+    # Métodos
+    def get_absolute_url(self):
+        """
+        Devuelve la url para acceder a una instancia particular de MyModelName.
+        """
+        return reverse('sensor_estacion_detail', args=[str(self.id)])
 
     def __str__(self):
         """
