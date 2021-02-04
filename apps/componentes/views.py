@@ -17,5 +17,5 @@ class Componente_EstacionListView(generic.ListView):
 
 class Componente_EstacionDetailView(generic.DetailView):
     model = Componente_Estacion
-    context_object_name = 'componentes_estacion'
+    context_object_name = 'componente_estacion'
     template_name = 'componentes/componente_estacion_detail.html'

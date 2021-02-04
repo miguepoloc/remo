@@ -169,6 +169,11 @@ class Componente_Estacion(models.Model):
         return '%s (%s)' % (self.componente.nombre, self.ubicacion)
 
 
+def estaciones_directorio_ruta(instance, filename):
+    # Ruta donde será cargada la imagen MEDIA_ROOT/static/img/componente_estacion/<filename>
+    return 'static/img/estaciones/{0}.png'.format(instance.id_estacion)
+
+
 class Estacion(models.Model):
     """
     Una clase que define el modelo de las estaciones
@@ -195,11 +200,13 @@ class Estacion(models.Model):
     sensores = models.ManyToManyField(
         Sensor_Estacion, help_text="Seleccione los sensores de la estación", null=True, blank=True)
     observaciones = models.TextField(max_length=4000, blank=True, null=True)
+    foto = models.ImageField(
+        upload_to=estaciones_directorio_ruta, null=True, blank=True)
 
     # Metadata
 
     class Meta:
-        ordering = ["id_estacion"]
+        ordering = ["id"]
 
     # Métodos
     def get_absolute_url(self):

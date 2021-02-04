@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-<title>Estaciones | LABIMA</title>
+<title>Estaciones | REMO</title>
 {% endblock title %}
 
 {% block content %}
@@ -36,29 +36,27 @@
         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
           <div class="card bg-light">
             <div class="card-header text-muted border-bottom-0">
-              <h2 class="lead"><b>{{ estacion.componente.nombre }}</b></h2>
+              <h2 class="lead"><b>{{ estacion.nombre }}</b></h2>
             </div>
             <div class="card-body pt-0">
               <div class="row">
                 <div class="col-7">
-                  <p class="text-muted text-sm"><b>Referencia: </b>{{ estacion.componente.referencia }}</p>
                   <p class="text-muted text-sm"><b>Ubicación:
-                    </b>{{ estacion.ubicacion }}</p>
-                  <p class="text-muted text-sm"><b>id:
-                    </b>{{ estacion.id }}</p>
+                    </b>{{ estacion.sitio }}</p>
+                  <p class="text-muted text-sm"><b>Id estación:
+                    </b>{{ estacion.id_estacion }}</p>
+                  <p class="text-muted text-sm"><b>Comunicación: </b>{{ estacion.protocolo_comunicacion }}</p>
                   <button type="button" class="btn btn-{{ estacion.estado.color }}" data-container="body"
-                    data-toggle="popover" data-placement="bottom"
-                    data-content="{{ estacion.estado.requerimientos }}">
+                    data-toggle="popover" data-placement="bottom" data-content="{{ estacion.estado.requerimientos }}">
                     <i class="{{ estacion.estado.simbolo }}"></i>
                     {{ estacion.estado }}
                   </button>
                 </div>
                 <div class="col-5 text-center">
-                  <a href="/static/img/estacion/{{ estacion.id }}.png" data-toggle="lightbox"
-                    data-title="{{ estacion.componente }}"
-                    data-gallery="{{ estacion.componente }}">
-                    <img src="/static/img/estacion/{{ estacion.id }}.png"
-                      alt="{{ estacion.componente }}" class="img-fluid">
+                  <a href="/static/img/estaciones/{{ estacion.id_estacion }}.png" data-toggle="lightbox"
+                    data-title="{{ estacion.nombre }}" data-gallery="{{ estacion.nombre }}">
+                    <img src="/static/img/estaciones/{{ estacion.id_estacion }}.png" alt="{{ estacion.nombre }}"
+                      class="img-fluid">
                   </a>
                 </div>
 
