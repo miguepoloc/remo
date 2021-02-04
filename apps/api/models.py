@@ -170,6 +170,11 @@ class Componente_Estacion(models.Model):
 
 
 class Estacion(models.Model):
+    """
+    Una clase que define el modelo de las estaciones
+    """
+
+    # Campos
     id = models.AutoField(primary_key=True)
     id_estacion = models.IntegerField()
     nombre = models.CharField(max_length=100)
@@ -190,6 +195,18 @@ class Estacion(models.Model):
     sensores = models.ManyToManyField(
         Sensor_Estacion, help_text="Seleccione los sensores de la estación", null=True, blank=True)
     observaciones = models.TextField(max_length=4000, blank=True, null=True)
+
+    # Metadata
+
+    class Meta:
+        ordering = ["id_estacion"]
+
+    # Métodos
+    def get_absolute_url(self):
+        """
+        Devuelve la url para acceder a una instancia particular de MyModelName.
+        """
+        return reverse('estacion_detail', args=[str(self.id)])
 
     def __str__(self):
         """

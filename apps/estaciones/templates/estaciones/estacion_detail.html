@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-<title>{{ componente_estacion.componente.nombre }} | LABIMA</title>
+<title>{{ estacion.nombre }} | REMO</title>
 {% endblock title %}
 
 {% block content %}
@@ -12,13 +12,13 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>{{ componente_estacion.componente.nombre }}</h1>
+          <h1>{{ estacion.nombre }}</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'componentes' %}">Componentes</a></li>
-            <li class="breadcrumb-item active">{{ componente_estacion.componente.nombre }}</li>
+            <li class="breadcrumb-item"><a href="{% url 'estaciones' %}">Estaciones</a></li>
+            <li class="breadcrumb-item active">{{ estacion.nombre }}</li>
           </ol>
         </div>
       </div>
@@ -27,231 +27,559 @@
 
   <!-- Main content -->
   <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
 
-    <!-- Default box -->
-    <div class="card card-solid">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-12 col-sm-6">
-            <h3 class="d-inline-block d-sm-none">{{ componente_estacion.componente.referencia }}</h3>
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img class="d-block w-100" src="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
-                    alt="{{ componente_estacion.id }}">
-                </div>
-                <div class="carousel-item">
-                  <img class="d-block w-100" src="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
-                    alt="{{ componente_estacion.id }}">
-                </div>
-                <div class="carousel-item">
-                  <img class="d-block w-100" src="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
-                    alt="{{ componente_estacion.id }}">
-                </div>
+          <!-- Profile Image -->
+          <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+              <div class="text-center">
+                <a href="{% static 'img/PBT.jpg' %}" data-toggle="lightbox" data-title="Estación meteorológica"
+                  data-gallery="gallery">
+                  <img src="{% static 'img/PBT.jpg' %}" alt="Estación profile picture"
+                    class="profile-user-img img-fluid">
+                </a>
               </div>
-              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
+
+              <h3 class="profile-username text-center">{{ estacion.nombre }}</h3>
+
+              <!-- <p class="text-muted text-center">Estación meteorológica</p> -->
+
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                  <b>Id estación</b> <a class="float-right">{{ estacion.id_estacion }}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Estado</b> <button type="button" class="float-right btn btn-{{ estacion.estado.color }}"
+                    data-container="body" data-toggle="popover" data-placement="bottom"
+                    data-content="{{ estacion.estado.requerimientos }}">
+                    <i class="{{ estacion.estado.simbolo }}"></i>
+                    {{ estacion.estado }}
+                  </button>
+                </li>
+              </ul>
+
+              <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
             </div>
+            <!-- /.card-body -->
           </div>
-          <div class="col-12 col-sm-6">
-            <h3 class="my-3">{{ componente_estacion.componente.referencia }}</h3>
-            <p>{{ componente_estacion.componente.funcion }}</p>
-            <div class="list-group">
-              <table class="table table-striped" style="text-align:center;">
-                <thead>
-                  <tr>
-                    <th scope="col">Característica</th>
-                    <th scope="col">Especificación</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row" style="vertical-align:middle;">Sensores</th>
-                    <td>{% for sensores in componente_estacion.sensores.all %}
-                      {{ sensores.sensor }}
-                      {% if not forloop.last %}<br>
-                      {% endif %}
-                      {% endfor %}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="vertical-align:middle;">Frecuencia de muestreo</th>
-                    <td>{{ componente_estacion.frecuencia_muestreo }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Frecuencia de calibración</th>
-                    <td>{{ componente_estacion.componente.frecuencia_calibracion }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Frecuencia de mantenimiento</th>
-                    <td>{{ componente_estacion.componente.frecuencia_mantenimiento }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="vertical-align:middle;">Protocolo de comunicación en uso</th>
-                    <td>{{ componente_estacion.protocolo_comunicacion_uso }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Observaciones</th>
-                    <td>{{ componente_estacion.observaciones }}</td>
-                  </tr>
+          <!-- /.card -->
 
-                </tbody>
-              </table>
-
-              <div class="mt-4" style="text-align:center;">
-                <button type="button" class="btn btn-{{ componente_estacion.estado.color }}" data-container="body"
-                  data-toggle="popover" data-placement="bottom"
-                  data-content="{{ componente_estacion.estado.requerimientos }}">
-                  <i class="{{ componente_estacion.estado.simbolo }}"></i>
-                  {{ componente_estacion.estado }}
-                </button>
-                <button type="button" class="btn btn-info" data-container="body">
-                  <a href="/static/doc/datasheet/{{ componente_estacion.componente.id }}.pdf"
-                    download="{{ componente_estacion.componente.nombre }}.pdf" style="color:white;">
-                    <i class="fas fa-file-download"></i>
-                    Datasheet
-                  </a>
-                </button>
-                <button type="button" class="btn btn-info" data-container="body">
-                  <a href="#" style="color:white;">
-                    <i class="fas fa-file-csv"></i>
-                    CSV
-                  </a>
-                </button>
-                <button type="button" class="btn btn-info" data-container="body">
-                  <a href="#" style="color:white;">
-                    <i class="far fa-file-pdf"></i>
-                    PDF
-                  </a>
-                </button>
-              </div>
+          <!-- About Me Box -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Acerca de:</h3>
             </div>
-          </div>
-          <div class="row mt-4">
-            <nav class="w-100">
-              <div class="nav nav-tabs" id="product-tab" role="tablist">
-                <a class="nav-item nav-link active" id="descripcion-tab" data-toggle="tab" href="#descripcion"
-                  role="tab" aria-controls="descripcion" aria-selected="true">Descripcion</a>
-                <a class="nav-item nav-link" id="datos-invemar-tab" data-toggle="tab" href="#datos-invemar" role="tab"
-                  aria-controls="datos-invemar" aria-selected="false">Datos Invemar</a>
-                <a class="nav-item nav-link" id="especificaciones-tab" data-toggle="tab" href="#especificaciones"
-                  role="tab" aria-controls="especificaciones" aria-selected="false">Especificaciones técnicas</a>
-              </div>
-            </nav>
-            <div class="tab-content p-3 mx-auto" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="descripcion" role="tabpanel" aria-labelledby="descripcion-tab"
-                style="text-align: justify;">
-                {{ componente_estacion.componente.descripcion }}
-              </div>
+            <!-- /.card-header -->
+            <div class="card-body" style="text-align: justify;">
+              <strong><i class="fas fa-book mr-1"></i> Descripción</strong>
 
-              <div class="tab-pane fade mx-auto" id="datos-invemar" role="tabpanel" aria-labelledby="datos-invemar-tab">
-                <div>
-                  <table class="table table-striped" style="text-align:center;">
-                    <thead>
-                      <tr>
-                        <th scope="col">Característica</th>
-                        <th scope="col">Especificación</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Número de inventario</th>
-                        <td>{{ componente_estacion.numero_inventario }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Serial</th>
-                        <td>{{ componente_estacion.serial }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ubicación</th>
-                        <td>{{ componente_estacion.ubicacion }}
-                      </tr>
-                      <tr>
-                        <th scope="row">Responsable del equipo</th>
-                        <td>{{ componente_estacion.responsable }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <p class="text-muted">
+                {{ estacion.descripcion }}
+              </p>
 
-              <div class="tab-pane fade" id="especificaciones" role="tabpanel" aria-labelledby="especificaciones-tab">
-                <table class="table table-striped" style="text-align:center;">
-                  <tbody>
-                    <thead class="thead-dark">
-                      <tr>
-                        <th colspan="2" scope="col">Energía</th>
-                      </tr>
-                    </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Voltaje de operación</th>
-                      <td>{{ componente_estacion.componente.voltaje }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Consumo de corriente</th>
-                      <td>{{ componente_estacion.componente.corriente }} </td>
-                    </tr>
-                    <thead class="thead-dark">
-                      <tr>
-                        <th colspan="2" scope="col">Rango de medición</th>
-                      </tr>
-                    </thead>
-                    <tr>
-                      <th scope="row">Rango</th>
-                      <td>{{ componente_estacion.componente.rango_medicion }}</td>
-                    </tr>
-                    <thead class="thead-dark">
-                      <tr>
-                        <th colspan="2" scope="col">Rango de operación</th>
-                      </tr>
-                    </thead>
-                    <tr>
-                      <th scope="row">Rango</th>
-                      <td>{{ componente_estacion.componente.rango_operacion }}</td>
-                    </tr>
-                    <thead class="thead-dark">
-                      <tr>
-                        <th colspan="2" scope="col">Exactitud</th>
-                      </tr>
-                    </thead>
-                    <tr>
-                      <th scope="row">Valor</th>
-                      <td>{{ componente_estacion.componente.exactitud }}</td>
-                    </tr>
-                    <thead class="thead-dark">
-                      <tr>
-                        <th colspan="2" scope="col">Resolución</th>
-                      </tr>
-                    </thead>
-                    <tr>
-                      <th scope="row">Valor</th>
-                      <td>{{ componente_estacion.componente.resolucion }}</td>
-                    </tr>
-                    <thead class="thead-dark">
-                      <tr>
-                        <th colspan="2" scope="col">Señales de salida</th>
-                      </tr>
-                    </thead>
-                    <tr>
-                      <th scope="row">Comunicación</th>
-                      <td>{{ componente_estacion.componente.protocolo_comunicacion }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <hr>
+
+              <strong><i class="fas fa-map-marker-alt mr-1"></i> Ubicación</strong>
+
+              <p class="text-muted">
+                {{ estacion.sitio }}
+              </p>
+              <p class="text-muted">Longitud: {{ estacion.longitud }}</p>
+              <p class="text-muted">Latitud: {{ estacion.latitud }}</p>
+
+              <hr>
+
+              <strong><i class="fas fa-pencil-alt mr-1"></i> Responsable</strong>
+
+              <p class="text-muted">
+                {{ estacion.responsable }}
+              </p>
+
+              <hr>
+
+              <strong><i class="far fa-file-alt mr-1"></i> Observaciones</strong>
+
+              <p class="text-muted">{{ estacion.observaciones }}
+              </p>
+
+              <hr>
+
+              <strong><i class="fas fa-calendar-day"></i> Fecha de inicio de registros</strong>
+
+              <p class="text-muted">
+                {{ estacion.fecha_inicio_registro }}
+              </p>
             </div>
+            <!-- /.card-body -->
           </div>
+          <!-- /.card -->
         </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-header p-2">
+              <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#general" data-toggle="tab">General</a></li>
+                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Historial</a></li>
+                <li class="nav-item"><a class="nav-link" href="#componentes" data-toggle="tab">Componentes</a></li>
+              </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="active tab-pane" id="general">
+                  <!-- Post -->
+                  <section class="content">
+                    <div class="container-fluid">
+                      <!-- Small boxes (Stat box) -->
+                      <div class="row">
+                        <div class="col-lg-3 col-6">
+                          <!-- small box -->
+                          <div class="small-box bg-info">
+                            <div class="inner">
+                              <h3>150</h3>
 
+                              <p>New Orders</p>
+                            </div>
+                            <div class="icon">
+                              <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                          </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                          <!-- small box -->
+                          <div class="small-box bg-success">
+                            <div class="inner">
+                              <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                              <p>Bounce Rate</p>
+                            </div>
+                            <div class="icon">
+                              <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                          </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                          <!-- small box -->
+                          <div class="small-box bg-warning">
+                            <div class="inner">
+                              <h3>44</h3>
+
+                              <p>User Registrations</p>
+                            </div>
+                            <div class="icon">
+                              <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                          </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                          <!-- small box -->
+                          <div class="small-box bg-danger">
+                            <div class="inner">
+                              <h3>65</h3>
+
+                              <p>Unique Visitors</p>
+                            </div>
+                            <div class="icon">
+                              <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                          </div>
+                        </div>
+                        <!-- ./col -->
+                      </div>
+                      <!-- /.row -->
+                      <!-- Main row -->
+                      <div class="row">
+                        <!-- Left col -->
+                        <section class="col-lg-7 connectedSortable">
+                          <!-- Custom tabs (Charts with tabs)-->
+                          <div class="card">
+                            <div class="card-header">
+                              <h3 class="card-title">
+                                <i class="fas fa-chart-pie mr-1"></i>
+                                Sales
+                              </h3>
+                              <div class="card-tools">
+                                <ul class="nav nav-pills ml-auto">
+                                  <li class="nav-item">
+                                    <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div><!-- /.card-header -->
+                            <div class="card-body">
+                              <div class="tab-content p-0">
+                                <!-- Morris chart - Sales -->
+                                <div class="chart tab-pane active" id="revenue-chart"
+                                  style="position: relative; height: 300px;">
+                                  <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                </div>
+                                <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                                  <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                </div>
+                              </div>
+                            </div><!-- /.card-body -->
+                          </div>
+                          <!-- /.card -->
+
+                          <div class="card card-primary">
+                            <div class="card-header">
+                              <h4 class="card-title">Imágenes</h4>
+                              <!-- tools card -->
+                              <div class="card-tools">
+                                <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse">
+                                  <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm" data-card-widget="remove">
+                                  <i class="fas fa-times"></i>
+                                </button>
+                              </div>
+                              <!-- /. tools -->
+                            </div>
+
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-sm-2">
+                                  <a href="{% static 'img/E_Puerto_Bolivar.jpg' %}" data-toggle="lightbox"
+                                    data-title="Estación meteorológica" data-gallery="gallery">
+                                    <img src="{% static 'img/E_Puerto_Bolivar.jpg' %}" alt="white sample"
+                                      class="img-fluid mb-2">
+
+                                  </a>
+                                </div>
+                                <div class="col-sm-2">
+                                  <a href="https://via.placeholder.com/1200/000000.png?text=2" data-toggle="lightbox"
+                                    data-title="sample 2 - black" data-gallery="gallery">
+                                    <img src="https://via.placeholder.com/300/000000?text=2" class="img-fluid mb-2"
+                                      alt="black sample" />
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </section>
+                        <!-- /.Left col -->
+                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                        <section class="col-lg-5 connectedSortable">
+
+                          <!-- Map card -->
+                          <div class="card bg-gradient-primary">
+                            <div class="card-header border-0">
+                              <h3 class="card-title">
+                                <i class="fas fa-map-marker-alt mr-1"></i>
+                                Geolocalización
+                              </h3>
+                              <!-- card tools -->
+                              <div class="card-tools">
+                                <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse"
+                                  title="Collapse">
+                                  <i class="fas fa-minus"></i>
+                                </button>
+                              </div>
+                              <!-- /.card-tools -->
+                            </div>
+                            <div class="card-body">
+                              <div id="geovisor" style="height: 250px; width: 100%;"></div>
+                            </div>
+                            <!-- /.card-body-->
+                          </div>
+                          <!-- /.card -->
+
+                          <!-- Calendar -->
+                          <div class="card bg-gradient-success">
+                            <div class="card-header border-0">
+
+                              <h3 class="card-title">
+                                <i class="far fa-calendar-alt"></i>
+                                Calendar
+                              </h3>
+                              <!-- tools card -->
+                              <div class="card-tools">
+                                <!-- button with a dropdown -->
+                                <div class="btn-group">
+                                  <button type="button" class="btn btn-success btn-sm dropdown-toggle"
+                                    data-toggle="dropdown" data-offset="-52">
+                                    <i class="fas fa-bars"></i>
+                                  </button>
+                                  <div class="dropdown-menu" role="menu">
+                                    <a href="#" class="dropdown-item">Add new event</a>
+                                    <a href="#" class="dropdown-item">Clear events</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item">View calendar</a>
+                                  </div>
+                                </div>
+                                <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
+                                  <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                                  <i class="fas fa-times"></i>
+                                </button>
+                              </div>
+                              <!-- /. tools -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body pt-0">
+                              <!--The calendar -->
+                              <div id="calendar" style="width: 100%"></div>
+                            </div>
+                            <!-- /.card-body -->
+                          </div>
+                          <!-- /.card -->
+                        </section>
+                        <!-- right col -->
+                      </div>
+                      <!-- /.row (main row) -->
+                    </div><!-- /.container-fluid -->
+                  </section>
+                  <!-- /.post -->
+
+                  <!-- Post -->
+                  <div class="post clearfix">
+                    <div class="user-block">
+                      <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
+                      <span class="username">
+                        <a href="#">Sarah Ross</a>
+                        <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
+                      </span>
+                      <span class="description">Sent you a message - 3 days ago</span>
+                    </div>
+                    <!-- /.user-block -->
+                    <p>
+                      Lorem ipsum represents a long-held tradition for designers,
+                      typographers and the like. Some people hate it and argue for
+                      its demise, but others ignore the hate as they create awesome
+                      tools to help create filler text for everyone from bacon lovers
+                      to Charlie Sheen fans.
+                    </p>
+
+                    <form class="form-horizontal">
+                      <div class="input-group input-group-sm mb-0">
+                        <input class="form-control form-control-sm" placeholder="Response">
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-danger">Send</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.post -->
+
+                  <!-- Post -->
+
+                  <!-- /.post -->
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="timeline">
+                  <!-- The timeline -->
+                  <div class="timeline timeline-inverse">
+                    <!-- timeline time label -->
+                    <div class="time-label">
+                      <span class="bg-danger">
+                        10 Feb. 2014
+                      </span>
+                    </div>
+                    <!-- /.timeline-label -->
+                    <!-- timeline item -->
+                    <div>
+                      <i class="fas fa-envelope bg-primary"></i>
+
+                      <div class="timeline-item">
+                        <span class="time"><i class="far fa-clock"></i> 12:05</span>
+
+                        <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+
+                        <div class="timeline-body">
+                          Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                          weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                          jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                          quora plaxo ideeli hulu weebly balihoo...
+                        </div>
+                        <div class="timeline-footer">
+                          <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                          <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- END timeline item -->
+                    <!-- timeline item -->
+                    <div>
+                      <i class="fas fa-user bg-info"></i>
+
+                      <div class="timeline-item">
+                        <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
+
+                        <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend request
+                        </h3>
+                      </div>
+                    </div>
+                    <!-- END timeline item -->
+                    <!-- timeline item -->
+                    <div>
+                      <i class="fas fa-comments bg-warning"></i>
+
+                      <div class="timeline-item">
+                        <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
+
+                        <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+
+                        <div class="timeline-body">
+                          Take me to your leader!
+                          Switzerland is small and neutral!
+                          We are more like Germany, ambitious and misunderstood!
+                        </div>
+                        <div class="timeline-footer">
+                          <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- END timeline item -->
+                    <!-- timeline time label -->
+                    <div class="time-label">
+                      <span class="bg-success">
+                        3 Jan. 2014
+                      </span>
+                    </div>
+                    <!-- /.timeline-label -->
+                    <!-- timeline item -->
+                    <div>
+                      <i class="fas fa-camera bg-purple"></i>
+
+                      <div class="timeline-item">
+                        <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
+
+                        <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+
+                        <div class="timeline-body">
+                          <img src="https://placehold.it/150x100" alt="...">
+                          <img src="https://placehold.it/150x100" alt="...">
+                          <img src="https://placehold.it/150x100" alt="...">
+                          <img src="https://placehold.it/150x100" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- END timeline item -->
+                    <div>
+                      <i class="far fa-clock bg-gray"></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.tab-pane -->
+
+                <div class="tab-pane" id="componentes">
+
+                  <!-- Main content -->
+                  <section class="content">
+
+                    <!-- Default box -->
+                    {% if estaciones_list %}
+                    <div class="card-body pb-0">
+                      <div class="row d-flex align-items-stretch">
+                        <!-- Nombrar componentes  -->
+                        {% for componente_estacion in estaciones_list %}
+                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                          <div class="card bg-light">
+                            <div class="card-header text-muted border-bottom-0">
+                              <h2 class="lead"><b>{{ componente_estacion }}</b></h2>
+                            </div>
+                            <div class="card-body pt-0">
+                              <div class="row">
+                                <div class="col-7">
+                                  <p class="text-muted text-sm"><b>Referencia: </b>{{
+                                    componente_estacion.componente.referencia }}</p>
+                                  <p class="text-muted text-sm"><b>Ubicación:
+                                    </b>{{ componente_estacion.ubicacion }}</p>
+                                  <p class="text-muted text-sm"><b>id:
+                                    </b>{{ componente_estacion.id }}</p>
+                                  <button type="button" class="btn btn-{{ componente_estacion.estado.color }}"
+                                    data-container="body" data-toggle="popover" data-placement="bottom"
+                                    data-content="{{ componente_estacion.estado.requerimientos }}">
+                                    <i class="{{ componente_estacion.estado.simbolo }}"></i>
+                                    {{ componente_estacion.estado }}
+                                  </button>
+                                </div>
+                                <div class="col-5 text-center">
+                                  <a href="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
+                                    data-toggle="lightbox" data-title="{{ componente_estacion.componente }}"
+                                    data-gallery="{{ componente_estacion.componente }}">
+                                    <img src="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
+                                      alt="{{ componente_estacion.componente }}" class="img-fluid">
+                                  </a>
+                                </div>
+
+                              </div>
+                            </div>
+                            <div class="card-footer">
+                              <div class="text-right">
+                                <a href="{{ componente_estacion.get_absolute_url }}" class="btn btn-sm btn-primary">
+                                  <i class="fas fa-info-circle"></i> Ver más
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                        {% if is_paginated %}
+                        <div class="container">
+                          <nav aria-label="...">
+                            <ul class="pagination justify-content-center">
+
+                              {% if page_obj.has_previous %}
+                              <li class="page-item">
+                                <a class="page-link"
+                                  href="{{ request.path }}?page={{ page_obj.previous_page_number }}"><i
+                                    class="fas fa-angle-double-left"></i></a>
+                              </li>
+                              {% endif %}
+
+                              {% for i in paginator.page_range %}
+                              {% if page_obj.number == i %}
+                              <li class="page-item active"><a class="page-link" href="?page={{i}}">{{ i }}</a></li>
+                              {% else %}
+                              <li class="page-item"><a class="page-link" href="?page={{i}}">{{ i }}</a></li>
+                              {% endif %}
+                              {% endfor %}
+
+                              {% if page_obj.has_next %}
+                              <li class="page-item">
+                                <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i
+                                    class="fas fa-angle-double-right"></i></a>
+                              </li>
+                              {% endif %}
+                            </ul>
+                          </nav>
+                        </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                    {% else %}
+                    <p>No hay componentes</p>
+                    {% endif %}
+                    <!-- /.card-body -->
+                  </section>
+                  <!-- /.content -->
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+              <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
 </div>
