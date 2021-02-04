@@ -51,6 +51,9 @@
                   <b>Id estación</b> <a class="float-right">{{ estacion.id_estacion }}</a>
                 </li>
                 <li class="list-group-item">
+                  <b>Id</b> <a class="float-right" id="id_estacion">{{ estacion.id }}</a>
+                </li>
+                <li class="list-group-item">
                   <b>Estado</b> <button type="button" class="float-right btn btn-{{ estacion.estado.color }}"
                     data-container="body" data-toggle="popover" data-placement="bottom"
                     data-content="{{ estacion.estado.requerimientos }}">
