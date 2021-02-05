@@ -54,6 +54,9 @@
                   <b>Id</b> <a class="float-right" id="id_estacion">{{ estacion.id }}</a>
                 </li>
                 <li class="list-group-item">
+                  <b>Comunicación</b> <a class="float-right" id="id_estacion">{{ estacion.protocolo_comunicacion }}</a>
+                </li>
+                <li class="list-group-item">
                   <b>Estado</b> <button type="button" class="float-right btn btn-{{ estacion.estado.color }}"
                     data-container="body" data-toggle="popover" data-placement="bottom"
                     data-content="{{ estacion.estado.requerimientos }}">
@@ -485,8 +488,6 @@
                   <section class="content">
 
                     <!-- Default box -->
-                    <!-- {{ estacion.componentes.all }}
-                    {{ estacion.sensores.all }} -->
                     {% if estacion.componentes.all %}
                     <div class="card-body pb-0">
                       <div class="row d-flex align-items-stretch">
@@ -588,3 +589,8 @@
 </div>
 <!-- /.content-wrapper -->
 {% endblock content %}
+
+{% block script %}
+<!-- Geovisor -->
+<script type="text/javascript" src="{% static 'js/geovisor.js' %}"></script>
+{% endblock script %}

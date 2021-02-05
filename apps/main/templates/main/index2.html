@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-<title>{{ estacion.nombre }} | REMO</title>
+<title>REMO | Dashboard</title>
 {% endblock title %}
 
 {% block content %}
@@ -12,13 +12,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>{{ estacion.nombre }}</h1>
+          <h1>Punta Betín</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'estaciones' %}">Estaciones</a></li>
-            <li class="breadcrumb-item active">{{ estacion.nombre }}</li>
+            <li class="breadcrumb-item active">Punta Betín</li>
           </ol>
         </div>
       </div>
@@ -35,34 +34,23 @@
           <div class="card card-primary card-outline">
             <div class="card-body box-profile">
               <div class="text-center">
-                <a href="/static/img/estaciones/{{ estacion.id_estacion }}.png" data-toggle="lightbox"
-                  data-title="{{ estacion.nombre }}" data-gallery="{{ estacion.nombre }}">
-                  <img src="/static/img/estaciones/{{ estacion.id_estacion }}.png" alt="{{ estacion.nombre }}"
+                <a href="{% static 'img/PBT.jpg' %}" data-toggle="lightbox" data-title="Estación meteorológica"
+                  data-gallery="gallery">
+                  <img src="{% static 'img/PBT.jpg' %}" alt="Estación profile picture"
                     class="profile-user-img img-fluid">
                 </a>
               </div>
 
-              <h3 class="profile-username text-center">{{ estacion.nombre }}</h3>
+              <h3 class="profile-username text-center">Punta Betín</h3>
 
-              <!-- <p class="text-muted text-center">Estación meteorológica</p> -->
+              <p class="text-muted text-center">Estación meteorológica</p>
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Id estación</b> <a class="float-right">{{ estacion.id_estacion }}</a>
+                  <b>Id</b> <a class="float-right">1366</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Id</b> <a class="float-right" id="id_estacion">{{ estacion.id }}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Comunicación</b> <a class="float-right" id="id_estacion">{{ estacion.protocolo_comunicacion }}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Estado</b> <button type="button" class="float-right btn btn-{{ estacion.estado.color }}"
-                    data-container="body" data-toggle="popover" data-placement="bottom"
-                    data-content="{{ estacion.estado.requerimientos }}">
-                    <i class="{{ estacion.estado.simbolo }}"></i>
-                    {{ estacion.estado }}
-                  </button>
+                  <b>Estado</b> <a class="float-right">Activa</a>
                 </li>
               </ul>
 
@@ -82,7 +70,9 @@
               <strong><i class="fas fa-book mr-1"></i> Descripción</strong>
 
               <p class="text-muted">
-                {{ estacion.descripcion }}
+                Estacion en tierra, metereologica compacta (armada) de fabricante xxx, sin comunicacion remota, aislada
+                con malla xxxx, señalizada con YYY, sujeta a mastil 3 mets, dataloguer en gabinete XXX de 30x 50 cm,
+                piso en tierra, antena de trasmision de xx metros marca xx.
               </p>
 
               <hr>
@@ -90,24 +80,26 @@
               <strong><i class="fas fa-map-marker-alt mr-1"></i> Ubicación</strong>
 
               <p class="text-muted">
-                {{ estacion.sitio }}
-              </p>
-              <p class="text-muted">Longitud: {{ estacion.longitud }}</p>
-              <p class="text-muted">Latitud: {{ estacion.latitud }}</p>
+                Punta Betín, Cima del cerro, Puerto de Santa Marta, Santa Marta DTCH, Magdalena.
+                Predio pertenenciente a XXX. </p>
+              <p class="text-muted">Longitud: -74,2193869</p>
+              <p class="text-muted">Latitud: 11,2508042</p>
+
+              <div id="geovisor" style="height: 250px; width: 100%;"></div>
 
               <hr>
 
               <strong><i class="fas fa-pencil-alt mr-1"></i> Responsable</strong>
 
               <p class="text-muted">
-                {{ estacion.responsable }}
+                Jefe del LabIMA
               </p>
 
               <hr>
 
               <strong><i class="far fa-file-alt mr-1"></i> Observaciones</strong>
 
-              <p class="text-muted">{{ estacion.observaciones }}
+              <p class="text-muted">No está funcionando debido a problemas en el sistema de carga
               </p>
 
               <hr>
@@ -115,7 +107,7 @@
               <strong><i class="fas fa-calendar-day"></i> Fecha de inicio de registros</strong>
 
               <p class="text-muted">
-                {{ estacion.fecha_inicio_registro }}
+                13/11/2012
               </p>
             </div>
             <!-- /.card-body -->
@@ -285,10 +277,13 @@
                             <div class="card-header border-0">
                               <h3 class="card-title">
                                 <i class="fas fa-map-marker-alt mr-1"></i>
-                                Geolocalización
+                                Visitors
                               </h3>
                               <!-- card tools -->
                               <div class="card-tools">
+                                <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
+                                  <i class="far fa-calendar-alt"></i>
+                                </button>
                                 <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse"
                                   title="Collapse">
                                   <i class="fas fa-minus"></i>
@@ -297,9 +292,29 @@
                               <!-- /.card-tools -->
                             </div>
                             <div class="card-body">
-                              <div id="geovisor_estaciones" style="height: 250px; width: 100%;"></div>
+                              <div id="world-map" style="height: 250px; width: 100%;"></div>
                             </div>
                             <!-- /.card-body-->
+                            <div class="card-footer bg-transparent">
+                              <div class="row">
+                                <div class="col-4 text-center">
+                                  <div id="sparkline-1"></div>
+                                  <div class="text-white">Visitors</div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-4 text-center">
+                                  <div id="sparkline-2"></div>
+                                  <div class="text-white">Online</div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-4 text-center">
+                                  <div id="sparkline-3"></div>
+                                  <div class="text-white">Sales</div>
+                                </div>
+                                <!-- ./col -->
+                              </div>
+                              <!-- /.row -->
+                            </div>
                           </div>
                           <!-- /.card -->
 
@@ -488,89 +503,144 @@
                   <section class="content">
 
                     <!-- Default box -->
-                    <!-- {{ estacion.componentes.all }}
-                    {{ estacion.sensores.all }} -->
-                    {% if estacion.componentes.all %}
                     <div class="card-body pb-0">
                       <div class="row d-flex align-items-stretch">
                         <!-- Nombrar componentes  -->
-                        {% for componente_estacion in estacion.componentes.all %}
-                        <div class="col-12 col-sm-6 col-md-6 d-flex align-items-stretch">
+                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
                           <div class="card bg-light">
                             <div class="card-header text-muted border-bottom-0">
-                              <h2 class="lead"><b>{{ componente_estacion.componente.nombre }}</b></h2>
+                              <h2 class="lead"><b>Termohigrómetro</b></h2>
                             </div>
                             <div class="card-body pt-0">
                               <div class="row">
                                 <div class="col-7">
-                                  <p class="text-muted text-sm"><b>Referencia: </b>
-                                    {{ componente_estacion.componente.referencia }}</p>
-                                  <p class="text-muted text-sm"><b>id:
-                                    </b>{{ componente_estacion.id }}</p>
-                                  <button type="button" class="btn btn-{{ componente_estacion.estado.color }}"
-                                    data-container="body" data-toggle="popover" data-placement="bottom"
-                                    data-content="{{ componente_estacion.estado.requerimientos }}">
-                                    <i class="{{ componente_estacion.estado.simbolo }}"></i>
-                                    {{ componente_estacion.estado }}
-                                  </button>
+                                  <p class="text-muted text-sm"><b>Referencia: </b>Rotronic HC2-S3</p>
+                                  <p class="text-muted text-sm"><b>Estado: </b>Activo OK</p>
                                 </div>
                                 <div class="col-5 text-center">
-                                  <a href="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
-                                    data-toggle="lightbox" data-title="{{ componente_estacion.componente }}"
-                                    data-gallery="{{ componente_estacion.componente }}">
-                                    <img src="/static/img/componente_estacion/{{ componente_estacion.id }}.png"
-                                      alt="{{ componente_estacion.componente }}" class="img-fluid">
+                                  <a href="{% static 'img/temp_PBT.png' %}" data-toggle="lightbox"
+                                    data-title="Termohigrómetro" data-gallery="Termohigrómetro">
+                                    <img src="{% static 'img/temp_PBT.png' %}" alt="componente-avatar"
+                                      class="img-fluid">
                                   </a>
                                 </div>
-
+                                <p class="text-muted text-sm" style="padding-left: 7.5px;"><b>Protocolo de comunicacion:
+                                  </b>UART<br>
+                                  Análogo</p>
+                                <p class="text-muted text-sm" style="padding-left: 7.5px;"><b>Número de inventario:
+                                  </b>Se desconoce</p>
                               </div>
                             </div>
                             <div class="card-footer">
                               <div class="text-right">
-                                <a href="{{ componente_estacion.get_absolute_url }}" class="btn btn-sm btn-primary">
+                                <a href="{% url 'componentes' %}" class="btn btn-sm btn-primary">
                                   <i class="fas fa-info-circle"></i> Ver más
                                 </a>
                               </div>
                             </div>
                           </div>
                         </div>
-                        {% endfor %}
-                        {% if is_paginated %}
-                        <div class="container">
-                          <nav aria-label="...">
-                            <ul class="pagination justify-content-center">
-
-                              {% if page_obj.has_previous %}
-                              <li class="page-item">
-                                <a class="page-link"
-                                  href="{{ request.path }}?page={{ page_obj.previous_page_number }}"><i
-                                    class="fas fa-angle-double-left"></i></a>
-                              </li>
-                              {% endif %}
-
-                              {% for i in paginator.page_range %}
-                              {% if page_obj.number == i %}
-                              <li class="page-item active"><a class="page-link" href="?page={{i}}">{{ i }}</a></li>
-                              {% else %}
-                              <li class="page-item"><a class="page-link" href="?page={{i}}">{{ i }}</a></li>
-                              {% endif %}
-                              {% endfor %}
-
-                              {% if page_obj.has_next %}
-                              <li class="page-item">
-                                <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i
-                                    class="fas fa-angle-double-right"></i></a>
-                              </li>
-                              {% endif %}
-                            </ul>
-                          </nav>
+                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                          <div class="card bg-light">
+                            <div class="card-header text-muted border-bottom-0">
+                              <h2 class="lead"><b>Datalogger</b></h2>
+                            </div>
+                            <div class="card-body pt-0">
+                              <div class="row">
+                                <div class="col-7">
+                                  <p class="text-muted text-sm"><b>Referencia: </b>SUTRON XLITE 9210</p>
+                                  <p class="text-muted text-sm"><b>Estado: </b> Regular </p>
+                                </div>
+                                <div class="col-5 text-center">
+                                  <a href="{% static 'img/sutron.png' %}" data-toggle="lightbox" data-title="Datalogger"
+                                    data-gallery="Datalogger">
+                                    <img src="{% static 'img/sutron.png' %}" alt="componente-avatar" class="img-fluid">
+                                  </a>
+                                </div>
+                                <p class="text-muted text-sm" style="padding-left: 7.5px;"><b>Protocolo de comunicacion:
+                                  </b>SSP (Protocolos Estandar de Sutron), MODBUS, MODEM, Telnet, HTTP, FTP, DHCP, DNS,
+                                  SLIP, PPP & personalizados vía programacion Basic (RS-232, TCP, & UDP) </p>
+                                <p class="text-muted text-sm" style="padding-left: 7.5px;"><b>Número de inventario:
+                                  </b>Se desconoce</p>
+                              </div>
+                            </div>
+                            <div class="card-footer">
+                              <div class="text-right">
+                                <a href="#" class="btn btn-sm btn-primary">
+                                  <i class="fas fa-info-circle"></i> Ver más
+                                </a>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        {% endif %}
+                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                          <div class="card bg-light">
+                            <div class="card-header text-muted border-bottom-0">
+                              <h2 class="lead"><b>Transmisor satelital</b></h2>
+                            </div>
+                            <div class="card-body pt-0">
+                              <div class="row">
+                                <div class="col-7">
+                                  <p class="text-muted text-sm"><b>Referencia: </b>Satlink 2-V2 SUTRON</p>
+                                  <p class="text-muted text-sm"><b>Estado: </b> Bueno </p>
+                                </div>
+                                <div class="col-5 text-center">
+                                  <a href="{% static 'img/satlink2.png' %}" data-toggle="lightbox"
+                                    data-title="Estación meteorológica" data-gallery="Transmisor">
+                                    <img src="{% static 'img/satlink2.png' %}" alt="componente-avatar"
+                                      class="img-fluid">
+                                  </a>
+                                </div>
+                                <p class="text-muted text-sm" style="padding-left: 7.5px;"><b>Protocolo de comunicacion:
+                                  </b>RS-232</p>
+                                <p class="text-muted text-sm" style="padding-left: 7.5px;"><b>Número de inventario:
+                                  </b>Se desconoce</p>
+                              </div>
+                            </div>
+                            <div class="card-footer">
+                              <div class="text-right">
+                                <a href="#" class="btn btn-sm btn-primary">
+                                  <i class="fas fa-info-circle"></i> Ver más
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                          <div class="card bg-light">
+                            <div class="card-header text-muted border-bottom-0">
+                              <h2 class="lead"><b>Transmisor satelital</b></h2>
+                            </div>
+                            <div class="card-body pt-0">
+                              <div class="row">
+                                <div class="col-7">
+                                  <p class="text-muted text-sm"><b>Referencia: </b>Satlink 2-V2 SUTRON</p>
+                                  <p class="text-muted text-sm"><b>Estado: </b> Bueno </p>
+                                </div>
+                                <div class="col-5 text-center">
+                                  <a href="{% static 'img/satlink2.png' %}" data-toggle="lightbox"
+                                    data-title="Estación meteorológica" data-gallery="Transmisor">
+                                    <img src="{% static 'img/satlink2.png' %}" alt="componente-avatar"
+                                      class="img-fluid">
+                                  </a>
+                                </div>
+                                <p class="text-muted text-sm" style="padding-left: 7.5px;"><b>Protocolo de comunicacion:
+                                  </b>RS-232</p>
+                                <p class="text-muted text-sm" style="padding-left: 7.5px;"><b>Número de inventario:
+                                  </b>Se desconoce</p>
+                              </div>
+                            </div>
+                            <div class="card-footer">
+                              <div class="text-right">
+                                <a href="#" class="btn btn-sm btn-primary">
+                                  <i class="fas fa-info-circle"></i> Ver más
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    {% else %}
-                    <p>No hay componentes</p>
-                    {% endif %}
                     <!-- /.card-body -->
                   </section>
                   <!-- /.content -->
@@ -590,6 +660,4 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
 {% endblock content %}
-<script type="text/javascript" src="{% static 'js/geovisor_estaciones.js' %}"></script>
