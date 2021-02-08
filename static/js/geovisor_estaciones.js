@@ -1,99 +1,46 @@
 var latitud;
 var longitud;
+var latlng = [];
+var marker;
 $(document).ready(function () {
-    id_estacion = document.getElementById("id_estacion")
-    //Obtiene los datos de la estacion de la API
-    console.log(id_estacion.text);
+    // var latlng = L.latLng(latitud, longitud);
+    var map = L.map('geovisor_estaciones', { attributionControl: false }).
+        setView([12, -76],
+            5);
+
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 18
+    }).addTo(map);
+    L.control.scale().addTo(map);
+    var boyaIcon = L.icon({
+        iconUrl: '/static/img/boya.png',
+        // shadowUrl: 'leaf-shadow.png',
+
+        iconSize: [14, 28], // size of the icon
+        // shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [0, 0], // point of the icon which will correspond to marker's location
+        // shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
+    });
+
     $.get('/api/Estacion/', function (result) {
         // Guarda en la variable estacion los resultados de la API
         estacion = result;
         console.log(estacion);
         for (let index = 0; index < estacion.length; index++) {
             console.log(estacion[index].id);
-
-            if (estacion[index].id == parseInt(id_estacion.text)) {
-                latitud = estacion[index].latitud;
-                longitud = estacion[index].longitud;
+            latitud = estacion[index].latitud;
+            longitud = estacion[index].longitud;
+            nombre = estacion[index].nombre;
+            if (latitud == null) {
+                console.log("NADA");
+            } else {
+                console.log("oye si");
+                marker = L.marker([latitud, longitud], { icon: boyaIcon }).addTo(map);
+                marker.bindPopup("<b>" + nombre + "</b><br>Soy una estación");
             }
+
         }
-        console.log(latitud);
-        console.log(longitud);
     });
-    require([
-        "esri/Map",
-        "esri/views/MapView",
-        "esri/Graphic"
-    ],
-        function (
-            Map,
-            MapView,
-            Graphic
-        ) {
-            var map = new Map({
-                basemap: "topo-vector"
-            });
-
-            var view = new MapView({
-                center: [longitud, latitud],
-                container: "geovisor",
-                map: map,
-                zoom: 16
-            });
-
-            /*************************
-             * Create a point graphic
-             *************************/
-
-            // First create a point geometry (this is the location of the Titanic)
-
-            var point = {
-                type: "point", // autocasts as new Point()
-                longitude: longitud,
-                latitude: latitud
-            };
-            // Create a symbol for drawing the point
-            var markerSymbol = {
-                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-                color: [226, 119, 40],
-                outline: {
-                    // autocasts as new SimpleLineSymbol()
-                    color: [255, 255, 255],
-                    width: 1
-                }
-            };
-
-            // Se crean los atributos
-            var puntoAtributo = {
-                id: "1",
-                nombre: "Boya",
-            };
-
-            // Create a graphic and add the geometry and symbol to it
-            var pointGraphic = new Graphic({
-                geometry: point,
-                symbol: markerSymbol,
-                attributes: puntoAtributo,
-                popupTemplate: {
-                    id: "{id}",
-                    content: [{
-                        type: "fields",
-                        fieldInfos: [{
-                            fieldName: "id"
-                        },
-                        {
-                            fieldName: "nombre"
-                        },
-                        ]
-                    }]
-                }
-
-            });
-
-            // Add the graphics to the view's graphics layer
-            view.graphics.addMany([pointGraphic]);
-
-
-        }
-    );
 });
-
