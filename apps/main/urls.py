@@ -5,6 +5,5 @@ from rest_framework import routers
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    # url(r'^data/(?P<idx>\w+)/$', views.index2, name='index2'),
+    url(r'^$', views.index, name='index'),
 ]
