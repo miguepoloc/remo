@@ -23,6 +23,7 @@ urlpatterns = [
     path('estaciones/', include('apps.estaciones.urls')),
     path('componentes/', include('apps.componentes.urls')),
     path('sensores/', include('apps.sensores.urls')),
+    path('calendario/', include('apps.calendario.urls')),
     path('api/', include('apps.api.urls')),
     path('admin/', admin.site.urls),
 ]

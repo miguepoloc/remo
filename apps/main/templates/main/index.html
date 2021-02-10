@@ -33,7 +33,7 @@
             <ul class="nav nav-pills">
               <li class="nav-item"><a class="nav-link active" href="#general" data-toggle="tab">General</a></li>
               <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Salidas de campo</a></li>
-              <li class="nav-item"><a class="nav-link" href="#calendario" data-toggle="tab">Calendario</a></li>
+              <li class="nav-item"><a class="nav-link" href="#calendario" data-toggle="tab">XXs</a></li>
             </ul>
           </div><!-- /.card-header -->
           <div class="card-body">
@@ -115,37 +115,36 @@
                       <!-- Left col -->
                       <section class="col-lg-7 connectedSortable">
                         <!-- Custom tabs (Charts with tabs)-->
+                        <!-- Calendar -->
                         <div class="card">
-                          <div class="card-header">
+                          <div class="card-header border-0">
+
                             <h3 class="card-title">
-                              <i class="fas fa-chart-pie mr-1"></i>
-                              Sales
+                              <i class="far fa-calendar-alt"></i>
+                              Calendario
                             </h3>
+                            <!-- tools card -->
                             <div class="card-tools">
-                              <ul class="nav nav-pills ml-auto">
-                                <li class="nav-item">
-                                  <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                                </li>
-                                <li class="nav-item">
-                                  <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                                </li>
-                              </ul>
+                              <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                              </button>
+                              <button type="button" class="btn btn-primary btn-sm" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                              </button>
                             </div>
-                          </div><!-- /.card-header -->
-                          <div class="card-body">
-                            <div class="tab-content p-0">
-                              <!-- Morris chart - Sales -->
-                              <div class="chart tab-pane active" id="revenue-chart"
-                                style="position: relative; height: 300px;">
-                                <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                              </div>
-                              <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                                <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
-                              </div>
+                            <!-- /. tools -->
+                          </div>
+                          <!-- /.card-header -->
+                          <div class="card-body pt-0">
+                            <!--The calendar -->
+                            <div id="external-events">
+                              <div id="calendar" style="width: 100%"></div>
                             </div>
-                          </div><!-- /.card-body -->
+                          </div>
+                          <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
+
 
                         <div class="card card-primary">
                           <div class="card-header">
@@ -210,87 +209,44 @@
                           <!-- /.card-body-->
                         </div>
                         <!-- /.card -->
-
-                        <!-- Calendar -->
-                        <div class="card bg-gradient-success">
-                          <div class="card-header border-0">
-
+                        <div class="card">
+                          <div class="card-header">
                             <h3 class="card-title">
-                              <i class="far fa-calendar-alt"></i>
-                              Calendar
+                              <i class="fas fa-chart-pie mr-1"></i>
+                              Gráficas
                             </h3>
-                            <!-- tools card -->
                             <div class="card-tools">
-                              <!-- button with a dropdown -->
-                              <div class="btn-group">
-                                <button type="button" class="btn btn-success btn-sm dropdown-toggle"
-                                  data-toggle="dropdown" data-offset="-52">
-                                  <i class="fas fa-bars"></i>
-                                </button>
-                                <div class="dropdown-menu" role="menu">
-                                  <a href="#" class="dropdown-item">Add new event</a>
-                                  <a href="#" class="dropdown-item">Clear events</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a href="#" class="dropdown-item">View calendar</a>
-                                </div>
-                              </div>
-                              <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                              </button>
-                              <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                              </button>
+                              <ul class="nav nav-pills ml-auto">
+                                <li class="nav-item">
+                                  <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#sales-chart" data-toggle="tab">Línea</a>
+                                </li>
+                              </ul>
                             </div>
-                            <!-- /. tools -->
-                          </div>
-                          <!-- /.card-header -->
-                          <div class="card-body pt-0">
-                            <!--The calendar -->
-                            <div id="calendar" style="width: 100%"></div>
-                          </div>
-                          <!-- /.card-body -->
+                          </div><!-- /.card-header -->
+                          <div class="card-body">
+                            <div class="tab-content p-0">
+                              <!-- Morris chart - Sales -->
+                              <div class="chart tab-pane active" id="revenue-chart"
+                                style="position: relative; height: 300px;">
+                                <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                              </div>
+                              <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                                <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                              </div>
+                            </div>
+                          </div><!-- /.card-body -->
                         </div>
                         <!-- /.card -->
+
                       </section>
                       <!-- right col -->
                     </div>
                     <!-- /.row (main row) -->
                   </div><!-- /.container-fluid -->
                 </section>
-                <!-- /.post -->
-
-                <!-- Post -->
-                <div class="post clearfix">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                    <span class="username">
-                      <a href="#">Sarah Ross</a>
-                      <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                    </span>
-                    <span class="description">Sent you a message - 3 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-
-                  <form class="form-horizontal">
-                    <div class="input-group input-group-sm mb-0">
-                      <input class="form-control form-control-sm" placeholder="Response">
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-danger">Send</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <!-- /.post -->
-
-                <!-- Post -->
-
                 <!-- /.post -->
               </div>
               <!-- /.tab-pane -->
@@ -392,7 +348,6 @@
 
               <div class="tab-pane" id="calendario">
 
-               
               </div>
               <!-- /.tab-pane -->
             </div>
@@ -413,4 +368,5 @@
 {% block script %}
 <!-- Geovisor -->
 <script type="text/javascript" src="{% static 'js/geovisor_estaciones.js' %}"></script>
+
 {% endblock script %}
