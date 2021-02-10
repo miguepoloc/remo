@@ -55,7 +55,7 @@
                           <div class="icon">
                             <i class="fas fa-broadcast-tower"></i>
                           </div>
-                          <a href="#" class="small-box-footer">Más información <i
+                          <a href="{% url 'estaciones' %}" class="small-box-footer">Más información <i
                               class="fas fa-arrow-circle-right"></i></a>
                         </div>
                       </div>
@@ -71,7 +71,7 @@
                           <div class="icon">
                             <i class="fas fa-cloud-sun-rain"></i>
                           </div>
-                          <a href="#" class="small-box-footer">Más información <i
+                          <a href="{% url 'sensores' %}" class="small-box-footer">Más información <i
                               class="fas fa-arrow-circle-right"></i></a>
                         </div>
                       </div>
@@ -87,7 +87,7 @@
                           <div class="icon">
                             <i class="fas fa-tools"></i>
                           </div>
-                          <a href="#" class="small-box-footer">Más información <i
+                          <a href="{% url 'componentes' %}" class="small-box-footer">Más información <i
                               class="fas fa-arrow-circle-right"></i></a>
                         </div>
                       </div>
@@ -253,95 +253,41 @@
               <div class="tab-pane" id="timeline">
                 <!-- The timeline -->
                 <div class="timeline timeline-inverse">
-                  <!-- timeline time label -->
-                  <div class="time-label">
-                    <span class="bg-danger">
-                      10 Feb. 2014
-                    </span>
-                  </div>
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <div>
-                    <i class="fas fa-envelope bg-primary"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="far fa-clock"></i> 12:05</span>
-
-                      <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                      <div class="timeline-body">
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                        quora plaxo ideeli hulu weebly balihoo...
-                      </div>
-                      <div class="timeline-footer">
-                        <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <div>
-                    <i class="fas fa-user bg-info"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
-
-                      <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend request
-                      </h3>
-                    </div>
-                  </div>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <div>
-                    <i class="fas fa-comments bg-warning"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
-
-                      <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                      <div class="timeline-body">
-                        Take me to your leader!
-                        Switzerland is small and neutral!
-                        We are more like Germany, ambitious and misunderstood!
-                      </div>
-                      <div class="timeline-footer">
-                        <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- END timeline item -->
+                  {% if mantenimiento_list %}
+                  {% for mantenimiento_estacion in mantenimiento_list %}
                   <!-- timeline time label -->
                   <div class="time-label">
                     <span class="bg-success">
-                      3 Jan. 2014
+                      {{ mantenimiento_estacion.fecha }}
                     </span>
                   </div>
                   <!-- /.timeline-label -->
                   <!-- timeline item -->
                   <div>
-                    <i class="fas fa-camera bg-purple"></i>
+                    <i class="fas fa-broadcast-tower bg-blue"></i>
 
                     <div class="timeline-item">
-                      <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
+                      <span class="time"><i class="far fa-clock"></i>Hace 1 mes</span>
 
-                      <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+                      <h3 class="timeline-header"><a href="#">{{ mantenimiento_estacion.estacion }}</a> Mantenimiento
+                      </h3>
 
                       <div class="timeline-body">
-                        <img src="https://placehold.it/150x100" alt="...">
-                        <img src="https://placehold.it/150x100" alt="...">
-                        <img src="https://placehold.it/150x100" alt="...">
-                        <img src="https://placehold.it/150x100" alt="...">
+                        {{ mantenimiento_estacion.observaciones }}
                       </div>
                     </div>
                   </div>
                   <!-- END timeline item -->
+                  {% endfor %}
+                  {% else %}
+                  <p>No hay mantenimientos</p>
+                  {% endif %}
+
                   <div>
                     <i class="far fa-clock bg-gray"></i>
                   </div>
+
+
                 </div>
               </div>
               <!-- /.tab-pane -->

@@ -220,3 +220,84 @@ class Estacion(models.Model):
         Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
         """
         return self.nombre
+
+
+class Mantenimiento(models.Model):
+    """
+    Una clase que define el modelo de los mantenimientos
+    """
+
+    # Campos
+    id = models.AutoField(primary_key=True)
+    estacion = models.ForeignKey(
+        'Estacion', on_delete=models.SET_NULL, null=True, blank=True)
+    fecha = models.DateTimeField(
+        max_length=2000, blank=True, null=True)
+    observaciones = models.TextField(max_length=4000, blank=True, null=True)
+
+    # Metadata
+
+    class Meta:
+        ordering = ["-fecha"]
+
+    # Métodos
+    def get_absolute_url(self):
+        """
+        Devuelve la url para acceder a una instancia particular de MyModelName.
+        """
+        return reverse('mantenimiento_detail', args=[str(self.id)])
+
+    # Nombre
+    def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
+        return '%s (%s)' % (self.estacion, self.fecha)
+
+# class Mantenimiento_Componentes(models.Model):
+#     """
+#     Una clase que define el modelo de los mantenimientos de los componentes
+#     """
+
+#     # Campos
+#     id = models.AutoField(primary_key=True)
+#     componente = models.ForeignKey(
+#         'Componente_Estacion', on_delete=models.SET_NULL, null=True, blank=True)
+#     operarios = models.CharField(max_length=4000, blank=True, null=True)
+
+
+#     estacion = models.ForeignKey(
+#         'Estacion', on_delete=models.SET_NULL, null=True, blank=True)
+#     descripcion = models.TextField(max_length=4000, blank=True, null=True)
+#     responsable = models.CharField(max_length=100, blank=True, null=True)
+#     protocolo_comunicacion = models.CharField(
+#         max_length=4000, blank=True, null=True)
+#     estado = models.ForeignKey(
+#         'Categoria_componente', on_delete=models.SET_NULL, null=True, blank=True)
+#     fecha_inicio_registro = models.DateTimeField(
+#         max_length=2000, blank=True, null=True)
+#     componentes = models.ManyToManyField(
+#         Componente_Estacion, help_text="Seleccione los componentes de la estación", null=True, blank=True)
+#     sensores = models.ManyToManyField(
+#         Sensor_Estacion, help_text="Seleccione los sensores de la estación", null=True, blank=True)
+
+#     foto = models.ImageField(
+#         upload_to=estaciones_directorio_ruta, null=True, blank=True)
+
+#     # Metadata
+
+#     class Meta:
+#         ordering = ["id"]
+
+#     # Métodos
+#     def get_absolute_url(self):
+#         """
+#         Devuelve la url para acceder a una instancia particular de MyModelName.
+#         """
+#         return reverse('estacion_detail', args=[str(self.id)])
+
+#     def __str__(self):
+#         """
+#         Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+#         """
+#         return self.nombre

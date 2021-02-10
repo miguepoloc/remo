@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
-from ..api.models import Estacion, Sensor_Estacion, Componente_Estacion
+from ..api.models import Estacion, Sensor_Estacion, Componente_Estacion, Mantenimiento
 
 
 # class index(generic.ListView):
@@ -19,5 +19,6 @@ def index(request):
     objeto1 = Estacion.objects.all()
     objeto2 = Sensor_Estacion.objects.all()
     objeto3 = Componente_Estacion.objects.all()
+    objeto4 = Mantenimiento.objects.all()
 
-    return render(request, "main/index.html", {'estaciones_list': objeto1, 'componentes_estacion_list': objeto2, 'sensores_estacion_list': objeto3})
+    return render(request, "main/index.html", {'estaciones_list': objeto1, 'componentes_estacion_list': objeto2, 'sensores_estacion_list': objeto3, 'mantenimiento_list': objeto4})
