@@ -36,6 +36,20 @@
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/ekko-lightbox/ekko-lightbox.css' %}">
     <!-- fullCalendar -->
     <link rel="stylesheet" href="{% static 'plugins/fullcalendar/main.css' %}">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css' %}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="{% static 'plugins/bs-stepper/css/bs-stepper.min.css' %}">
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="{% static 'plugins/dropzone/min/dropzone.min.css' %}">
+
     <!-- Arcgis -->
     <!-- <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css"> -->
     <!-- Leaflet -->
@@ -106,6 +120,14 @@
                                 <i class="fas fa-cloud-sun-rain"></i>
                                 <p>
                                     Sensores
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'salidas_de_campo_form' %}" class="nav-link">
+                                <i class="far fa-calendar-alt"></i>
+                                <p>
+                                    Salidas de campo
                                 </p>
                             </a>
                         </li>
@@ -200,6 +222,25 @@
     <script type="text/javascript" src="{% static 'plugins/ekko-lightbox/ekko-lightbox.min.js' %}"></script>
     <!-- Filterizr-->
     <script type="text/javascript" src="{% static 'plugins/filterizr/jquery.filterizr.min.js' %}"></script>
+    <!-- Select2 -->
+    <script type="text/javascript" src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script type="text/javascript"
+        src="{% static 'plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
+    <!-- InputMask -->
+    <script type="text/javascript" src="{% static 'plugins/moment/moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/inputmask/jquery.inputmask.min.js' %}"></script>
+    <!-- date-range-picker -->
+    <script type="text/javascript" src="{% static 'plugins/daterangepicker/daterangepicker.js' %}"></script>
+    <!-- bootstrap color picker -->
+    <script type="text/javascript"
+        src="{% static 'plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' %}"></script>
+    <!-- Bootstrap Switch -->
+    <script type="text/javascript" src="{% static 'plugins/bootstrap-switch/js/bootstrap-switch.min.js' %}"></script>
+    <!-- BS-Stepper -->
+    <script type="text/javascript" src="{% static 'plugins/bs-stepper/js/bs-stepper.min.js' %}"></script>
+    <!-- dropzonejs -->
+    <script type="text/javascript" src="{% static 'plugins/dropzone/min/dropzone.min.js' %}"></script>
     <!-- Arcgis-->
     <!-- <script src="https://js.arcgis.com/4.18/"></script> -->
     <!-- Leaflet-->
