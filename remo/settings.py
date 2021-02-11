@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.componentes',
     'apps.sensores',
     'apps.calendario',
+    'apps.salidas_de_campo',
 ]
 
 MIDDLEWARE = [

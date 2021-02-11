@@ -1,3 +1,4 @@
+from typing import no_type_check
 from django.urls import reverse
 from django.db import models
 from django.utils import timezone
@@ -222,17 +223,48 @@ class Estacion(models.Model):
         return self.nombre
 
 
-class Mantenimiento(models.Model):
+class Tipo_Salida_De_Campo(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipo = models.CharField(
+        max_length=200, help_text="Ingrese el tipo de salida de campo")
+    color = models.CharField(max_length=100)
+    simbolo = models.CharField(max_length=100)
+
+    def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
+        return self.tipo
+
+
+class Investigador(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(
+        max_length=200, help_text="Ingrese el nombre completo del investigador")
+    cargo = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
+        return self.nombre
+
+
+class Salidas_De_Campo(models.Model):
     """
-    Una clase que define el modelo de los mantenimientos
+    Una clase que define el modelo de las salidas de campo
     """
 
     # Campos
     id = models.AutoField(primary_key=True)
     estacion = models.ForeignKey(
         'Estacion', on_delete=models.SET_NULL, null=True, blank=True)
-    fecha = models.DateTimeField(
+    fecha = models.DateField(
         max_length=2000, blank=True, null=True)
+    tipo_de_salida = models.ForeignKey(
+        'Tipo_Salida_De_Campo', on_delete=models.SET_NULL, null=True, blank=True)
+    operarios = models.ManyToManyField(
+        Investigador, help_text="Seleccione los investigadores", null=True, blank=True)
     observaciones = models.TextField(max_length=4000, blank=True, null=True)
 
     # Metadata
@@ -245,7 +277,7 @@ class Mantenimiento(models.Model):
         """
         Devuelve la url para acceder a una instancia particular de MyModelName.
         """
-        return reverse('mantenimiento_detail', args=[str(self.id)])
+        return reverse('salidas_de_campo_detail', args=[str(self.id)])
 
     # Nombre
     def __str__(self):
@@ -253,51 +285,3 @@ class Mantenimiento(models.Model):
         Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
         """
         return '%s (%s)' % (self.estacion, self.fecha)
-
-# class Mantenimiento_Componentes(models.Model):
-#     """
-#     Una clase que define el modelo de los mantenimientos de los componentes
-#     """
-
-#     # Campos
-#     id = models.AutoField(primary_key=True)
-#     componente = models.ForeignKey(
-#         'Componente_Estacion', on_delete=models.SET_NULL, null=True, blank=True)
-#     operarios = models.CharField(max_length=4000, blank=True, null=True)
-
-
-#     estacion = models.ForeignKey(
-#         'Estacion', on_delete=models.SET_NULL, null=True, blank=True)
-#     descripcion = models.TextField(max_length=4000, blank=True, null=True)
-#     responsable = models.CharField(max_length=100, blank=True, null=True)
-#     protocolo_comunicacion = models.CharField(
-#         max_length=4000, blank=True, null=True)
-#     estado = models.ForeignKey(
-#         'Categoria_componente', on_delete=models.SET_NULL, null=True, blank=True)
-#     fecha_inicio_registro = models.DateTimeField(
-#         max_length=2000, blank=True, null=True)
-#     componentes = models.ManyToManyField(
-#         Componente_Estacion, help_text="Seleccione los componentes de la estación", null=True, blank=True)
-#     sensores = models.ManyToManyField(
-#         Sensor_Estacion, help_text="Seleccione los sensores de la estación", null=True, blank=True)
-
-#     foto = models.ImageField(
-#         upload_to=estaciones_directorio_ruta, null=True, blank=True)
-
-#     # Metadata
-
-#     class Meta:
-#         ordering = ["id"]
-
-#     # Métodos
-#     def get_absolute_url(self):
-#         """
-#         Devuelve la url para acceder a una instancia particular de MyModelName.
-#         """
-#         return reverse('estacion_detail', args=[str(self.id)])
-
-#     def __str__(self):
-#         """
-#         Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
-#         """
-#         return self.nombre
