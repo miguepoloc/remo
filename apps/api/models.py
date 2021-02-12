@@ -24,7 +24,7 @@ class Categoria_sensor(models.Model):
 
 
 class Sensor(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=500)
     unidad = models.CharField(max_length=300, blank=True, null=True)
     abreviatura = models.CharField(max_length=300, blank=True, null=True)

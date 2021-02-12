@@ -36,6 +36,6 @@ def Salidas_De_CampoForm(request):
     tipo_de_salida = Tipo_Salida_De_Campo.objects.all()
 
     return render(request, "salidas_de_campo/salidas_de_campo_form.html",
-                  {'estaciones_list': estacion, 'componentes_estacion_list': sensor_estacion,
-                   'sensores_estacion_list': componente_estacion, 'salidas_de_campo_form': salidas_de_campo,
+                  {'estaciones_list': estacion, 'componentes_estacion_list': componente_estacion,
+                   'sensores_estacion_list': sensor_estacion, 'salidas_de_campo_form': salidas_de_campo,
                    'investigador': investigador, 'tipo_de_salida': tipo_de_salida})

@@ -14,6 +14,11 @@ router.register(r'Sensor_Estacion',
 router.register(r'Componente_Estacion',
                 views.Componente_EstacionViewSet, "Componente_Estacion")
 router.register(r'Estacion', views.EstacionViewSet, "Estacion")
+router.register(r'Tipo_Salida_De_Campo',
+                views.Tipo_Salida_De_CampoViewSet, "Tipo_Salida_De_Campo")
+router.register(r'Investigador', views.InvestigadorViewSet, "Investigador")
+router.register(r'Salida_De_Campo',
+                views.Salidas_De_CampoViewSet, "Salida_De_Campo")
 
 
 urlpatterns = [
