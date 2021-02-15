@@ -30,7 +30,7 @@
       <!-- SELECT2 EXAMPLE -->
       <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title"><i class="fas fa-broadcast-tower"></i> Estación</h3>
+          <h3 class="card-title" id="nombre_estacion"><i class="fas fa-broadcast-tower"></i> Estación</h3>
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -46,11 +46,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Estación</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected" disabled="disabled">Selecciona una estación</option>
+                <select class="form-control select2" style="width: 100%;" required id="select_estacion">
+                  <option value="" selected="selected" disabled="disabled">Selecciona una estación</option>
                   {% if estaciones_list %}
                   {% for estacion in estaciones_list %}
-                  <option>{{ estacion.nombre }}</option>
+                  <option value="{{ estacion.id }}">{{ estacion.nombre }}</option>
                   {% endfor %}
                   {% endif %}
                 </select>
@@ -112,19 +112,19 @@
           <!-- Aquí debe agregarse para otro componente -->
           <div class="card card-primary ">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-tools"></i> Componente</h3>
+              <h3 class="card-title" id="nombre_componente"><i class="fas fa-tools"></i> Componente</h3>
             </div>
             <div class="card-body">
               <!-- Date dd/mm/yyyy -->
               <div class="form-group">
                 <label>Componente</label>
-                <select class="form-control select2" style="width: 100%;">
+                <select class="form-control select2" style="width: 100%;" id="select_componente">
                   <option selected="selected" disabled="disabled">Selecciona un componente</option>
-                  {% if componentes_estacion_list %}
+                  <!-- {% if componentes_estacion_list %}
                   {% for componente in componentes_estacion_list %}
                   <option>{{ componente }}</option>
                   {% endfor %}
-                  {% endif %}
+                  {% endif %} -->
                 </select>
                 <label>Tipo de salida</label>
                 <select class="form-control select2" style="width: 100%;">
@@ -142,11 +142,7 @@
                 <textarea class="form-control" rows="3" cols="200"
                   placeholder="Ingrese las actividades realizadas durante la salida de campo"></textarea>
               </div>
-              <div style="text-align: center;">
-                <button type="button" class="btn btn-dark swalOK">
-                  <i class="fas fa-plus-circle"></i> Agregar componente
-                </button>
-              </div>
+
             </div>
             <!-- /.card-body -->
           </div>
@@ -159,19 +155,19 @@
           <!-- Aquí debe agregarse para otro sensor -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-cloud-sun-rain"></i> Sensor</h3>
+              <h3 class="card-title" id="nombre_sensor"><i class="fas fa-cloud-sun-rain"></i> Sensor</h3>
             </div>
             <div class="card-body">
               <!-- Date dd/mm/yyyy -->
               <div class="form-group">
                 <label>Sensor</label>
-                <select class="form-control select2" style="width: 100%;">
+                <select class="form-control select2" style="width: 100%;" id="select_sensor">
                   <option selected="selected" disabled="disabled">Selecciona un sensor</option>
-                  {% if sensores_estacion_list %}
+                  <!-- {% if sensores_estacion_list %}
                   {% for sensor in sensores_estacion_list %}
                   <option>{{ sensor }}</option>
                   {% endfor %}
-                  {% endif %}
+                  {% endif %} -->
                 </select>
                 <label>Tipo de salida</label>
                 <select class="form-control select2" style="width: 100%;">
@@ -190,15 +186,34 @@
                   placeholder="Ingrese las actividades realizadas durante la salida de campo"></textarea>
               </div>
               <div id="Prueba"></div>
-              <div style="text-align: center;">
-                <button type="button" class="btn btn-dark swalOK" id="addSensor">
-                  <i class="fas fa-plus-circle"></i> Agregar sensor
-                </button>
-              </div>
+
             </div>
             <!-- /.card-body -->
           </div>
-          <!-- /.Fin del componente -->
+          <!-- /.Fin del sensor -->
+        </div>
+
+        <div class="col-md-6">
+          <div style="text-align: center;">
+            <button type="button" class="btn btn-dark swalOK">
+              <i class="fas fa-plus-circle"></i> Agregar componente
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div style="text-align: center;">
+            <button type="button" class="btn btn-dark swalOK" id="addSensor">
+              <i class="fas fa-plus-circle"></i> Agregar sensor
+            </button>
+          </div>
+        </div>
+        <br><br><br>
+        <div class="col-md-12">
+          <div class="card card-primary" style="text-align: center;">
+            <button type="button" class="btn btn-success swalOK">
+              <i class="fas fa-clipboard-check"></i> Agregar salida
+            </button>
+          </div>
         </div>
         <!-- /.col (right) -->
       </div>
@@ -326,62 +341,5 @@
     })
 
   })
-  // BS-Stepper Init
-  document.addEventListener('DOMContentLoaded', function () {
-    window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-  })
-
-  // DropzoneJS Demo Code Start
-  Dropzone.autoDiscover = false
-
-  // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-  var previewNode = document.querySelector("#template")
-  previewNode.id = ""
-  var previewTemplate = previewNode.parentNode.innerHTML
-  previewNode.parentNode.removeChild(previewNode)
-
-  var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-    url: "/target-url", // Set the url
-    thumbnailWidth: 80,
-    thumbnailHeight: 80,
-    parallelUploads: 20,
-    previewTemplate: previewTemplate,
-    autoQueue: false, // Make sure the files aren't queued until manually added
-    previewsContainer: "#previews", // Define the container to display the previews
-    clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-  })
-
-  myDropzone.on("addedfile", function (file) {
-    // Hookup the start button
-    file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
-  })
-
-  // Update the total progress bar
-  myDropzone.on("totaluploadprogress", function (progress) {
-    document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-  })
-
-  myDropzone.on("sending", function (file) {
-    // Show the total progress bar when upload starts
-    document.querySelector("#total-progress").style.opacity = "1"
-    // And disable the start button
-    file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-  })
-
-  // Hide the total progress bar when nothing's uploading anymore
-  myDropzone.on("queuecomplete", function (progress) {
-    document.querySelector("#total-progress").style.opacity = "0"
-  })
-
-  // Setup the buttons for all transfers
-  // The "add files" button doesn't need to be setup because the config
-  // `clickable` has already been specified.
-  document.querySelector("#actions .start").onclick = function () {
-    myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-  }
-  document.querySelector("#actions .cancel").onclick = function () {
-    myDropzone.removeAllFiles(true)
-  }
-  // DropzoneJS Demo Code End
 </script>
 {% endblock script %}
