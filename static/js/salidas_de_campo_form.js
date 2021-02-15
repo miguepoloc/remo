@@ -1,3 +1,18 @@
+// --------------- PARA EL MÉTODO POST -----------
+// Token necesario para que funcione el método POST
+var csrftoken = Cookies.get('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
 var lista_componentes_estacion = "";
 
 $.get('/api/Componente_Estacion/', function (result) {
@@ -75,15 +90,47 @@ $('#select_estacion').on('select2:select', function (e) {
 
 $('#select_componente').on('select2:select', function (e) {
     var data = e.params.data;
-    componente_selecto = data.id;
     document.getElementById('nombre_componente').innerHTML = '<i class="fas fa-tools"></i> ' + data.text;
 });
 
 $('#select_sensor').on('select2:select', function (e) {
     var data = e.params.data;
-    componente_selecto = data.id;
     document.getElementById('nombre_sensor').innerHTML = '<i class="fas fa-cloud-sun-rain"></i> ' + data.text;
 });
+
+var tipo_estacion_selecto;
+$('#select_estacion_tipo').on('select2:select', function (e) {
+    var data = e.params.data;
+    tipo_estacion_selecto = data.id;
+    // document.getElementById('nombre_sensor').innerHTML = '<i class="fas fa-cloud-sun-rain"></i> ' + data.text;
+});
+
+
+$("#agregar").click(function () {
+    console.log("Agregando");
+
+    var fecha = document.getElementById('fecha_salida').value;
+    fecha = convertir_fecha(fecha);
+    $.ajax({
+        type: "POST",
+        url: "/api/Salida_De_Campo/",
+        data: {
+            "fecha": fecha,
+            // "observaciones": ,
+            "estacion": estacion_selecta,
+            "tipo_de_salida": tipo_estacion_selecto,
+            // "operarios": ,
+        }
+    });
+});
+
+function convertir_fecha(fecha) {
+    anio = fecha.slice(6, 10);
+    mes = fecha.slice(3, 5);
+    dia = fecha.slice(0, 2);
+    return (nueva_fecha = anio + "-" + mes + "-" + dia);
+}
+
 
 
 // var d1 = document.getElementById('Prueba');

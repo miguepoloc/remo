@@ -55,11 +55,11 @@
                   {% endif %}
                 </select>
                 <label>Tipo de salida</label>
-                <select class="form-control select2" style="width: 100%;">
+                <select class="form-control select2" style="width: 100%;" required id="select_estacion_tipo">
                   <option selected="selected" disabled="disabled">Selecciona el tipo de salida</option>
                   {% if tipo_de_salida %}
                   {% for salida_tipo in tipo_de_salida %}
-                  <option>{{ salida_tipo.tipo }}</option>
+                  <option value="{{ salida_tipo.id }}">{{ salida_tipo.tipo }}</option>
                   {% endfor %}
                   {% endif %}
                 </select>
@@ -85,7 +85,8 @@
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                   </div>
                   <input type="text" class="form-control" data-inputmask-alias="datetime"
-                    data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+                    data-inputmask-inputformat="dd/mm/yyyy" data-mask id="fecha_salida">
+                </div>
                 </div>
               </div>
               <!-- /.form-group -->
@@ -210,7 +211,7 @@
         <br><br><br>
         <div class="col-md-12">
           <div class="card card-primary" style="text-align: center;">
-            <button type="button" class="btn btn-success swalOK">
+            <button type="button" class="btn btn-success swalOK" type="submit" id="agregar">
               <i class="fas fa-clipboard-check"></i> Agregar salida
             </button>
           </div>
