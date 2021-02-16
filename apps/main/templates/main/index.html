@@ -64,7 +64,7 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                           <div class="inner">
-                            <h3>{{ componentes_estacion_list|length }}</h3>
+                            <h3>{{ sensores_estacion_list|length }}</h3>
 
                             <p>Sensores</p>
                           </div>
@@ -80,7 +80,7 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                           <div class="inner">
-                            <h3>{{ sensores_estacion_list|length }}</h3>
+                            <h3>{{ componentes_estacion_list|length }}</h3>
 
                             <p>Componentes</p>
                           </div>
@@ -264,7 +264,7 @@
                   <!-- /.timeline-label -->
                   <!-- timeline item -->
                   <div>
-                    <i class="{{ salida_de_campo.tipo_de_salida.simbolo }} bg-blue"></i>
+                    <i class="{{ salida_de_campo.tipo_de_salida.simbolo }} bg-{{ salida_de_campo.tipo_de_salida.color2 }}"></i>
 
                     <div class="timeline-item">
 

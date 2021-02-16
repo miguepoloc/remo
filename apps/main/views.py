@@ -16,9 +16,9 @@ from ..api.models import Estacion, Sensor_Estacion, Componente_Estacion, Salidas
 
 def index(request):
 
-    objeto1 = Estacion.objects.all()
-    objeto2 = Sensor_Estacion.objects.all()
-    objeto3 = Componente_Estacion.objects.all()
-    objeto4 = Salidas_De_Campo.objects.all()
+    estacion = Estacion.objects.all()
+    sensor = Sensor_Estacion.objects.all()
+    componente = Componente_Estacion.objects.all()
+    salida = Salidas_De_Campo.objects.all()
 
-    return render(request, "main/index.html", {'estaciones_list': objeto1, 'componentes_estacion_list': objeto2, 'sensores_estacion_list': objeto3, 'salida_de_campo_list': objeto4})
+    return render(request, "main/index.html", {'estaciones_list': estacion, 'componentes_estacion_list': componente, 'sensores_estacion_list': sensor, 'salida_de_campo_list': salida})
