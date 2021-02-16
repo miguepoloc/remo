@@ -265,7 +265,7 @@ class Salidas_De_Campo(models.Model):
         'Tipo_Salida_De_Campo', on_delete=models.SET_NULL, null=True, blank=True)
     operarios = models.ManyToManyField(
         Investigador, help_text="Seleccione los investigadores", null=True, blank=True)
-    observaciones = models.TextField(max_length=4000, blank=True, null=True)
+    observaciones = models.TextField(max_length=100000, blank=True, null=True)
 
     # Metadata
 
@@ -285,3 +285,77 @@ class Salidas_De_Campo(models.Model):
         Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
         """
         return '%s (%s)' % (self.estacion, self.fecha)
+
+
+class Sensor_Salidas_De_Campo(models.Model):
+    """
+    Una clase que define el modelo de las salidas de campo de los sensores
+    """
+
+    # Campos
+    id = models.AutoField(primary_key=True)
+    sensor = models.ForeignKey(
+        'Sensor_Estacion', on_delete=models.SET_NULL, null=True, blank=True)
+    fecha = models.DateField(
+        max_length=2000, blank=True, null=True)
+    tipo_de_salida = models.ForeignKey(
+        'Tipo_Salida_De_Campo', on_delete=models.SET_NULL, null=True, blank=True)
+    operarios = models.ManyToManyField(
+        Investigador, help_text="Seleccione los investigadores", null=True, blank=True)
+    observaciones = models.TextField(max_length=100000, blank=True, null=True)
+
+    # Metadata
+
+    class Meta:
+        ordering = ["-fecha"]
+
+    # Métodos
+    def get_absolute_url(self):
+        """
+        Devuelve la url para acceder a una instancia particular de MyModelName.
+        """
+        return reverse('sensor_salidas_de_campo_detail', args=[str(self.id)])
+
+    # Nombre
+    def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
+        return '%s (%s)' % (self.sensor, self.fecha)
+
+
+class Componente_Salidas_De_Campo(models.Model):
+    """
+    Una clase que define el modelo de las salidas de campo de los sensores
+    """
+
+    # Campos
+    id = models.AutoField(primary_key=True)
+    componente = models.ForeignKey(
+        'Componente_Estacion', on_delete=models.SET_NULL, null=True, blank=True)
+    fecha = models.DateField(
+        max_length=2000, blank=True, null=True)
+    tipo_de_salida = models.ForeignKey(
+        'Tipo_Salida_De_Campo', on_delete=models.SET_NULL, null=True, blank=True)
+    operarios = models.ManyToManyField(
+        Investigador, help_text="Seleccione los investigadores", null=True, blank=True)
+    observaciones = models.TextField(max_length=100000, blank=True, null=True)
+
+    # Metadata
+
+    class Meta:
+        ordering = ["-fecha"]
+
+    # Métodos
+    def get_absolute_url(self):
+        """
+        Devuelve la url para acceder a una instancia particular de MyModelName.
+        """
+        return reverse('componente_salidas_de_campo_detail', args=[str(self.id)])
+
+    # Nombre
+    def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
+        return '%s (%s)' % (self.componente, self.fecha)

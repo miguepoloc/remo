@@ -71,158 +71,156 @@
               <div class="form-group">
                 <label>Operarios</label>
                 <select class="select2" multiple="multiple" data-placeholder="Selecciona los operarios"
-                  style="width: 100%;">
+                  style="width: 100%;" id="select_operario">
                   {% if investigador %}
                   {% for operario in investigador %}
-                  <option>{{ operario.nombre }}</option>
+                  <option value="{{ operario.id }}">{{ operario.nombre }}</option>
                   {% endfor %}
                   {% endif %}
                 </select>
                 <label>Fecha:</label>
 
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <input class="form-control" type="date" value="" id="fecha_salida">
                   </div>
-                  <input type="text" class="form-control" data-inputmask-alias="datetime"
-                    data-inputmask-inputformat="dd/mm/yyyy" data-mask id="fecha_salida">
-                </div>
                 </div>
               </div>
-              <!-- /.form-group -->
-
             </div>
-            <!-- /.col -->
+            <!-- /.form-group -->
+
+          </div>
+          <!-- /.col -->
+          <div class="form-group">
+            <label>Observaciones</label>
+            <textarea class="form-control" rows="3" cols="200"
+              placeholder="Ingrese las actividades realizadas durante la salida de campo"></textarea>
+          </div>
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+
+    <div class="row" id="componente_sensor">
+      <div class="col-md-6">
+
+
+        <!-- Aquí debe agregarse para otro componente -->
+        <div class="card card-primary ">
+          <div class="card-header">
+            <h3 class="card-title" id="nombre_componente"><i class="fas fa-tools"></i> Componente</h3>
+          </div>
+          <div class="card-body">
+            <!-- Date dd/mm/yyyy -->
+            <div class="form-group">
+              <label>Componente</label>
+              <select class="form-control select2" style="width: 100%;" id="select_componente">
+                <option selected="selected" disabled="disabled">Selecciona un componente</option>
+                <!-- {% if componentes_estacion_list %}
+                  {% for componente in componentes_estacion_list %}
+                  <option>{{ componente }}</option>
+                  {% endfor %}
+                  {% endif %} -->
+              </select>
+              <label>Tipo de salida</label>
+              <select class="form-control select2" style="width: 100%;">
+                <option selected="selected" disabled="disabled">Selecciona el tipo de salida</option>
+                {% if tipo_de_salida %}
+                {% for salida_tipo in tipo_de_salida %}
+                <option>{{ salida_tipo.tipo }}</option>
+                {% endfor %}
+                {% endif %}
+              </select>
+            </div>
+            <!-- /.form group -->
             <div class="form-group">
               <label>Observaciones</label>
               <textarea class="form-control" rows="3" cols="200"
                 placeholder="Ingrese las actividades realizadas durante la salida de campo"></textarea>
             </div>
+
           </div>
-          <!-- /.row -->
+          <!-- /.card-body -->
         </div>
-        <!-- /.card-body -->
+        <!-- /.Fin del componente -->
       </div>
-      <!-- /.card -->
 
 
-      <div class="row" id="componente_sensor">
-        <div class="col-md-6">
-
-
-          <!-- Aquí debe agregarse para otro componente -->
-          <div class="card card-primary ">
-            <div class="card-header">
-              <h3 class="card-title" id="nombre_componente"><i class="fas fa-tools"></i> Componente</h3>
-            </div>
-            <div class="card-body">
-              <!-- Date dd/mm/yyyy -->
-              <div class="form-group">
-                <label>Componente</label>
-                <select class="form-control select2" style="width: 100%;" id="select_componente">
-                  <option selected="selected" disabled="disabled">Selecciona un componente</option>
-                  <!-- {% if componentes_estacion_list %}
-                  {% for componente in componentes_estacion_list %}
-                  <option>{{ componente }}</option>
-                  {% endfor %}
-                  {% endif %} -->
-                </select>
-                <label>Tipo de salida</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected" disabled="disabled">Selecciona el tipo de salida</option>
-                  {% if tipo_de_salida %}
-                  {% for salida_tipo in tipo_de_salida %}
-                  <option>{{ salida_tipo.tipo }}</option>
-                  {% endfor %}
-                  {% endif %}
-                </select>
-              </div>
-              <!-- /.form group -->
-              <div class="form-group">
-                <label>Observaciones</label>
-                <textarea class="form-control" rows="3" cols="200"
-                  placeholder="Ingrese las actividades realizadas durante la salida de campo"></textarea>
-              </div>
-
-            </div>
-            <!-- /.card-body -->
+      <!-- /.col (left) -->
+      <div class="col-md-6">
+        <!-- Aquí debe agregarse para otro sensor -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title" id="nombre_sensor"><i class="fas fa-cloud-sun-rain"></i> Sensor</h3>
           </div>
-          <!-- /.Fin del componente -->
-        </div>
-
-
-        <!-- /.col (left) -->
-        <div class="col-md-6">
-          <!-- Aquí debe agregarse para otro sensor -->
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title" id="nombre_sensor"><i class="fas fa-cloud-sun-rain"></i> Sensor</h3>
-            </div>
-            <div class="card-body">
-              <!-- Date dd/mm/yyyy -->
-              <div class="form-group">
-                <label>Sensor</label>
-                <select class="form-control select2" style="width: 100%;" id="select_sensor">
-                  <option selected="selected" disabled="disabled">Selecciona un sensor</option>
-                  <!-- {% if sensores_estacion_list %}
+          <div class="card-body">
+            <!-- Date dd/mm/yyyy -->
+            <div class="form-group">
+              <label>Sensor</label>
+              <select class="form-control select2" style="width: 100%;" id="select_sensor">
+                <option selected="selected" disabled="disabled">Selecciona un sensor</option>
+                <!-- {% if sensores_estacion_list %}
                   {% for sensor in sensores_estacion_list %}
                   <option>{{ sensor }}</option>
                   {% endfor %}
                   {% endif %} -->
-                </select>
-                <label>Tipo de salida</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected" disabled="disabled">Selecciona el tipo de salida</option>
-                  {% if tipo_de_salida %}
-                  {% for salida_tipo in tipo_de_salida %}
-                  <option>{{ salida_tipo.tipo }}</option>
-                  {% endfor %}
-                  {% endif %}
-                </select>
-              </div>
-              <!-- /.form group -->
-              <div class="form-group">
-                <label>Observaciones</label>
-                <textarea class="form-control" rows="3" cols="200"
-                  placeholder="Ingrese las actividades realizadas durante la salida de campo"></textarea>
-              </div>
-              <div id="Prueba"></div>
-
+              </select>
+              <label>Tipo de salida</label>
+              <select class="form-control select2" style="width: 100%;">
+                <option selected="selected" disabled="disabled">Selecciona el tipo de salida</option>
+                {% if tipo_de_salida %}
+                {% for salida_tipo in tipo_de_salida %}
+                <option>{{ salida_tipo.tipo }}</option>
+                {% endfor %}
+                {% endif %}
+              </select>
             </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.Fin del sensor -->
-        </div>
+            <!-- /.form group -->
+            <div class="form-group">
+              <label>Observaciones</label>
+              <textarea class="form-control" rows="3" cols="200"
+                placeholder="Ingrese las actividades realizadas durante la salida de campo"></textarea>
+            </div>
+            <div id="Prueba"></div>
 
-        <div class="col-md-6">
-          <div style="text-align: center;">
-            <button type="button" class="btn btn-dark swalOK">
-              <i class="fas fa-plus-circle"></i> Agregar componente
-            </button>
           </div>
+          <!-- /.card-body -->
         </div>
-        <div class="col-md-6">
-          <div style="text-align: center;">
-            <button type="button" class="btn btn-dark swalOK" id="addSensor">
-              <i class="fas fa-plus-circle"></i> Agregar sensor
-            </button>
-          </div>
-        </div>
-        <br><br><br>
-        <div class="col-md-12">
-          <div class="card card-primary" style="text-align: center;">
-            <button type="button" class="btn btn-success swalOK" type="submit" id="agregar">
-              <i class="fas fa-clipboard-check"></i> Agregar salida
-            </button>
-          </div>
-        </div>
-        <!-- /.col (right) -->
+        <!-- /.Fin del sensor -->
       </div>
-      <!-- /.row -->
+
+      <div class="col-md-6">
+        <div style="text-align: center;">
+          <button type="button" class="btn btn-dark swalOK">
+            <i class="fas fa-plus-circle"></i> Agregar componente
+          </button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="text-align: center;">
+          <button type="button" class="btn btn-dark swalOK" id="addSensor">
+            <i class="fas fa-plus-circle"></i> Agregar sensor
+          </button>
+        </div>
+      </div>
+      <br><br><br>
+      <div class="col-md-12">
+        <div class="card card-primary" style="text-align: center;">
+          <button type="button" class="btn btn-success swalOK" type="submit" id="agregar">
+            <i class="fas fa-clipboard-check"></i> Agregar salida
+          </button>
+        </div>
+      </div>
+      <!-- /.col (right) -->
     </div>
-    <!-- /.container-fluid -->
-  </section>
-  <!-- /.content -->
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 {% endblock content %}

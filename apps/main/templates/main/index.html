@@ -96,7 +96,7 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                           <div class="inner">
-                            <h3>65</h3>
+                            <h3>{{ salida_de_campo_list|length }}</h3>
 
                             <p>Salidas a campo</p>
                           </div>
@@ -268,7 +268,8 @@
 
                     <div class="timeline-item">
 
-                      <h3 class="timeline-header"><a href="{{ salida_de_campo.estacion.get_absolute_url }}"> {{ salida_de_campo.estacion }}</a> {{ salida_de_campo.tipo_de_salida.tipo }}
+                      <h3 class="timeline-header"><a href="{{ salida_de_campo.estacion.get_absolute_url }}">
+                          {{ salida_de_campo.estacion }}</a> {{ salida_de_campo.tipo_de_salida.tipo }}
                       </h3>
 
                       <div class="timeline-body">

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import (Categoria_componente, Categoria_sensor, Componente,
-                     Estacion, Componente_Estacion, Sensor, Sensor_Estacion, 
-                     Tipo_Salida_De_Campo, Investigador, Salidas_De_Campo)
+                     Estacion, Componente_Estacion, Sensor, Sensor_Estacion,
+                     Tipo_Salida_De_Campo, Investigador, Salidas_De_Campo, Sensor_Salidas_De_Campo, Componente_Salidas_De_Campo)
 
 
 class Categoria_componenteSerializer(serializers.ModelSerializer):
@@ -61,4 +61,16 @@ class InvestigadorSerializer(serializers.ModelSerializer):
 class Salidas_De_CampoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Salidas_De_Campo
+        fields = '__all__'
+
+
+class Sensor_Salidas_De_CampoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sensor_Salidas_De_Campo
+        fields = '__all__'
+
+
+class Componente_Salidas_De_CampoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Componente_Salidas_De_Campo
         fields = '__all__'

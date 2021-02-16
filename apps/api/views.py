@@ -2,10 +2,12 @@ from django.shortcuts import render
 from rest_framework import views, viewsets, mixins
 from rest_framework.response import Response
 from .serializers import (Categoria_componenteSerializer, Categoria_sensorSerializer, ComponenteSerializer,
-                          EstacionSerializer, Componente_EstacionSerializer, SensorSerializer, Sensor_EstacionSerializer, 
-                          Tipo_Salida_De_CampoSerializer, InvestigadorSerializer, Salidas_De_CampoSerializer)
+                          EstacionSerializer, Componente_EstacionSerializer, SensorSerializer, Sensor_EstacionSerializer,
+                          Tipo_Salida_De_CampoSerializer, InvestigadorSerializer, Salidas_De_CampoSerializer, 
+                          Sensor_Salidas_De_CampoSerializer, Componente_Salidas_De_CampoSerializer)
 from .models import (Categoria_componente, Categoria_sensor, Componente,
-                     Estacion, Componente_Estacion, Sensor, Sensor_Estacion, Tipo_Salida_De_Campo, Investigador, Salidas_De_Campo)
+                     Estacion, Componente_Estacion, Sensor, Sensor_Estacion, Tipo_Salida_De_Campo, Investigador, 
+                     Salidas_De_Campo, Sensor_Salidas_De_Campo, Componente_Salidas_De_Campo)
 
 
 class Categoria_componenteViewSet(viewsets.ModelViewSet):
@@ -49,6 +51,7 @@ class EstacionViewSet(viewsets.ModelViewSet):
     queryset = Estacion.objects.all().order_by('id')
     serializer_class = EstacionSerializer
 
+
 class Tipo_Salida_De_CampoViewSet(viewsets.ModelViewSet):
 
     queryset = Tipo_Salida_De_Campo.objects.all().order_by('id')
@@ -65,3 +68,14 @@ class Salidas_De_CampoViewSet(viewsets.ModelViewSet):
 
     queryset = Salidas_De_Campo.objects.all().order_by('id')
     serializer_class = Salidas_De_CampoSerializer
+
+
+class Sensor_Salidas_De_CampoViewSet(viewsets.ModelViewSet):
+
+    queryset = Sensor_Salidas_De_Campo.objects.all().order_by('id')
+    serializer_class = Sensor_Salidas_De_CampoSerializer
+
+class Componente_Salidas_De_CampoViewSet(viewsets.ModelViewSet):
+
+    queryset = Componente_Salidas_De_Campo.objects.all().order_by('id')
+    serializer_class = Componente_Salidas_De_CampoSerializer

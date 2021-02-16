@@ -106,11 +106,28 @@ $('#select_estacion_tipo').on('select2:select', function (e) {
 });
 
 
+var operarios = [];
+$('#select_operario').on('select2:select', function (e) {
+    var data = e.params.data;
+    operarios.push(parseInt(data.id));
+    console.log(data);
+});
+
+$('#select_operario').on('select2:unselect', function (e) {
+    var data = e.params.data.id;
+    pos = operarios.indexOf(data);
+    let elementoEliminado = operarios.splice(pos, 1)
+});
+
 $("#agregar").click(function () {
     console.log("Agregando");
 
     var fecha = document.getElementById('fecha_salida').value;
+    console.log(fecha);
+
     fecha = convertir_fecha(fecha);
+    console.log(operarios);
+
     $.ajax({
         type: "POST",
         url: "/api/Salida_De_Campo/",
@@ -125,9 +142,9 @@ $("#agregar").click(function () {
 });
 
 function convertir_fecha(fecha) {
-    anio = fecha.slice(6, 10);
-    mes = fecha.slice(3, 5);
-    dia = fecha.slice(0, 2);
+    anio = fecha.slice(0, 4);
+    mes = fecha.slice(5, 7);
+    dia = fecha.slice(8, 10);
     return (nueva_fecha = anio + "-" + mes + "-" + dia);
 }
 
