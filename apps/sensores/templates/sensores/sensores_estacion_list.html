@@ -43,7 +43,8 @@
                 <div class="col-12">
                   <p class="text-muted text-sm"><b>Unidad: </b>{{ sensor_estacion.sensor.unidad }}</p>
                   <p class="text-muted text-sm"><b>Ubicación:
-                    </b>{{ sensor_estacion.ubicacion }}</p>
+                    </b><a href="{{ sensor_estacion.ubicacion.get_absolute_url }}">{{ sensor_estacion.ubicacion }}</a>
+                  </p>
                   <p class="text-muted text-sm"><b>id:
                     </b>{{ sensor_estacion.id }}</p>
                   <button type="button" class="btn btn-{{ sensor_estacion.estado.color }}" data-container="body"

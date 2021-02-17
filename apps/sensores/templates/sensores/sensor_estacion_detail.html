@@ -52,11 +52,19 @@
                   </tr>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">Componente asociado</th>
-                    <td>{{ sensor_estacion.componente.componente }}</td>
+                    <td>
+                      <a href="{{ sensor_estacion.componente.get_absolute_url }}">
+                        {{ sensor_estacion.componente.componente }}
+                      </a>
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">Ubicación</th>
-                    <td>{{ sensor_estacion.ubicacion }}</td>
+                    <td>
+                      <a href="{{ sensor_estacion.ubicacion.get_absolute_url }}">
+                        {{ sensor_estacion.ubicacion }}
+                      </a>
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row">Observaciones</th>

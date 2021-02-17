@@ -43,7 +43,11 @@
                 <div class="col-7">
                   <p class="text-muted text-sm"><b>Referencia: </b>{{ componente_estacion.componente.referencia }}</p>
                   <p class="text-muted text-sm"><b>Ubicación:
-                    </b>{{ componente_estacion.ubicacion }}</p>
+                    </b>
+                    <a href="{{ componente_estacion.ubicacion.get_absolute_url }}">
+                      {{ componente_estacion.ubicacion }}
+                    </a>
+                  </p>
                   <p class="text-muted text-sm"><b>id:
                     </b>{{ componente_estacion.id }}</p>
                   <button type="button" class="btn btn-{{ componente_estacion.estado.color }}" data-container="body"

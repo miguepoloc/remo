@@ -75,7 +75,9 @@
                     <th scope="row" style="vertical-align:middle;">Sensores</th>
                     <td>
                       {% for sensores in componente_estacion.sensores.all %}
-                      {{ sensores.sensor }}
+                      <a href="{{ sensores.get_absolute_url }}">
+                        {{ sensores.sensor }}
+                      </a>
                       {% if not forloop.last %}<br>
                       {% endif %}
                       {% endfor %}
@@ -171,7 +173,11 @@
                       </tr>
                       <tr>
                         <th scope="row">Ubicación</th>
-                        <td>{{ componente_estacion.ubicacion }}
+                        <td>
+                          <a href="{{ componente_estacion.ubicacion.get_absolute_url }}">
+                            {{ componente_estacion.ubicacion }}
+                          </a>
+                        </td>
                       </tr>
                       <tr>
                         <th scope="row">Responsable del equipo</th>
