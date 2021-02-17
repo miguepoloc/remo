@@ -229,6 +229,7 @@ class Tipo_Salida_De_Campo(models.Model):
         max_length=200, help_text="Ingrese el tipo de salida de campo")
     color = models.CharField(max_length=100)
     color2 = models.CharField(max_length=100, blank=True, null=True)
+    requerimientos = models.CharField(max_length=100, blank=True, null=True)
     simbolo = models.CharField(max_length=100)
 
     def __str__(self):

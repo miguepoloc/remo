@@ -73,11 +73,13 @@
                 <tbody>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">Sensores</th>
-                    <td>{% for sensores in componente_estacion.sensores.all %}
+                    <td>
+                      {% for sensores in componente_estacion.sensores.all %}
                       {{ sensores.sensor }}
                       {% if not forloop.last %}<br>
                       {% endif %}
-                      {% endfor %}</td>
+                      {% endfor %}
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">Frecuencia de muestreo</th>

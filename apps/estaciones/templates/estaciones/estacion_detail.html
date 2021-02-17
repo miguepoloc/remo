@@ -107,7 +107,14 @@
 
               <strong><i class="far fa-file-alt mr-1"></i> Observaciones</strong>
 
-              <p class="text-muted">{{ estacion.observaciones }}
+              <p class="text-muted">
+                {% if salida_de_campo_list %}
+                {% for salida_de_campo in salida_de_campo_list %}
+                {% if forloop.first %}
+                {{ salida_de_campo.observaciones }}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
               </p>
 
               <hr>
@@ -369,11 +376,12 @@
                   <div class="timeline timeline-inverse">
                     {% if salida_de_campo_list %}
                     {% for salida_de_campo in salida_de_campo_list %}
-                    {% if salida_de_campo.estacion.id == estacion.id %}
                     <!-- timeline time label -->
                     <div class="time-label">
                       <span class="bg-{{ salida_de_campo.tipo_de_salida.color }}">
-                        {{ salida_de_campo.fecha }}
+                        <a href="{{ salida_de_campo.get_absolute_url }}">
+                          {{ salida_de_campo.fecha }}
+                        </a>
                       </span>
                     </div>
                     <!-- /.timeline-label -->
@@ -394,7 +402,6 @@
                       </div>
                     </div>
                     <!-- END timeline item -->
-                    {% endif %}
                     {% endfor %}
                     {% else %}
                     <p>No hay salidas de campo</p>
