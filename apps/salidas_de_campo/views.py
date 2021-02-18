@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
-from ..api.models import Estacion, Sensor_Estacion, Componente_Estacion, Salidas_De_Campo, Investigador, Tipo_Salida_De_Campo
+from ..api.models import Estacion, Sensor_Estacion, Componente_Estacion, Salidas_De_Campo, Investigador, Tipo_Salida_De_Campo, Componente_Salidas_De_Campo
 
 
 class Salidas_De_CampoListView(generic.ListView):

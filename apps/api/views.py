@@ -66,7 +66,7 @@ class InvestigadorViewSet(viewsets.ModelViewSet):
 
 class Salidas_De_CampoViewSet(viewsets.ModelViewSet):
 
-    queryset = Salidas_De_Campo.objects.all().order_by('id')
+    queryset = Salidas_De_Campo.objects.all().order_by('-fecha')
     serializer_class = Salidas_De_CampoSerializer
 
 

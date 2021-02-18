@@ -109,8 +109,9 @@ $('#select_estacion_tipo').on('select2:select', function (e) {
 var operarios = [];
 $('#select_operario').on('select2:select', function (e) {
     var data = e.params.data;
-    operarios.push(parseInt(data.id));
+    operarios.push(data.id);
     console.log(data);
+    console.log(operarios);
 });
 
 $('#select_operario').on('select2:unselect', function (e) {
@@ -133,10 +134,10 @@ $("#agregar").click(function () {
         url: "/api/Salida_De_Campo/",
         data: {
             "fecha": fecha,
-            // "observaciones": ,
+            "observaciones": fecha,
             "estacion": estacion_selecta,
             "tipo_de_salida": tipo_estacion_selecto,
-            // "operarios": ,
+            "operarios": operarios,
         }
     });
 });
