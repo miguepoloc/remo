@@ -95,7 +95,8 @@
           <div class="form-group">
             <label>Observaciones</label>
             <textarea class="form-control" rows="3" cols="200"
-              placeholder="Ingrese las actividades realizadas durante la salida de campo"></textarea>
+              placeholder="Ingrese las actividades realizadas durante la salida de campo"
+              id="observaciones_estacion"></textarea>
           </div>
         </div>
         <!-- /.row -->
@@ -127,11 +128,11 @@
                   {% endif %} -->
               </select>
               <label>Tipo de salida</label>
-              <select class="form-control select2" style="width: 100%;">
+              <select class="form-control select2" style="width: 100%;" required id="select_componente_tipo">
                 <option selected="selected" disabled="disabled">Selecciona el tipo de salida</option>
                 {% if tipo_de_salida %}
                 {% for salida_tipo in tipo_de_salida %}
-                <option>{{ salida_tipo.tipo }}</option>
+                <option value="{{ salida_tipo.id }}">{{ salida_tipo.tipo }}</option>
                 {% endfor %}
                 {% endif %}
               </select>
@@ -140,7 +141,8 @@
             <div class="form-group">
               <label>Observaciones</label>
               <textarea class="form-control" rows="3" cols="200"
-                placeholder="Ingrese las actividades realizadas durante la salida de campo"></textarea>
+                placeholder="Ingrese las actividades realizadas durante la salida de campo"
+                id="observaciones_componente"></textarea>
             </div>
 
           </div>
@@ -170,11 +172,11 @@
                   {% endif %} -->
               </select>
               <label>Tipo de salida</label>
-              <select class="form-control select2" style="width: 100%;">
+              <select class="form-control select2" style="width: 100%;" required id="select_sensor_tipo">
                 <option selected="selected" disabled="disabled">Selecciona el tipo de salida</option>
                 {% if tipo_de_salida %}
                 {% for salida_tipo in tipo_de_salida %}
-                <option>{{ salida_tipo.tipo }}</option>
+                <option value="{{ salida_tipo.id }}">{{ salida_tipo.tipo }}</option>
                 {% endfor %}
                 {% endif %}
               </select>
@@ -183,7 +185,8 @@
             <div class="form-group">
               <label>Observaciones</label>
               <textarea class="form-control" rows="3" cols="200"
-                placeholder="Ingrese las actividades realizadas durante la salida de campo"></textarea>
+                placeholder="Ingrese las actividades realizadas durante la salida de campo"
+                id="observaciones_sensor"></textarea>
             </div>
             <div id="Prueba"></div>
 
