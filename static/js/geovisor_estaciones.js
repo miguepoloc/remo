@@ -17,9 +17,9 @@ $(document).ready(function () {
         iconUrl: '/static/img/boya.png',
         // shadowUrl: 'leaf-shadow.png',
 
-        iconSize: [14, 28], // size of the icon
+        iconSize: [11.9, 23.8], // size of the icon
         // shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [0, 0], // point of the icon which will correspond to marker's location
+        iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
         // shadowAnchor: [4, 62],  // the same for the shadow
         popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
     });
@@ -36,7 +36,6 @@ $(document).ready(function () {
             if (latitud == null) {
                 console.log("NADA");
             } else {
-                console.log("oye si");
                 marker = L.marker([latitud, longitud], { icon: boyaIcon }).addTo(map);
                 marker.bindPopup("<b>" + nombre + "</b><br>Soy una estación");
             }
