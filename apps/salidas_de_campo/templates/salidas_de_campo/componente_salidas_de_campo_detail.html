@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>{{ salidas_de_campo.estacion }} ({{ salidas_de_campo.fecha }}) | LABIMA</title>
+{% endblock title %}
+
+{% block content %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>{{ salidas_de_campo.estacion }} ({{ salidas_de_campo.fecha }})</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'salidas_de_campo' %}">Salidas de campo</a></li>
+            <li class="breadcrumb-item active">{{ salidas_de_campo.estacion }} ({{ salidas_de_campo.fecha }})</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Default box -->
+    <div class="card card-solid">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <div class="list-group">
+              <table class="table table-striped" style="text-align:center;">
+                <thead>
+                  <tr>
+                    <th scope="col">Característica</th>
+                    <th scope="col">Especificación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" style="vertical-align:middle;">id</th>
+                    <td>{{ salidas_de_campo.id }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="vertical-align:middle;">Estación</th>
+                    <td>{{ salidas_de_campo.estacion }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="vertical-align:middle;">Fecha</th>
+                    <td>{{ salidas_de_campo.fecha }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="vertical-align:middle;">Tipo de salida</th>
+                    <td>{{ salidas_de_campo.tipo_de_salida }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="vertical-align:middle;">Operarios</th>
+                    <td>
+                      {% for operarios in salidas_de_campo.operarios.all %}
+                      {{ operarios.nombre }}
+                      {% if not forloop.last %}<br>
+                      {% endif %}
+                      {% endfor %}
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+              <div class="mt-4" style="text-align:center;">
+                <button type="button" class="btn btn-{{ salidas_de_campo.tipo_de_salida.color }}" data-container="body"
+                  data-toggle="popover" data-placement="bottom"
+                  data-content="{{ salidas_de_campo.tipo_de_salida.requerimientos }}">
+                  <i class="{{ salidas_de_campo.tipo_de_salida.simbolo }}"></i>
+                  {{ salidas_de_campo.tipo_de_salida }}
+                </button>
+                <button type="button" class="btn btn-info" data-container="body">
+                  <a href="#" style="color:white;">
+                    <i class="fas fa-file-csv"></i>
+                    CSV
+                  </a>
+                </button>
+                <button type="button" class="btn btn-info" data-container="body">
+                  <a href="#" style="color:white;">
+                    <i class="far fa-file-pdf"></i>
+                    PDF
+                  </a>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <nav class="w-100">
+              <div class="nav nav-tabs" id="product-tab" role="tablist">
+                <a class="nav-item nav-link active" id="descripcion-tab" data-toggle="tab" href="#descripcion"
+                  role="tab" aria-controls="descripcion" aria-selected="true">Descripcion</a>
+                <!-- <a class="nav-item nav-link" id="historial-tab" data-toggle="tab" href="#historial" role="tab"
+                  aria-controls="historial" aria-selected="false">Historial</a> -->
+              </div>
+            </nav>
+            <div class="tab-content p-3 mx-auto" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="descripcion" role="tabpanel" aria-labelledby="descripcion-tab"
+                style="text-align: justify;">
+                {{ salidas_de_campo.observaciones }}
+              </div>
+
+              <div class="tab-pane fade mx-auto" id="historial" role="tabpanel" aria-labelledby="historial-tab">
+                <div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{% endblock content %}
