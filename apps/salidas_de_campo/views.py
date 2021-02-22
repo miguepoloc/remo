@@ -30,6 +30,12 @@ class Salidas_De_CampoDetailView(generic.DetailView):
     template_name = 'salidas_de_campo/salidas_de_campo_detail.html'
 
 
+class Componente_Salidas_De_CampoDetailView(generic.DetailView):
+    model = Componente_Salidas_De_Campo
+    context_object_name = 'componente_salidas_de_campo'
+    template_name = 'salidas_de_campo/componente_salidas_de_campo_detail.html'
+
+
 # class Salidas_De_CampoForm(generic.ListView):
 #     model = Salidas_De_Campo
 #     context_object_name = 'salidas_de_campo_form'

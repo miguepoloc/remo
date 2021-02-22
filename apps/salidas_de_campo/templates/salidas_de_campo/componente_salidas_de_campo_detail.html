@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-<title>{{ salidas_de_campo.estacion }} ({{ salidas_de_campo.fecha }}) | LABIMA</title>
+<title>{{ componente_salidas_de_campo.componente }} ({{ componente_salidas_de_campo.fecha }}) | LABIMA</title>
 {% endblock title %}
 
 {% block content %}
@@ -12,13 +12,13 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>{{ salidas_de_campo.estacion }} ({{ salidas_de_campo.fecha }})</h1>
+          <h1>{{ componente_salidas_de_campo.componente }} ({{ componente_salidas_de_campo.fecha }})</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
             <li class="breadcrumb-item active"><a href="{% url 'salidas_de_campo' %}">Salidas de campo</a></li>
-            <li class="breadcrumb-item active">{{ salidas_de_campo.estacion }} ({{ salidas_de_campo.fecha }})</li>
+            <li class="breadcrumb-item active">{{ componente_salidas_de_campo.componente }} ({{ componente_salidas_de_campo.fecha }})</li>
           </ol>
         </div>
       </div>
@@ -44,24 +44,24 @@
                 <tbody>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">id</th>
-                    <td>{{ salidas_de_campo.id }}</td>
+                    <td>{{ componente_salidas_de_campo.id }}</td>
                   </tr>
                   <tr>
-                    <th scope="row" style="vertical-align:middle;">Estación</th>
-                    <td>{{ salidas_de_campo.estacion }}</td>
+                    <th scope="row" style="vertical-align:middle;">Componente</th>
+                    <td>{{ componente_salidas_de_campo.componente }}</td>
                   </tr>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">Fecha</th>
-                    <td>{{ salidas_de_campo.fecha }}</td>
+                    <td>{{ componente_salidas_de_campo.fecha }}</td>
                   </tr>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">Tipo de salida</th>
-                    <td>{{ salidas_de_campo.tipo_de_salida }}</td>
+                    <td>{{ componente_salidas_de_campo.tipo_de_salida }}</td>
                   </tr>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">Operarios</th>
                     <td>
-                      {% for operarios in salidas_de_campo.operarios.all %}
+                      {% for operarios in componente_salidas_de_campo.operarios.all %}
                       {{ operarios.nombre }}
                       {% if not forloop.last %}<br>
                       {% endif %}
@@ -73,11 +73,11 @@
               </table>
 
               <div class="mt-4" style="text-align:center;">
-                <button type="button" class="btn btn-{{ salidas_de_campo.tipo_de_salida.color }}" data-container="body"
+                <button type="button" class="btn btn-{{ componente_salidas_de_campo.tipo_de_salida.color }}" data-container="body"
                   data-toggle="popover" data-placement="bottom"
-                  data-content="{{ salidas_de_campo.tipo_de_salida.requerimientos }}">
-                  <i class="{{ salidas_de_campo.tipo_de_salida.simbolo }}"></i>
-                  {{ salidas_de_campo.tipo_de_salida }}
+                  data-content="{{ componente_salidas_de_campo.tipo_de_salida.requerimientos }}">
+                  <i class="{{ componente_salidas_de_campo.tipo_de_salida.simbolo }}"></i>
+                  {{ componente_salidas_de_campo.tipo_de_salida }}
                 </button>
                 <button type="button" class="btn btn-info" data-container="body">
                   <a href="#" style="color:white;">
@@ -106,7 +106,7 @@
             <div class="tab-content p-3 mx-auto" id="nav-tabContent">
               <div class="tab-pane fade show active" id="descripcion" role="tabpanel" aria-labelledby="descripcion-tab"
                 style="text-align: justify;">
-                {{ salidas_de_campo.observaciones }}
+                {{ componente_salidas_de_campo.observaciones }}
               </div>
 
               <div class="tab-pane fade mx-auto" id="historial" role="tabpanel" aria-labelledby="historial-tab">

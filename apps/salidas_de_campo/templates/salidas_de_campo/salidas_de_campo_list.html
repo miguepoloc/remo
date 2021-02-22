@@ -78,33 +78,6 @@
                   </div>
                   <!-- END timeline item -->
                   {% endfor %}
-                  {% if is_paginated %}
-                  <div class="container">
-                    <nav aria-label="...">
-                      <ul class="pagination justify-content-center">
-                        {% if page_obj.has_previous %}
-                        <li class="page-item">
-                          <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}"><i
-                              class="fas fa-angle-double-left"></i></a>
-                        </li>
-                        {% endif %}
-                        {% for i in paginator.page_range %}
-                        {% if page_obj.number == i %}
-                        <li class="page-item active"><a class="page-link" href="?page={{i}}">{{ i }}</a></li>
-                        {% else %}
-                        <li class="page-item"><a class="page-link" href="?page={{i}}">{{ i }}</a></li>
-                        {% endif %}
-                        {% endfor %}
-                        {% if page_obj.has_next %}
-                        <li class="page-item">
-                          <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i
-                              class="fas fa-angle-double-right"></i></a>
-                        </li>
-                        {% endif %}
-                      </ul>
-                    </nav>
-                  </div>
-                  {% endif %}
                   {% else %}
                   <div>
                     <div class="timeline-item">
@@ -125,7 +98,7 @@
                   <!-- timeline time label -->
                   <div class="time-label">
                     <span class="bg-{{ salida_de_campo.tipo_de_salida.color }}">
-                      <a href="">
+                      <a href="{{ salida_de_campo.get_absolute_url }}">
                         {{ salida_de_campo.fecha }}
                       </a>
                     </span>
