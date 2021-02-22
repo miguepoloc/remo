@@ -111,12 +111,11 @@
         <div id="agregar_componente">
 
           <!-- Aquí debe agregarse para otro componente -->
-          <div class="card card-primary ">
+          <!-- <div class="card card-primary ">
             <div class="card-header">
               <h3 class="card-title" id="nombre_componente"><i class="fas fa-tools"></i> Componente</h3>
             </div>
             <div class="card-body">
-              <!-- Date dd/mm/yyyy -->
               <div class="form-group">
                 <label>Componente</label>
                 <select class="form-control select2" style="width: 100%;" id="select_componente">
@@ -132,20 +131,21 @@
                   {% endif %}
                 </select>
               </div>
-              <!-- /.form group -->
               <div class="form-group">
                 <label>Observaciones</label>
                 <textarea class="form-control" rows="3" cols="200"
                   placeholder="Ingrese las actividades realizadas durante la salida de campo"
                   id="observaciones_componente"></textarea>
               </div>
-
             </div>
-            <!-- /.card-body -->
-          </div>
+          </div> -->
           <!-- /.Fin del componente -->
         </div>
-
+        <div style="text-align: center;">
+          <button type="button" class="btn btn-dark swalOK" id="addComponente">
+            <i class="fas fa-plus-circle"></i> Agregar componente
+          </button>
+        </div>
       </div>
 
 
@@ -155,12 +155,11 @@
         <div id="agregar_sensor">
 
           <!-- Aquí debe agregarse para otro sensor -->
-          <div class="card card-primary">
+          <!-- <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title" id="nombre_sensor"><i class="fas fa-cloud-sun-rain"></i> Sensor</h3>
             </div>
             <div class="card-body">
-              <!-- Date dd/mm/yyyy -->
               <div class="form-group">
                 <label>Sensor</label>
                 <select class="form-control select2" style="width: 100%;" id="select_sensor">
@@ -176,7 +175,6 @@
                   {% endif %}
                 </select>
               </div>
-              <!-- /.form group -->
               <div class="form-group">
                 <label>Observaciones</label>
                 <textarea class="form-control" rows="3" cols="200"
@@ -184,30 +182,20 @@
                   id="observaciones_sensor"></textarea>
               </div>
               <div id="Prueba"></div>
-
             </div>
-            <!-- /.card-body -->
-          </div>
+          </div> -->
           <!-- /.Fin del sensor -->
         </div>
-      </div>
-
-      <div class="col-md-6">
-        <div style="text-align: center;">
-          <button type="button" class="btn btn-dark swalOK" id="addComponente">
-            <i class="fas fa-plus-circle"></i> Agregar componente
-          </button>
-        </div>
-      </div>
-      <div class="col-md-6">
         <div style="text-align: center;">
           <button type="button" class="btn btn-dark swalOK" id="addSensor">
             <i class="fas fa-plus-circle"></i> Agregar sensor
           </button>
         </div>
       </div>
-      <br><br><br>
+
+
       <div class="col-md-12">
+        <br>
         <div class="card card-primary" style="text-align: center;">
           <button type="button" class="btn btn-success swalOK" type="submit" id="agregar">
             <i class="fas fa-clipboard-check"></i> Agregar salida

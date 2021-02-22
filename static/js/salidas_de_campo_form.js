@@ -130,10 +130,6 @@ $('#select_estacion').on('select2:select', function (e) {
         document.getElementById("select_componente" + index).innerHTML = "<option selected='selected' disabled='disabled'>Selecciona un componente</option>";
         document.getElementById('nombre_componente' + index).innerHTML = '<i class="fas fa-tools"></i> Componente';
     }
-    document.getElementById("select_sensor").innerHTML = "<option selected='selected' disabled='disabled'>Selecciona un sensor</option>";
-    document.getElementById('nombre_sensor').innerHTML = '<i class="fas fa-cloud-sun-rain"></i> Sensor';
-    document.getElementById("select_componente").innerHTML = "<option selected='selected' disabled='disabled'>Selecciona un componente</option>";
-    document.getElementById('nombre_componente').innerHTML = '<i class="fas fa-tools"></i> Componente';
 
     var data_estacion = e.params.data;
     estacion_selecta = data_estacion.id;
@@ -155,24 +151,26 @@ $('#select_estacion').on('select2:select', function (e) {
                         document.getElementById("select_componente" + index).appendChild(z);
                         console.log("select_componente" + index);
                     }
-                    // document.getElementById("select_componente").appendChild(z);
                 }
             }
         }
     }
-    for (i = 0; i < lista_sensores_estacion.length; i++) {
-        if (lista_sensores_estacion[i].ubicacion == estacion_selecta) {
-            for (j = 0; j < lista_sensores.length; j++) {
-                if (lista_sensores[j].id == lista_sensores_estacion[i].sensor) {
-                    // Se crea un elemento tipo option
-                    let z = document.createElement("option");
-                    // Al cual se le asigna el valor de la variable
-                    z.setAttribute("value", lista_sensores[j].id);
-                    // Y se le asigna al valor a mostrar
-                    let t = document.createTextNode(lista_sensores[j].nombre + " (" + lista_sensores[j].unidad + ")");
-                    z.appendChild(t);
-                    // Luego se añade al html
-                    document.getElementById("select_sensor").appendChild(z);
+    for (let index = 0; index < cant_sensores; index++) {
+        for (i = 0; i < lista_sensores_estacion.length; i++) {
+            if (lista_sensores_estacion[i].ubicacion == estacion_selecta) {
+                for (j = 0; j < lista_sensores.length; j++) {
+                    if (lista_sensores[j].id == lista_sensores_estacion[i].sensor) {
+                        // Se crea un elemento tipo option
+                        let z = document.createElement("option");
+                        // Al cual se le asigna el valor de la variable
+                        z.setAttribute("value", lista_sensores[j].id);
+                        // Y se le asigna al valor a mostrar
+                        let t = document.createTextNode(lista_sensores[j].nombre + " (" + lista_sensores[j].unidad + ")");
+                        z.appendChild(t);
+                        // Luego se añade al html
+                        document.getElementById("select_sensor" + index).appendChild(z);
+                        console.log("select_sensor" + index);
+                    }
                 }
             }
         }
@@ -204,7 +202,6 @@ $('#select_operario').on('select2:unselect', function (e) {
 var data_componente;
 $('#select_componente').on('select2:select', function (e) {
     data_componente = e.params.data;
-    document.getElementById('nombre_componente').innerHTML = '<i class="fas fa-tools"></i> ' + data_componente.text;
 });
 
 var data_tipo_componente;
@@ -230,48 +227,52 @@ $("#agregar").click(function () {
     fecha = convertir_fecha(fecha);
     console.log(operarios);
 
-    var observaciones_estacion = document.getElementById('observaciones_estacion').value;
-    var observaciones_componente = document.getElementById('observaciones_componente').value;
-    var observaciones_sensor = document.getElementById('observaciones_sensor').value;
+    // var observaciones_estacion = document.getElementById('observaciones_estacion').value;
+    // var observaciones_sensor = document.getElementById('observaciones_sensor').value;
+
+    for (let index = 0; index < cant_componentes; index++) {
+        // Componente
+        console.log(cant_componentes);
+        $.ajax({
+            type: "POST",
+            url: "/api/Componente_Salida_De_Campo/",
+            data: {
+                "fecha": fecha,
+                "observaciones": document.getElementById('observaciones_componente' + index).value,
+                "componente": document.getElementById('select_componente' + index).value,
+                "tipo_de_salida": document.getElementById('select_componente_tipo' + index).value,
+                "operarios": operarios,
+            }
+        });
+    }
 
     // Estación
-    $.ajax({
-        type: "POST",
-        url: "/api/Salida_De_Campo/",
-        data: {
-            "fecha": fecha,
-            "observaciones": observaciones_estacion,
-            "estacion": estacion_selecta,
-            "tipo_de_salida": data_tipo_estacion,
-            "operarios": operarios,
-        }
-    });
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/api/Salida_De_Campo/",
+    //     data: {
+    //         "fecha": fecha,
+    //         "observaciones": observaciones_estacion,
+    //         "estacion": estacion_selecta,
+    //         "tipo_de_salida": data_tipo_estacion,
+    //         "operarios": operarios,
+    //     }
+    // });
 
-    // Sensor
-    $.ajax({
-        type: "POST",
-        url: "/api/Sensor_Salida_De_Campo/",
-        data: {
-            "fecha": fecha,
-            "observaciones": observaciones_sensor,
-            "sensor": data_sensor.id,
-            "tipo_de_salida": data_tipo_sensor,
-            "operarios": operarios,
-        }
-    });
+    // // Sensor
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/api/Sensor_Salida_De_Campo/",
+    //     data: {
+    //         "fecha": fecha,
+    //         "observaciones": observaciones_sensor,
+    //         "sensor": data_sensor.id,
+    //         "tipo_de_salida": data_tipo_sensor,
+    //         "operarios": operarios,
+    //     }
+    // });
 
-    // Componente
-    $.ajax({
-        type: "POST",
-        url: "/api/Componente_Salida_De_Campo/",
-        data: {
-            "fecha": fecha,
-            "observaciones": observaciones_componente,
-            "componente": data_componente.id,
-            "tipo_de_salida": data_tipo_componente,
-            "operarios": operarios,
-        }
-    });
+
 });
 
 function convertir_fecha(fecha) {

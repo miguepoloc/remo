@@ -33,79 +33,177 @@
 
   <!-- Main content -->
   <section class="content">
-
-    <!-- Default box -->
-    <div class="timeline timeline-inverse">
-      {% if salida_de_campo_list %}
-      {% for salida_de_campo in salida_de_campo_list %}
-      <!-- timeline time label -->
-      <div class="time-label">
-        <span class="bg-{{ salida_de_campo.tipo_de_salida.color }}">
-          <a href="{{ salida_de_campo.get_absolute_url }}">
-            {{ salida_de_campo.fecha }}
-          </a>
-        </span>
-      </div>
-      <!-- /.timeline-label -->
-      <!-- timeline item -->
-      <div>
-        <i class="{{ salida_de_campo.tipo_de_salida.simbolo }} bg-{{ salida_de_campo.tipo_de_salida.color2 }}"></i>
-
-        <div class="timeline-item">
-
-          <h3 class="timeline-header"><a href="{{ salida_de_campo.estacion.get_absolute_url }}">
-              {{ salida_de_campo.estacion }}</a> {{ salida_de_campo.tipo_de_salida.tipo }}
-          </h3>
-
-          <div class="timeline-body">
-            {{ salida_de_campo.observaciones }}
+    <div class="container-fluid">
+      <div class="row">
+        <!-- /.col -->
+        <div class="card">
+          <div class="card-header p-2">
+            <ul class="nav nav-pills">
+              <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Salidas de campo</a>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="#timelineC" data-toggle="tab">Salidas de campo
+                  componentes</a></li>
+              <li class="nav-item"><a class="nav-link" href="#timelineS" data-toggle="tab">Salidas de campo sensores</a>
+              </li>
+            </ul>
+          </div><!-- /.card-header -->
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="active tab-pane" id="timeline">
+                <!-- Default box -->
+                <div class="timeline timeline-inverse">
+                  {% if salida_de_campo_list %}
+                  {% for salida_de_campo in salida_de_campo_list %}
+                  <!-- timeline time label -->
+                  <div class="time-label">
+                    <span class="bg-{{ salida_de_campo.tipo_de_salida.color }}">
+                      <a href="{{ salida_de_campo.get_absolute_url }}">
+                        {{ salida_de_campo.fecha }}
+                      </a>
+                    </span>
+                  </div>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <div>
+                    <i
+                      class="{{ salida_de_campo.tipo_de_salida.simbolo }} bg-{{ salida_de_campo.tipo_de_salida.color2 }}"></i>
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><a href="{{ salida_de_campo.estacion.get_absolute_url }}">
+                          {{ salida_de_campo.estacion }}</a> {{ salida_de_campo.tipo_de_salida.tipo }}
+                      </h3>
+                      <div class="timeline-body">
+                        {{ salida_de_campo.observaciones }}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END timeline item -->
+                  {% endfor %}
+                  {% if is_paginated %}
+                  <div class="container">
+                    <nav aria-label="...">
+                      <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                          <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}"><i
+                              class="fas fa-angle-double-left"></i></a>
+                        </li>
+                        {% endif %}
+                        {% for i in paginator.page_range %}
+                        {% if page_obj.number == i %}
+                        <li class="page-item active"><a class="page-link" href="?page={{i}}">{{ i }}</a></li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{i}}">{{ i }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                          <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i
+                              class="fas fa-angle-double-right"></i></a>
+                        </li>
+                        {% endif %}
+                      </ul>
+                    </nav>
+                  </div>
+                  {% endif %}
+                  {% else %}
+                  <div>
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><b>No hay salidas de campo</b></h3>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div>
+                    <i class="far fa-clock bg-gray"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="active tab-pane" id="timelineC">
+                <!-- Default box -->
+                <div class="timeline timeline-inverse">
+                  {% if componentes_salida_de_campo_list %}
+                  {% for salida_de_campo in componentes_salida_de_campo_list %}
+                  <!-- timeline time label -->
+                  <div class="time-label">
+                    <span class="bg-{{ salida_de_campo.tipo_de_salida.color }}">
+                      <a href="">
+                        {{ salida_de_campo.fecha }}
+                      </a>
+                    </span>
+                  </div>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <div>
+                    <i
+                      class="{{ salida_de_campo.tipo_de_salida.simbolo }} bg-{{ salida_de_campo.tipo_de_salida.color2 }}"></i>
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><a href="{{ salida_de_campo.componente.get_absolute_url }}">
+                          {{ salida_de_campo.componente }}</a> {{ salida_de_campo.tipo_de_salida.tipo }}
+                      </h3>
+                      <div class="timeline-body">
+                        {{ salida_de_campo.observaciones }}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END timeline item -->
+                  {% endfor %}
+                  {% else %}
+                  <div>
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><b>No hay salidas de campo</b></h3>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div>
+                    <i class="far fa-clock bg-gray"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="active tab-pane" id="timelineS">
+                <!-- Default box -->
+                <div class="timeline timeline-inverse">
+                  {% if sensores_salida_de_campo_list %}
+                  {% for salida_de_campo in sensores_salida_de_campo_list %}
+                  <!-- timeline time label -->
+                  <div class="time-label">
+                    <span class="bg-{{ salida_de_campo.tipo_de_salida.color }}">
+                      <a href="">
+                        {{ salida_de_campo.fecha }}
+                      </a>
+                    </span>
+                  </div>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <div>
+                    <i
+                      class="{{ salida_de_campo.tipo_de_salida.simbolo }} bg-{{ salida_de_campo.tipo_de_salida.color2 }}"></i>
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><a href="{{ salida_de_campo.sensor.get_absolute_url }}">
+                          {{ salida_de_campo.sensor }}</a> {{ salida_de_campo.tipo_de_salida.tipo }}
+                      </h3>
+                      <div class="timeline-body">
+                        {{ salida_de_campo.observaciones }}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END timeline item -->
+                  {% endfor %}
+                  {% else %}
+                  <div>
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><b>No hay salidas de campo</b></h3>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div>
+                    <i class="far fa-clock bg-gray"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <!-- END timeline item -->
-      {% endfor %}
-      {% if is_paginated %}
-      <div class="container">
-        <nav aria-label="...">
-          <ul class="pagination justify-content-center">
-
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-              <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}"><i
-                  class="fas fa-angle-double-left"></i></a>
-            </li>
-            {% endif %}
-
-            {% for i in paginator.page_range %}
-            {% if page_obj.number == i %}
-            <li class="page-item active"><a class="page-link" href="?page={{i}}">{{ i }}</a></li>
-            {% else %}
-            <li class="page-item"><a class="page-link" href="?page={{i}}">{{ i }}</a></li>
-            {% endif %}
-            {% endfor %}
-
-            {% if page_obj.has_next %}
-            <li class="page-item">
-              <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i
-                  class="fas fa-angle-double-right"></i></a>
-            </li>
-            {% endif %}
-          </ul>
-        </nav>
-      </div>
-      {% endif %}
-      {% else %}
-      <p>No hay salidas de campo</p>
-      {% endif %}
-
-      <div>
-        <i class="far fa-clock bg-gray"></i>
-      </div>
-
-
     </div>
-
-
     <!-- /.card-body -->
   </section>
   <!-- /.content -->
