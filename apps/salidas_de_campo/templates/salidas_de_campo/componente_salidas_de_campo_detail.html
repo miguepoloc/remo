@@ -18,7 +18,8 @@
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
             <li class="breadcrumb-item active"><a href="{% url 'salidas_de_campo' %}">Salidas de campo</a></li>
-            <li class="breadcrumb-item active">{{ componente_salidas_de_campo.componente }} ({{ componente_salidas_de_campo.fecha }})</li>
+            <li class="breadcrumb-item active">{{ componente_salidas_de_campo.componente }}
+              ({{ componente_salidas_de_campo.fecha }})</li>
           </ol>
         </div>
       </div>
@@ -48,7 +49,11 @@
                   </tr>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">Componente</th>
-                    <td>{{ componente_salidas_de_campo.componente }}</td>
+                    <td>
+                      <a href="{{ componente_salidas_de_campo.componente.get_absolute_url }}">
+                        {{ componente_salidas_de_campo.componente }}
+                      </a>
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row" style="vertical-align:middle;">Fecha</th>
@@ -73,8 +78,8 @@
               </table>
 
               <div class="mt-4" style="text-align:center;">
-                <button type="button" class="btn btn-{{ componente_salidas_de_campo.tipo_de_salida.color }}" data-container="body"
-                  data-toggle="popover" data-placement="bottom"
+                <button type="button" class="btn btn-{{ componente_salidas_de_campo.tipo_de_salida.color }}"
+                  data-container="body" data-toggle="popover" data-placement="bottom"
                   data-content="{{ componente_salidas_de_campo.tipo_de_salida.requerimientos }}">
                   <i class="{{ componente_salidas_de_campo.tipo_de_salida.simbolo }}"></i>
                   {{ componente_salidas_de_campo.tipo_de_salida }}

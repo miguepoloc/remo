@@ -12,13 +12,13 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>{{ componente_estacion.componente.nombre }}</h1>
+          <h1>{{ componente_estacion }}</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
             <li class="breadcrumb-item"><a href="{% url 'componentes' %}">Componentes</a></li>
-            <li class="breadcrumb-item active">{{ componente_estacion.componente.nombre }}</li>
+            <li class="breadcrumb-item active">{{ componente_estacion }}</li>
           </ol>
         </div>
       </div>
@@ -33,7 +33,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-12 col-sm-6">
-            <h3 class="d-inline-block d-sm-none">{{ componente_estacion.componente.referencia }}</h3>
+            <h3 class="d-inline-block d-sm-none">{{ componente_estacion.componente }}</h3>
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="col-12 col-sm-6">
-            <h3 class="my-3">{{ componente_estacion.componente.referencia }}</h3>
+            <h3 class="my-3">{{ componente_estacion.componente }}</h3>
             <p>{{ componente_estacion.componente.funcion }}</p>
             <div class="list-group">
               <table class="table table-striped" style="text-align:center;">
