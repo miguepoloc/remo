@@ -61,9 +61,14 @@ var cant_componentes = 0;
 var add_componente = document.getElementById('agregar_componente');
 $("#addComponente").click(function () {
     let htmlx = "";
-    htmlx += '<div class="card card-primary ">';
+    htmlx += '<div class="card card-primary" id="card_c' + cant_componentes + '">';
     htmlx += '<div class="card-header">';
     htmlx += '<h3 class="card-title" id="nombre_componente' + cant_componentes + '"><i class="fas fa-tools"></i> Componente ' + cant_componentes + '</h3>';
+    htmlx += '<div class="card-tools">';
+    htmlx += '<button type="button" class="btn btn-tool" data-card-widget="collapse">';
+    htmlx += '<i class="fas fa-minus"></i>';
+    htmlx += '</button>';
+    htmlx += '</div>';
     htmlx += '</div>';
     htmlx += '<div class="card-body">';
     htmlx += '<div class="form-group">';
@@ -96,9 +101,14 @@ var cant_sensores = 0;
 var add_sensor = document.getElementById('agregar_sensor');
 $("#addSensor").click(function () {
     let htmlx = "";
-    htmlx += '<div class="card card-primary ">';
+    htmlx += '<div class="card card-primary" id="card_s' + cant_sensores + '">';
     htmlx += '<div class="card-header">';
     htmlx += '<h3 class="card-title" id="nombre_sensor' + cant_sensores + '"><i class="fas fa-cloud-sun-rain"></i> Sensor ' + cant_sensores + '</h3>';
+    htmlx += '<div class="card-tools">';
+    htmlx += '<button type="button" class="btn btn-tool" data-card-widget="collapse">';
+    htmlx += '<i class="fas fa-minus"></i>';
+    htmlx += '</button>';
+    htmlx += '</div>';
     htmlx += '</div>';
     htmlx += '<div class="card-body">';
     htmlx += '<div class="form-group">';
@@ -224,6 +234,21 @@ $('#select_sensor').on('select2:select', function (e) {
 var data_tipo_sensor;
 $('#select_sensor_tipo').on('select2:select', function (e) {
     data_tipo_sensor = e.params.data.id;
+});
+
+
+$("#deleteComponente").click(function () {
+    if (cant_componentes > 0) {
+        $("#card_c" + (cant_componentes - 1)).remove();
+        cant_componentes = cant_componentes - 1;
+    }
+});
+
+$("#deleteSensor").click(function () {
+    if (cant_sensores > 0) {
+        $("#card_s" + (cant_sensores - 1)).remove();
+        cant_sensores = cant_sensores - 1;
+    }
 });
 
 // Botón de agregar a la base de datos
