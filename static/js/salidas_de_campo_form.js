@@ -19,18 +19,23 @@ var lista_componentes_estacion = "";
 
 $.get('/api/Componente_Estacion/', function (result) {
     lista_componentes_estacion = result;
+    console.log("Lista Componentes Estación: ");
+    console.log(lista_componentes_estacion);
 });
 
 var lista_componentes = "";
 
 $.get('/api/Componente/', function (result) {
     lista_componentes = result;
+    console.log("Lista Componentes: ");
+    console.log(lista_componentes);
 });
 
 var lista_sensores_estacion = "";
 
 $.get('/api/Sensor_Estacion/', function (result) {
     lista_sensores_estacion = result;
+    console.log("Lista Sensores Estación: ");
     console.log(lista_sensores_estacion);
 
 });
@@ -39,6 +44,7 @@ var lista_sensores = "";
 
 $.get('/api/Sensor/', function (result) {
     lista_sensores = result;
+    console.log("Lista Sensores: ");
     console.log(lista_sensores);
 });
 
@@ -46,6 +52,7 @@ var lista_tipo = "";
 
 $.get('/api/Tipo_Salida_De_Campo/', function (result) {
     lista_tipo = result;
+    console.log("Lista Tipo de salida: ");
     console.log(lista_tipo);
 });
 
@@ -100,7 +107,7 @@ $("#addSensor").click(function () {
     htmlx += '<option selected="selected" disabled="disabled">Selecciona un sensor</option>';
     htmlx += '</select>';
     htmlx += '<label>Tipo de salida</label>';
-    htmlx += '<select class="form-control select2" style="width: 100%;" required id="select_componente_tipo' + cant_sensores + '">';
+    htmlx += '<select class="form-control select2" style="width: 100%;" required id="select_sensor_tipo' + cant_sensores + '">';
     htmlx += '<option selected="selected" disabled="disabled">Selecciona el tipo de salida</option>';
     for (let index = 0; index < lista_tipo.length; index++) {
         htmlx += '<option value="' + lista_tipo[index].id + '">' + lista_tipo[index].tipo + '</option>';
@@ -140,16 +147,16 @@ $('#select_estacion').on('select2:select', function (e) {
             if (lista_componentes_estacion[i].ubicacion == estacion_selecta) {
                 for (j = 0; j < lista_componentes.length; j++) {
                     if (lista_componentes[j].id == lista_componentes_estacion[i].componente) {
+                        console.log(lista_componentes[j].nombre + " id: " + lista_componentes_estacion[i].id);
                         // Se crea un elemento tipo option
                         let z = document.createElement("option");
                         // Al cual se le asigna el valor de la variable
-                        z.setAttribute("value", lista_componentes[j].id);
+                        z.setAttribute("value", lista_componentes_estacion[i].id);
                         // Y se le asigna al valor a mostrar
                         let t = document.createTextNode(lista_componentes[j].nombre + " (" + lista_componentes[j].referencia + ")");
                         z.appendChild(t);
                         // Luego se añade al html
                         document.getElementById("select_componente" + index).appendChild(z);
-                        console.log("select_componente" + index);
                     }
                 }
             }
@@ -160,16 +167,16 @@ $('#select_estacion').on('select2:select', function (e) {
             if (lista_sensores_estacion[i].ubicacion == estacion_selecta) {
                 for (j = 0; j < lista_sensores.length; j++) {
                     if (lista_sensores[j].id == lista_sensores_estacion[i].sensor) {
+                        console.log(lista_sensores[j].nombre + " id: " + lista_sensores_estacion[i].id);
                         // Se crea un elemento tipo option
                         let z = document.createElement("option");
                         // Al cual se le asigna el valor de la variable
-                        z.setAttribute("value", lista_sensores[j].id);
+                        z.setAttribute("value", lista_sensores_estacion[i].id);
                         // Y se le asigna al valor a mostrar
                         let t = document.createTextNode(lista_sensores[j].nombre + " (" + lista_sensores[j].unidad + ")");
                         z.appendChild(t);
                         // Luego se añade al html
                         document.getElementById("select_sensor" + index).appendChild(z);
-                        console.log("select_sensor" + index);
                     }
                 }
             }
@@ -187,8 +194,6 @@ var data_operarios_add;
 $('#select_operario').on('select2:select', function (e) {
     data_operarios_add = e.params.data;
     operarios.push(data_operarios_add.id);
-    console.log(data_operarios_add);
-    console.log(operarios);
 });
 
 var data_operarios_delete;
@@ -225,14 +230,12 @@ $('#select_sensor_tipo').on('select2:select', function (e) {
 $("#agregar").click(function () {
     var fecha = document.getElementById('fecha_salida').value;
     fecha = convertir_fecha(fecha);
-    console.log(operarios);
 
-    // var observaciones_estacion = document.getElementById('observaciones_estacion').value;
     // var observaciones_sensor = document.getElementById('observaciones_sensor').value;
 
+    // Componente
     for (let index = 0; index < cant_componentes; index++) {
-        // Componente
-        console.log(cant_componentes);
+        console.log("Componente: " + document.getElementById('select_componente' + index).value);
         $.ajax({
             type: "POST",
             url: "/api/Componente_Salida_De_Campo/",
@@ -246,33 +249,35 @@ $("#agregar").click(function () {
         });
     }
 
+    // Sensor
+    for (let index = 0; index < cant_sensores; index++) {
+        console.log("Sensores: " + document.getElementById('select_sensor' + index).value);
+        $.ajax({
+            type: "POST",
+            url: "/api/Sensor_Salida_De_Campo/",
+            data: {
+                "fecha": fecha,
+                "observaciones": document.getElementById('observaciones_sensor' + index).value,
+                "sensor": document.getElementById('select_sensor' + index).value,
+                "tipo_de_salida": document.getElementById('select_sensor_tipo' + index).value,
+                "operarios": operarios,
+            }
+        });
+    }
+
+
     // Estación
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/api/Salida_De_Campo/",
-    //     data: {
-    //         "fecha": fecha,
-    //         "observaciones": observaciones_estacion,
-    //         "estacion": estacion_selecta,
-    //         "tipo_de_salida": data_tipo_estacion,
-    //         "operarios": operarios,
-    //     }
-    // });
-
-    // // Sensor
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/api/Sensor_Salida_De_Campo/",
-    //     data: {
-    //         "fecha": fecha,
-    //         "observaciones": observaciones_sensor,
-    //         "sensor": data_sensor.id,
-    //         "tipo_de_salida": data_tipo_sensor,
-    //         "operarios": operarios,
-    //     }
-    // });
-
-
+    $.ajax({
+        type: "POST",
+        url: "/api/Salida_De_Campo/",
+        data: {
+            "fecha": fecha,
+            "observaciones": document.getElementById('observaciones_estacion').value,
+            "estacion": estacion_selecta,
+            "tipo_de_salida": data_tipo_estacion,
+            "operarios": operarios,
+        }
+    });
 });
 
 function convertir_fecha(fecha) {
