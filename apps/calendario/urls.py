@@ -5,5 +5,6 @@ from rest_framework import routers
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.CalendarioListView.as_view(), name='calendario'),
+    # url(r'^$', views.CalendarioListView.as_view(), name='calendario'),
+    url(r'^$', views.calendario, name='calendario'),
 ]

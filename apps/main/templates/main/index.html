@@ -319,5 +319,22 @@
 {% block script %}
 <!-- Geovisor -->
 <script type="text/javascript" src="{% static 'js/geovisor_estaciones.js' %}"></script>
-
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarUI = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarUI, {
+      events: [
+        {% for calendario_list in calendario_list %}
+                    {
+        title: "{{ calendario_list.estacion }}",
+        start: '{{ calendario_list.fecha_inicio | date:"Y-m-d" }}',
+        end: '{{ calendario_list.fecha_fin | date:"Y-m-d" }}',
+      },
+      {% endfor %}
+            ]
+    });
+  calendar.render();
+  calendar.setOption('locale', 'es');
+  });
+</script>
 {% endblock script %}

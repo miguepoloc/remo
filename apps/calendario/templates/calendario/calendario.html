@@ -26,76 +26,168 @@
 
   <!-- Main content -->
   <section class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="sticky-top mb-3">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title">Eventos</h4>
-              </div>
-              <div class="card-body">
-                <!-- the events -->
-                <div id="external-events">
-                  <div class="external-event bg-success">Mantenimiento</div>
-                  <div class="external-event bg-warning">Cambio de sensores</div>
-                  <div class="external-event bg-info">Inspección</div>
-                  <div class="external-event bg-primary">Instalación</div>
-                  <div class="external-event bg-danger">Planeación</div>
-                  <div class="checkbox">
-                    <label for="drop-remove">
-                      <input type="checkbox" id="drop-remove">
-                      remove after drop
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Crear evento</h3>
-              </div>
-              <div class="card-body">
-                <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                  <ul class="fc-color-picker" id="color-chooser">
-                    <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
-                    <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
-                    <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
-                    <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                    <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
-                  </ul>
-                </div>
-                <!-- /btn-group -->
-                <div class="input-group">
-                  <input id="new-event" type="text" class="form-control" placeholder="Título del evento">
-
-                  <div class="input-group-append">
-                    <button id="add-new-event" type="button" class="btn btn-primary">Añadir</button>
-                  </div>
-                  <!-- /btn-group -->
-                </div>
-                <!-- /input-group -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.col -->
-        <div class="col-md-9">
-          <div class="card card-primary">
-            <div class="card-body p-0">
-              <!-- THE CALENDAR -->
-              <div id="calendar" class=""></div>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <!-- /.col -->
+    <div class="container">
+      <div id="calendar" class="col-md-12">
       </div>
+
       <!-- /.row -->
-    </div><!-- /.container-fluid -->
+
+      <!-- Modal -->
+      <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form class="form-horizontal" method="POST" action="api/Calendario_Salida_De_Campo/">
+
+              <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Agregar Evento</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+
+              </div>
+              <div class="modal-body">
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <label for="estacion" class="control-label">Estación</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <select name="" class="form-control select2" id="select_estacion">
+                        <option value="" selected="selected" disabled="disabled">Selecciona una estación</option>
+                        {% if estaciones_list %}
+                        {% for estacion in estaciones_list %}
+                        <option class="col-sm-2 control-label" value="{{ estacion.id }}">{{ estacion.nombre }}</option>
+                        {% endfor %}
+                        {% endif %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <label for="estacion" class="control-label">Tipo de salida</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <select name="" class="form-control select2" id="select_estacion_tipo">
+                        <option selected="selected" disabled="disabled">Selecciona el tipo de salida</option>
+                        {% if tipo_de_salida %}
+                        {% for salida_tipo in tipo_de_salida %}
+                        <option value="{{ salida_tipo.id }}">{{ salida_tipo.tipo }}</option>
+                        {% endfor %}
+                        {% endif %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <label for="estacion" class="control-label">Fecha inicial</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <input class="form-control" type="date" value="" id="fecha_inicial">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <label for="estacion" class="control-label">Fecha final</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <input class="form-control" type="date" value="" id="fecha_final">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <label for="estacion" class="control-label">Observaciones</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <textarea class="form-control" rows="3" cols="200"
+                        placeholder="Ingrese las actividades que se van a realizar durante la salida de campo"
+                        id="observaciones_estacion"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary swalOK" id="nueva_salida">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form class="form-horizontal" method="POST" action="editEventTitle.php">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modificar Evento</h4>
+              </div>
+              <div class="modal-body">
+
+                <div class="form-group">
+                  <label for="title" class="col-sm-2 control-label">Titulo</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="title" class="form-control" id="title" placeholder="Titulo">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="color" class="col-sm-2 control-label">Color</label>
+                  <div class="col-sm-10">
+                    <select name="color" class="form-control" id="color">
+                      <option value="">Seleccionar</option>
+                      <option style="color:#0071c5;" value="#0071c5">&#9724; Azul oscuro</option>
+                      <option style="color:#40E0D0;" value="#40E0D0">&#9724; Turquesa</option>
+                      <option style="color:#008000;" value="#008000">&#9724; Verde</option>
+                      <option style="color:#FFD700;" value="#FFD700">&#9724; Amarillo</option>
+                      <option style="color:#FF8C00;" value="#FF8C00">&#9724; Naranja</option>
+                      <option style="color:#FF0000;" value="#FF0000">&#9724; Rojo</option>
+                      <option style="color:#000;" value="#000">&#9724; Negro</option>
+
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                      <label class="text-danger"><input type="checkbox" name="delete"> Eliminar Evento</label>
+                    </div>
+                  </div>
+                </div>
+
+                <input type="hidden" name="id" class="form-control" id="id">
+
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="nueva_salida">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /.container -->
   </section>
   <!-- /.content -->
 </div>
@@ -103,22 +195,90 @@
 {% endblock content %}
 
 {% block script %}
+
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var calendarUI = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarUI, {
+  $(document).ready(function () {
+
+    var date = new Date();
+    var yyyy = date.getFullYear().toString();
+    var mm = (date.getMonth() + 1).toString().length == 1 ? "0" + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString();
+    var dd = (date.getDate()).toString().length == 1 ? "0" + (date.getDate()).toString() : (date.getDate()).toString();
+
+    $('#calendar').fullCalendar({
+      header: {
+        right: 'prev,next today',
+        // center: 'title',
+      },
+      defaultDate: yyyy + "-" + mm + "-" + dd,
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      selectable: true,
+      selectHelper: true,
+      select: function (start, end) {
+
+        $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD'));
+        $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD'));
+        $('#ModalAdd').modal('show');
+      },
+      eventRender: function (event, element) {
+        element.bind('dblclick', function () {
+          $('#ModalEdit #id').val(event.id);
+          $('#ModalEdit #title').val(event.title);
+          $('#ModalEdit #color').val(event.color);
+          $('#ModalEdit').modal('show');
+        });
+      },
+      eventDrop: function (event, delta, revertFunc) { // si changement de position
+
+        edit(event);
+
+      },
+      eventResize: function (event, dayDelta, minuteDelta, revertFunc) { // si changement de longueur
+
+        edit(event);
+
+      },
       events: [
-        {% for calendario_list in object_list %}
-                    {
-        title: "{{ calendario_list.estacion }}",
-        start: '{{ calendario_list.fecha_inicio | date:"Y-m-d" }}',
-        end: '{{ calendario_list.fecha_fin | date:"Y-m-d" }}',
+        {% for calendario in calendario_list %}
+          {
+        title: "{{ calendario.estacion }}" + '{{ calendario.fecha_inicio | date:"Y-m-d" }}',
+        start: '{{ calendario.fecha_inicio | date:"Y-m-d" }}',
+        end: '{{ calendario.fecha_fin | date:"Y-m-d" }}',
+        // color: '#008000',
       },
       {% endfor %}
-            ]
+      ]
     });
-  calendar.render();
-  calendar.setOption('locale', 'es');
+  function edit(event) {
+    start = event.start.format('YYYY-MM-DD');
+    if (event.end) {
+      end = event.end.format('YYYY-MM-DD');
+    } else {
+      end = start;
+    }
+
+    id = event.id;
+
+    Event = [];
+    Event[0] = id;
+    Event[1] = start;
+    Event[2] = end;
+
+    $.ajax({
+      url: 'editEventDate.php',
+      type: "POST",
+      data: {
+        Event: Event
+      },
+      success: function (rep) {
+        if (rep == 'OK') {
+          alert('Evento se ha guardado correctamente');
+        } else {
+          alert('No se pudo guardar. Inténtalo de nuevo.');
+        }
+      }
+    });
+  }
   });
 </script>
 {% endblock script %}
