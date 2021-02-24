@@ -23,6 +23,8 @@ router.register(r'Sensor_Salida_De_Campo',
                 views.Sensor_Salidas_De_CampoViewSet, "Sensor_Salida_De_Campo")
 router.register(r'Componente_Salida_De_Campo',
                 views.Componente_Salidas_De_CampoViewSet, "Componente_Salida_De_Campo")
+router.register(r'Calendario_Salida_De_Campo',
+                views.Calendario_Salidas_De_CampoViewSet, "Calendario_Salida_De_Campo")
 
 
 urlpatterns = [

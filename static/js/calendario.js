@@ -1,3 +1,4 @@
+
 $(function () {
 
     /* initialize the external events
@@ -39,7 +40,7 @@ $(function () {
 
     var containerEl = document.getElementById('external-events');
     var checkbox = document.getElementById('drop-remove');
-    var calendarEl = document.getElementById('calendar');
+    var calendarEl = document.getElementById('calendarx');
 
     // initialize the external events
     // -----------------------------------------------------------------
@@ -58,7 +59,7 @@ $(function () {
 
     var calendar = new Calendar(calendarEl, {
         headerToolbar: {
-            left: 'prev,next today',
+            left: 'prev,next Hoy',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },

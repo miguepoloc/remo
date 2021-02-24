@@ -86,7 +86,7 @@
           <div class="card card-primary">
             <div class="card-body p-0">
               <!-- THE CALENDAR -->
-              <div id="calendar"></div>
+              <div id="calendar" class=""></div>
             </div>
             <!-- /.card-body -->
           </div>
@@ -103,5 +103,22 @@
 {% endblock content %}
 
 {% block script %}
-
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarUI = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarUI, {
+      events: [
+        {% for calendario_list in object_list %}
+                    {
+        title: "{{ calendario_list.estacion }}",
+        start: '{{ calendario_list.fecha_inicio | date:"Y-m-d" }}',
+        end: '{{ calendario_list.fecha_fin | date:"Y-m-d" }}',
+      },
+      {% endfor %}
+            ]
+    });
+  calendar.render();
+  calendar.setOption('locale', 'es');
+  });
+</script>
 {% endblock script %}

@@ -264,7 +264,8 @@
                   <!-- /.timeline-label -->
                   <!-- timeline item -->
                   <div>
-                    <i class="{{ salida_de_campo.tipo_de_salida.simbolo }} bg-{{ salida_de_campo.tipo_de_salida.color2 }}"></i>
+                    <i
+                      class="{{ salida_de_campo.tipo_de_salida.simbolo }} bg-{{ salida_de_campo.tipo_de_salida.color2 }}"></i>
 
                     <div class="timeline-item">
 
@@ -280,7 +281,11 @@
                   <!-- END timeline item -->
                   {% endfor %}
                   {% else %}
-                  <p>No hay salidas de campo</p>
+                  <div>
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><b>No hay salidas de campo</b></h3>
+                    </div>
+                  </div>
                   {% endif %}
 
                   <div>
