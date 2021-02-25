@@ -33,6 +33,7 @@ $("#nueva_salida").click(function () {
             // "operarios": operarios,
         }
     });
+    location.reload();
 });
 
 function convertir_fecha(fecha) {

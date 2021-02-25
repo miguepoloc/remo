@@ -27,7 +27,7 @@
   <!-- Main content -->
   <section class="content">
     <div class="container">
-      <div id="calendar" class="col-md-12" style="max-width: 1100px; margin: 0 auto;">
+      <div id="calendar" class="col-md-12">
       </div>
 
       <!-- /.row -->
@@ -197,30 +197,47 @@
 {% block script %}
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      // initialDate: '2020-09-12',
-      locale: 'es',
-      // initialView: 'timeGridWeek',
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+  $(document).ready(function () {
+
+    var date = new Date();
+    var yyyy = date.getFullYear().toString();
+    var mm = (date.getMonth() + 1).toString().length == 1 ? "0" + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString();
+    var dd = (date.getDate()).toString().length == 1 ? "0" + (date.getDate()).toString() : (date.getDate()).toString();
+
+    $('#calendar').fullCalendar({
+      header: {
+        right: 'prev,next today',
+        // center: 'title',
       },
-      height: 'auto',
-      navLinks: true, // Permite dar click en día o semana para ver esa fecha en específico
+      defaultDate: yyyy + "-" + mm + "-" + dd,
       editable: true,
+      eventLimit: true, // allow "more" link when too many events
       selectable: true,
-      selectMirror: true,
-      nowIndicator: true,
-      businessHours: true, // Cambia de color los fines de semana
-      // Números de las semanas
-      weekNumbers: true,
-      weekNumberCalculation: 'ISO',
+      selectHelper: true,
+      select: function (start, end) {
 
+        $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD'));
+        $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD'));
+        $('#ModalAdd').modal('show');
+      },
+      eventRender: function (event, element) {
+        element.bind('dblclick', function () {
+          $('#ModalEdit #id').val(event.id);
+          $('#ModalEdit #title').val(event.title);
+          $('#ModalEdit #color').val(event.color);
+          $('#ModalEdit').modal('show');
+        });
+      },
+      eventDrop: function (event, delta, revertFunc) { // si changement de position
 
+        edit(event);
 
+      },
+      eventResize: function (event, dayDelta, minuteDelta, revertFunc) { // si changement de longueur
+
+        edit(event);
+
+      },
       events: [
         {% for calendario in calendario_list %}
           {
@@ -232,9 +249,36 @@
       {% endfor %}
       ]
     });
+  function edit(event) {
+    start = event.start.format('YYYY-MM-DD');
+    if (event.end) {
+      end = event.end.format('YYYY-MM-DD');
+    } else {
+      end = start;
+    }
 
-  calendar.render();
+    id = event.id;
+
+    Event = [];
+    Event[0] = id;
+    Event[1] = start;
+    Event[2] = end;
+
+    $.ajax({
+      url: 'editEventDate.php',
+      type: "POST",
+      data: {
+        Event: Event
+      },
+      success: function (rep) {
+        if (rep == 'OK') {
+          alert('Evento se ha guardado correctamente');
+        } else {
+          alert('No se pudo guardar. Inténtalo de nuevo.');
+        }
+      }
+    });
+  }
   });
-
 </script>
 {% endblock script %}
