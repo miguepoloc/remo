@@ -203,6 +203,8 @@ class Estacion(models.Model):
     observaciones = models.TextField(max_length=4000, blank=True, null=True)
     foto = models.ImageField(
         upload_to=estaciones_directorio_ruta, null=True, blank=True)
+    color = models.CharField(
+        max_length=200, help_text="Ingrese el color en formato Hexa", null=True, blank=True)
 
     # Metadata
 
@@ -378,8 +380,6 @@ class Calendario_Salidas_De_Campo(models.Model):
         max_length=2000, blank=True, null=True)
     tipo_de_salida = models.ForeignKey(
         'Tipo_Salida_De_Campo', on_delete=models.SET_NULL, null=True, blank=True)
-    operarios = models.ManyToManyField(
-        Investigador, help_text="Seleccione los investigadores", null=True, blank=True)
     observaciones = models.TextField(max_length=100000, blank=True, null=True)
 
     # Metadata

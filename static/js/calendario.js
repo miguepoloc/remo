@@ -30,7 +30,6 @@ $("#nueva_salida").click(function () {
             "observaciones": document.getElementById('observaciones_estacion').value,
             "estacion": document.getElementById('select_estacion').value,
             "tipo_de_salida": document.getElementById('select_estacion_tipo').value,
-            // "operarios": operarios,
         }
     });
     location.reload();
@@ -42,3 +41,4 @@ function convertir_fecha(fecha) {
     dia = fecha.slice(8, 10);
     return (nueva_fecha = anio + "-" + mes + "-" + dia);
 }
+
