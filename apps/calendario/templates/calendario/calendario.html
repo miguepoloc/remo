@@ -250,6 +250,25 @@
       weekNumbers: true,
       weekNumberCalculation: 'ISO',
 
+
+      eventDrop: function (info) {
+        if (!confirm("¿Estás seguro de hacer este cambio?")) {
+          info.revert();
+          console.log("No se movió");
+        }
+        else {
+          console.log("Movido");
+          $.ajax({
+            type: "PUT",
+            url: "/api/Calendario_Salida_De_Campo/" + info.event.id + "/",
+            data: {
+              "fecha_inicio": info.event.startStr,
+              "fecha_fin": info.event.endStr,
+            }
+          });
+        }
+      },
+
       select: function (start, end) {
         $('#ModalAdd').modal('show');
       },
