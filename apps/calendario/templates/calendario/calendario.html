@@ -201,11 +201,7 @@
 
 
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                      <label class="text-danger"><input type="checkbox" name="delete"> Eliminar Evento</label>
-                    </div>
-                  </div>
+                  <button type="button" class="btn btn-dark" id="eliminar_salida">Eliminar Salida</button>
                 </div>
 
 
@@ -350,6 +346,13 @@
               "estacion": document.getElementById('select_estacion_edit').value,
               "tipo_de_salida": document.getElementById('select_estacion_tipo_edit').value,
             }
+          });
+          location.reload();
+        });
+        $("#eliminar_salida").click(function () {
+          $.ajax({
+            type: "DELETE",
+            url: "/api/Calendario_Salida_De_Campo/" + id_select + "/",
           });
           location.reload();
         });
