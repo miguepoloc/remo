@@ -3,6 +3,8 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
+router.register(r'Tipo_Estacion',
+                views.Tipo_EstacionViewSet, "Tipo_Estacion")
 router.register(r'Categoria_componente',
                 views.Categoria_componenteViewSet, "Categoria_componente")
 router.register(r'Categoria_sensor',

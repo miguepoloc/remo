@@ -15,29 +15,35 @@ $(document).ready(function () {
     L.control.scale().addTo(map);
     var boyaIcon = L.icon({
         iconUrl: '/static/img/boya.png',
-        // shadowUrl: 'leaf-shadow.png',
-
         iconSize: [11.9, 23.8], // size of the icon
-        // shadowSize: [50, 64], // size of the shadow
         iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
-        // shadowAnchor: [4, 62],  // the same for the shadow
         popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
     });
-
+    var estacionIcon = L.icon({
+        iconUrl: '/static/img/estacion.png',
+        iconSize: [15, 28], // size of the icon
+        iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
+        popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
+    });
     $.get('/api/Estacion/', function (result) {
         // Guarda en la variable estacion los resultados de la API
         estacion = result;
         console.log(estacion);
         for (let index = 0; index < estacion.length; index++) {
-            console.log(estacion[index].id);
             latitud = estacion[index].latitud;
             longitud = estacion[index].longitud;
             nombre = estacion[index].nombre;
             if (latitud == null) {
                 console.log("NADA");
             } else {
-                marker = L.marker([latitud, longitud], { icon: boyaIcon }).addTo(map);
-                marker.bindPopup("<b>" + nombre + "</b><br>Soy una estación");
+                console.log(estacion[index].tipo);
+                if (estacion[index].tipo == 1) {
+                    marker = L.marker([latitud, longitud], { icon: estacionIcon }).addTo(map);
+                } else {
+                    marker = L.marker([latitud, longitud], { icon: boyaIcon }).addTo(map);
+                }
+                marker.bindPopup("<b>" + nombre + "</b><br>" + estacion[index].tipo);
+
             }
 
         }

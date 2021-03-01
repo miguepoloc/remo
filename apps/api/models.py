@@ -8,8 +8,21 @@ def corrector_hora():
     return str(timezone.now() + timezone.timedelta(hours=-5)).split(".")[0]
 
 
+class Tipo_Estacion(models.Model):
+    id = models.AutoField(primary_key=True)
+    tipo = models.CharField(
+        max_length=200, help_text="Ingrese el tipo de estación")
+    simbolo = models.CharField(max_length=100)
+
+    def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
+        return self.tipo
+
+
 class Categoria_sensor(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     categoria = models.CharField(
         max_length=200, help_text="Ingrese la categoria de estado")
     requerimientos = models.CharField(max_length=100)
@@ -194,6 +207,8 @@ class Estacion(models.Model):
         max_length=4000, blank=True, null=True)
     estado = models.ForeignKey(
         'Categoria_componente', on_delete=models.SET_NULL, null=True, blank=True)
+    tipo = models.ForeignKey(
+        'tipo_estacion', on_delete=models.SET_NULL, null=True, blank=True)
     fecha_inicio_registro = models.DateTimeField(
         max_length=2000, blank=True, null=True)
     componentes = models.ManyToManyField(

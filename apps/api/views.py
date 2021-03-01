@@ -4,10 +4,18 @@ from rest_framework.response import Response
 from .serializers import (Categoria_componenteSerializer, Categoria_sensorSerializer, ComponenteSerializer,
                           EstacionSerializer, Componente_EstacionSerializer, SensorSerializer, Sensor_EstacionSerializer,
                           Tipo_Salida_De_CampoSerializer, InvestigadorSerializer, Salidas_De_CampoSerializer,
-                          Sensor_Salidas_De_CampoSerializer, Componente_Salidas_De_CampoSerializer, Calendario_Salidas_De_CampoSerializer)
+                          Sensor_Salidas_De_CampoSerializer, Componente_Salidas_De_CampoSerializer, Calendario_Salidas_De_CampoSerializer,
+                          Tipo_EstacionSerializer)
 from .models import (Categoria_componente, Categoria_sensor, Componente,
                      Estacion, Componente_Estacion, Sensor, Sensor_Estacion, Tipo_Salida_De_Campo, Investigador,
-                     Salidas_De_Campo, Sensor_Salidas_De_Campo, Componente_Salidas_De_Campo, Calendario_Salidas_De_Campo)
+                     Salidas_De_Campo, Sensor_Salidas_De_Campo, Componente_Salidas_De_Campo, Calendario_Salidas_De_Campo,
+                     Tipo_Estacion)
+
+
+class Tipo_EstacionViewSet(viewsets.ModelViewSet):
+
+    queryset = Tipo_Estacion.objects.all().order_by('id')
+    serializer_class = Tipo_EstacionSerializer
 
 
 class Categoria_componenteViewSet(viewsets.ModelViewSet):
