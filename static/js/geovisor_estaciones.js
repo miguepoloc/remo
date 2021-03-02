@@ -33,9 +33,7 @@ $(document).ready(function () {
             latitud = estacion[index].latitud;
             longitud = estacion[index].longitud;
             nombre = estacion[index].nombre;
-            if (latitud == null) {
-                console.log("NADA");
-            } else {
+            if (latitud != null) {
                 console.log(estacion[index].tipo);
                 if (estacion[index].tipo == 1) {
                     marker = L.marker([latitud, longitud], { icon: estacionIcon }).addTo(map);
