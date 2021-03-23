@@ -25,6 +25,8 @@ urlpatterns = [
     path('sensores/', include('apps.sensores.urls')),
     path('calendario/', include('apps.calendario.urls')),
     path('salidas_de_campo/', include('apps.salidas_de_campo.urls')),
+    path('graficas/', include('apps.graficas.urls')),
+    path('data/', include('apps.data.urls')),
     path('api/', include('apps.api.urls')),
     path('admin/', admin.site.urls),
 ]
