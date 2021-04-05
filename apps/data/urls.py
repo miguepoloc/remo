@@ -5,6 +5,5 @@ from rest_framework import routers
 from . import views
 
 urlpatterns = [
-    url(r'', views.Data.as_view(),
-        name='data'),
+    url(r'', views.Data.as_view(), name='data'),
 ]
