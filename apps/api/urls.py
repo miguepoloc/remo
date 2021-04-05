@@ -27,8 +27,9 @@ router.register(r'Componente_Salida_De_Campo',
                 views.Componente_Salidas_De_CampoViewSet, "Componente_Salida_De_Campo")
 router.register(r'Calendario_Salida_De_Campo',
                 views.Calendario_Salidas_De_CampoViewSet, "Calendario_Salida_De_Campo")
-router.register(r'Data',
-                views.DataViewSet, "Data")
+router.register(r'Data', views.DataViewSet, "Data")
+router.register(r'Codigo_Variable',
+                views.Codigo_VariableViewSet, "Codigo_Variable")
 
 
 urlpatterns = [
