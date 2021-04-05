@@ -3,7 +3,13 @@ from .models import (Categoria_componente, Categoria_sensor, Componente,
                      Estacion, Componente_Estacion, Sensor, Sensor_Estacion,
                      Tipo_Salida_De_Campo, Investigador, Salidas_De_Campo,
                      Sensor_Salidas_De_Campo, Componente_Salidas_De_Campo,
-                     Calendario_Salidas_De_Campo, Tipo_Estacion)
+                     Calendario_Salidas_De_Campo, Tipo_Estacion, Data)
+
+
+class DataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Data
+        fields = '__all__'
 
 
 class Tipo_EstacionSerializer(serializers.ModelSerializer):

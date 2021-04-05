@@ -5,4 +5,6 @@ from rest_framework import routers
 from . import views
 
 urlpatterns = [
+    url(r'', views.Graficas.as_view(),
+        name='graficas'),
 ]

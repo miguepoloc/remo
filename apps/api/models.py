@@ -8,6 +8,19 @@ def corrector_hora():
     return str(timezone.now() + timezone.timedelta(hours=-5)).split(".")[0]
 
 
+class Data(models.Model):
+    id = models.AutoField(primary_key=True)
+    fecha = models.DateTimeField(max_length=100)
+    variable = models.CharField(max_length=100)
+    valor = models.FloatField(max_length=100)
+
+    def __str__(self):
+        """
+        Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
+        """
+        return self.variable
+
+
 class Tipo_Estacion(models.Model):
     id = models.AutoField(primary_key=True)
     tipo = models.CharField(
