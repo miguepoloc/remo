@@ -305,7 +305,7 @@
     <script type="text/javascript" src="{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
     <script type="text/javascript" src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/datatables-buttons/js/buttons.colVis.js' %}"></script>
     <!-- Page specific script -->
     <script>
         $(function () {
@@ -337,18 +337,15 @@
 
         $(function () {
             $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "searching": false,
+                "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-            });
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
     </script>
     <!-- Gráficas se puede cambiar -->
