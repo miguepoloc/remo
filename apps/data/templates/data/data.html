@@ -41,6 +41,7 @@
                     <th>id</th>
                     <th>Fecha</th>
                     <th>Variable</th>
+                    <th>Código Variable</th>
                     <th>Valor</th>
                   </tr>
                 </thead>
@@ -48,7 +49,7 @@
                   {% for data in data_list %}
                   <tr>
                     <td>{{ data.id }}</td>
-                    <td>{{ data.fecha | date:"Y-m-d" }}
+                    <td>{{ data.fecha | date:"Y-m-d H:i:s" }}
                     </td>
                     <td>
                       {% for codigo in codigo_variable_list %}
@@ -56,6 +57,9 @@
                       {{ codigo.variable }}
                       {% endif %}
                       {% endfor %}
+                    </td>
+                    <td>
+                      {{ data.variable }}
                     </td>
                     <td> {{ data.valor }}</td>
                   </tr>
@@ -66,6 +70,7 @@
                     <th>id</th>
                     <th>Fecha</th>
                     <th>Variable</th>
+                    <th>Código Variable</th>
                     <th>Valor</th>
                   </tr>
                 </tfoot>

@@ -273,6 +273,14 @@
     <script type="text/javascript" src="{% static 'plugins/sweetalert2/sweetalert2.min.js' %}"></script>
     <!-- Toastr -->
     <script type="text/javascript" src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
+    <!-- Highcharts -->
+    <script src="{% static 'plugins/highcharts/highcharts.js' %}"></script>
+    <script src="{% static 'plugins/highcharts/highcharts-more.js' %}"></script>
+    <script src="{% static 'plugins/highcharts/solid-gauge.js' %}"></script>
+    <script src="{% static 'plugins/highcharts/exporting.js' %}"></script>
+    <script src="{% static 'plugins/highcharts/export-data.js' %}"></script>
+    <script src="{% static 'plugins/highcharts/accessibility.js' %}"></script>
+    <script src="{% static 'plugins/highcharts/data.js' %}"></script>
     <!-- Arcgis-->
     <!-- <script src="https://js.arcgis.com/4.18/"></script> -->
     <!-- Leaflet-->
@@ -338,13 +346,40 @@
         $(function () {
             $("#example1").DataTable({
                 "paging": true,
-                "lengthChange": false,
+                "lengthChange": true,
                 "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ datos por página",
+                    "zeroRecords": "No hay datos",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay datos disponibles",
+                    "infoFiltered": "(Filtrados de _MAX_ datos totales)"
+                },
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                }
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
     </script>
@@ -533,6 +568,8 @@
             })
         })
     </script>
+    <script src="{% static 'js/graficas.js' %}"></script>
+
     <!-- Contenido de la página -->
     {% block script %} {% endblock script %}
 </body>
