@@ -18,5 +18,5 @@ class Data(generic.ListView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['codigo_variable_list'] = Codigo_Sensor.objects.all()
+        context['codigo_sensor_list'] = Codigo_Sensor.objects.all()
         return context

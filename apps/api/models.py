@@ -9,7 +9,7 @@ def corrector_hora():
 
 
 class Codigo_Sensor(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.IntegerField(primary_key=True)
     id_sensor = models.CharField(max_length=10)
     sensor = models.ForeignKey(
         'Sensor_Estacion', on_delete=models.SET_NULL, null=True, blank=True)
@@ -28,14 +28,15 @@ class Codigo_Sensor(models.Model):
 class Data(models.Model):
     id = models.AutoField(primary_key=True)
     fecha = models.DateTimeField(max_length=100)
-    variable = models.CharField(max_length=100)
+    sensor = models.ForeignKey(
+        'Codigo_Sensor', on_delete=models.SET_NULL, null=True, blank=True)
     valor = models.FloatField(max_length=100)
 
     def __str__(self):
         """
         Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
         """
-        return self.variable
+        return '%s (%s)' % (self.sensor, self.fecha)
 
 
 class Tipo_Estacion(models.Model):

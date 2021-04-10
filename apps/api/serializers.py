@@ -6,7 +6,7 @@ from .models import (Categoria_componente, Categoria_sensor, Componente,
                      Calendario_Salidas_De_Campo, Tipo_Estacion, Data, Codigo_Sensor)
 
 
-class Codigo_VariableSerializer(serializers.ModelSerializer):
+class Codigo_SensorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Codigo_Sensor
         fields = '__all__'

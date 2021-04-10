@@ -28,8 +28,8 @@ router.register(r'Componente_Salida_De_Campo',
 router.register(r'Calendario_Salida_De_Campo',
                 views.Calendario_Salidas_De_CampoViewSet, "Calendario_Salida_De_Campo")
 router.register(r'Data', views.DataViewSet, "Data")
-router.register(r'Codigo_Variable',
-                views.Codigo_VariableViewSet, "Codigo_Variable")
+router.register(r'Codigo_Sensor',
+                views.Codigo_SensorViewSet, "Codigo_Sensor")
 
 
 urlpatterns = [

@@ -5,17 +5,17 @@ from .serializers import (Categoria_componenteSerializer, Categoria_sensorSerial
                           EstacionSerializer, Componente_EstacionSerializer, SensorSerializer, Sensor_EstacionSerializer,
                           Tipo_Salida_De_CampoSerializer, InvestigadorSerializer, Salidas_De_CampoSerializer,
                           Sensor_Salidas_De_CampoSerializer, Componente_Salidas_De_CampoSerializer, Calendario_Salidas_De_CampoSerializer,
-                          Tipo_EstacionSerializer, DataSerializer, Codigo_VariableSerializer)
+                          Tipo_EstacionSerializer, DataSerializer, Codigo_SensorSerializer)
 from .models import (Categoria_componente, Categoria_sensor, Componente,
                      Estacion, Componente_Estacion, Sensor, Sensor_Estacion, Tipo_Salida_De_Campo, Investigador,
                      Salidas_De_Campo, Sensor_Salidas_De_Campo, Componente_Salidas_De_Campo, Calendario_Salidas_De_Campo,
                      Tipo_Estacion, Data, Codigo_Sensor)
 
 
-class Codigo_VariableViewSet(viewsets.ModelViewSet):
+class Codigo_SensorViewSet(viewsets.ModelViewSet):
 
     queryset = Codigo_Sensor.objects.all().order_by('id')
-    serializer_class = Codigo_VariableSerializer
+    serializer_class = Codigo_SensorSerializer
 
 
 class DataViewSet(viewsets.ModelViewSet):

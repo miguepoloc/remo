@@ -56,40 +56,22 @@
                     <td>{{ data.fecha | date:"Y-m-d H:i:s" }}
                     </td>
                     <td>
-                      {% for codigo in codigo_variable_list %}
-                      {% if codigo.id_sensor == data.variable %}
-                      {{ codigo.sensor.sensor.nombre }}
-                      {% endif %}
-                      {% endfor %}
+                      {{ data.sensor.sensor.sensor.nombre }}
                     </td>
                     <td>
-                      {% for codigo in codigo_variable_list %}
-                      {% if codigo.id_sensor == data.variable %}
-                      {{ codigo.id_sensor }}
-                      {% endif %}
-                      {% endfor %}
+                      {{ data.sensor.id_sensor }}
                     </td>
                     <td> {{ data.valor }}</td>
                     <td>
-                      {% for codigo in codigo_variable_list %}
-                      {% if codigo.id_sensor == data.variable %}
-                      {{ codigo.sensor.sensor.unidad }}
-                      {% endif %}
-                      {% endfor %}
+                      {{ data.sensor.sensor.sensor.unidad }}
+
                     </td>
                     <td>
-                      {% for codigo in codigo_variable_list %}
-                      {% if codigo.id_sensor == data.variable %}
-                      {{ codigo.estacion }}
-                      {% endif %}
-                      {% endfor %}
+                      {{ data.sensor.estacion }}
+
                     </td>
                     <td>
-                      {% for codigo in codigo_variable_list %}
-                      {% if codigo.id_sensor == data.variable %}
-                      {{ codigo.componente.componente }}
-                      {% endif %}
-                      {% endfor %}
+                      {{ data.sensor.componente.componente.nombre }}
                     </td>
 
                   </tr>
