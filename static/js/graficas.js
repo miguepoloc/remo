@@ -383,7 +383,7 @@ function grafica(sx) {
         },
 
         title: {
-            text: 'Speedometer'
+            text: sx
         },
 
         pane: {
@@ -422,7 +422,7 @@ function grafica(sx) {
         // the value axis
         yAxis: {
             min: 0,
-            max: 50,
+            max: 100,
 
             minorTickInterval: 'auto',
             minorTickWidth: 1,
@@ -440,61 +440,62 @@ function grafica(sx) {
                 rotation: 'auto'
             },
             title: {
-                text: 'km/h'
+                text: '%'
             },
             plotBands: [{
                 from: 0,
-                to: 15,
+                to: 20,
                 color: '#DF5353' // green
             },
             {
-                from: 15,
-                to: 25,
+                from: 20,
+                to: 40,
                 color: '#DDDF0D' // yellow
             },
             {
-                from: 25,
-                to: 32,
+                from: 40,
+                to: 60,
                 color: '#55BF3B' // green
             },
             {
-                from: 32,
-                to: 40,
+                from: 60,
+                to: 80,
                 color: '#DDDF0D' // yellow
             }, {
-                from: 40,
-                to: 50,
+                from: 80,
+                to: 100,
                 color: '#DF5353' // red
             }]
         },
 
         series: [{
-            name: 'Speed',
-            data: [20],
+            name: sx,
+            data: ultimo,
             tooltip: {
-                valueSuffix: ' km/h'
+                valueSuffix: " " + sx
             }
         }]
 
     },
         // Add some life
-        function (chart) {
-            if (!chart.renderer.forExport) {
-                setInterval(function () {
-                    var point = chart.series[0].points[0],
-                        newVal,
-                        inc = Math.round((Math.random() - 0.5) * 20);
+        // function (chart) {
+        //     if (!chart.renderer.forExport) {
+        //         setInterval(function () {
+        //             var point = chart.series[0].points[0],
+        //                 newVal,
+        //                 inc = Math.round((Math.random() - 0.5) * 20);
 
-                    newVal = point.y + inc;
-                    if (newVal < 0 || newVal > 50) {
-                        newVal = point.y - inc;
-                    }
+        //             newVal = point.y + inc;
+        //             if (newVal < 0 || newVal > 50) {
+        //                 newVal = point.y - inc;
+        //             }
 
-                    point.update(newVal);
+        //             point.update(newVal);
 
-                }, 3000);
-            }
-        });
+        //         }, 3000);
+        //     }
+        // }
+    );
 
     console.log(trunc(objeto_variable[sx][objeto_variable[sx].length - 1], 2));
 }

@@ -3,10 +3,10 @@ from .models import (Categoria_componente, Categoria_sensor, Componente,
                      Estacion, Componente_Estacion, Sensor_Estacion, Sensor,
                      Investigador, Tipo_Salida_De_Campo, Salidas_De_Campo,
                      Sensor_Salidas_De_Campo, Componente_Salidas_De_Campo,
-                     Calendario_Salidas_De_Campo, Tipo_Estacion, Data, Codigo_Variable)
+                     Calendario_Salidas_De_Campo, Tipo_Estacion, Data, Codigo_Sensor)
 
 admin.site.register(Data)
-admin.site.register(Codigo_Variable)
+admin.site.register(Codigo_Sensor)
 admin.site.register(Tipo_Estacion)
 admin.site.register(Categoria_componente)
 admin.site.register(Categoria_sensor)

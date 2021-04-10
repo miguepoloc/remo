@@ -40,12 +40,16 @@
                   <tr>
                     <th>id</th>
                     <th>Fecha</th>
-                    <th>Variable</th>
-                    <th>Código Variable</th>
+                    <th>Sensor</th>
+                    <th>Código Sensor</th>
                     <th>Valor</th>
+                    <th>Unidad</th>
+                    <th>Estación</th>
+                    <th>Componente</th>
                   </tr>
                 </thead>
                 <tbody>
+
                   {% for data in data_list %}
                   <tr>
                     <td>{{ data.id }}</td>
@@ -53,15 +57,41 @@
                     </td>
                     <td>
                       {% for codigo in codigo_variable_list %}
-                      {% if codigo.id == data.variable %}
-                      {{ codigo.variable }}
+                      {% if codigo.id_sensor == data.variable %}
+                      {{ codigo.sensor.sensor.nombre }}
                       {% endif %}
                       {% endfor %}
                     </td>
                     <td>
-                      {{ data.variable }}
+                      {% for codigo in codigo_variable_list %}
+                      {% if codigo.id_sensor == data.variable %}
+                      {{ codigo.id_sensor }}
+                      {% endif %}
+                      {% endfor %}
                     </td>
                     <td> {{ data.valor }}</td>
+                    <td>
+                      {% for codigo in codigo_variable_list %}
+                      {% if codigo.id_sensor == data.variable %}
+                      {{ codigo.sensor.sensor.unidad }}
+                      {% endif %}
+                      {% endfor %}
+                    </td>
+                    <td>
+                      {% for codigo in codigo_variable_list %}
+                      {% if codigo.id_sensor == data.variable %}
+                      {{ codigo.estacion }}
+                      {% endif %}
+                      {% endfor %}
+                    </td>
+                    <td>
+                      {% for codigo in codigo_variable_list %}
+                      {% if codigo.id_sensor == data.variable %}
+                      {{ codigo.componente.componente }}
+                      {% endif %}
+                      {% endfor %}
+                    </td>
+
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -69,9 +99,12 @@
                   <tr>
                     <th>id</th>
                     <th>Fecha</th>
-                    <th>Variable</th>
-                    <th>Código Variable</th>
+                    <th>Sensor</th>
+                    <th>Código Sensor</th>
                     <th>Valor</th>
+                    <th>Unidad</th>
+                    <th>Estación</th>
+                    <th>Componente</th>
                   </tr>
                 </tfoot>
               </table>
@@ -91,3 +124,50 @@
 <!-- /.content-wrapper -->
 
 {% endblock content %}
+
+<!-- Page specific script -->
+{% block script %}
+<!-- Highcharts -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "language": {
+        "lengthMenu": "Mostrar _MENU_ datos por página",
+        "zeroRecords": "No hay datos",
+        "info": "Mostrando página _PAGE_ de _PAGES_",
+        "infoEmpty": "No hay datos disponibles",
+        "infoFiltered": "(Filtrados de _MAX_ datos totales)"
+      },
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      initComplete: function () {
+        this.api().columns().every(function () {
+          var column = this;
+          var select = $('<select><option value=""></option></select>')
+            .appendTo($(column.footer()).empty())
+            .on('change', function () {
+              var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+              );
+
+              column
+                .search(val ? '^' + val + '$' : '', true, false)
+                .draw();
+            });
+
+          column.data().unique().sort().each(function (d, j) {
+            select.append('<option value="' + d + '">' + d + '</option>')
+          });
+        });
+      }
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
+
+{% endblock script %}

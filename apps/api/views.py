@@ -9,12 +9,12 @@ from .serializers import (Categoria_componenteSerializer, Categoria_sensorSerial
 from .models import (Categoria_componente, Categoria_sensor, Componente,
                      Estacion, Componente_Estacion, Sensor, Sensor_Estacion, Tipo_Salida_De_Campo, Investigador,
                      Salidas_De_Campo, Sensor_Salidas_De_Campo, Componente_Salidas_De_Campo, Calendario_Salidas_De_Campo,
-                     Tipo_Estacion, Data, Codigo_Variable)
+                     Tipo_Estacion, Data, Codigo_Sensor)
 
 
 class Codigo_VariableViewSet(viewsets.ModelViewSet):
 
-    queryset = Codigo_Variable.objects.all().order_by('id')
+    queryset = Codigo_Sensor.objects.all().order_by('id')
     serializer_class = Codigo_VariableSerializer
 
 

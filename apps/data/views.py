@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
-from ..api.models import Data, Codigo_Variable
+from ..api.models import Data, Codigo_Sensor
 
 
 class Data(generic.ListView):
@@ -18,5 +18,5 @@ class Data(generic.ListView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['codigo_variable_list'] = Codigo_Variable.objects.all()
+        context['codigo_variable_list'] = Codigo_Sensor.objects.all()
         return context

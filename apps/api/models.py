@@ -8,15 +8,21 @@ def corrector_hora():
     return str(timezone.now() + timezone.timedelta(hours=-5)).split(".")[0]
 
 
-class Codigo_Variable(models.Model):
-    id = models.CharField(max_length=10, primary_key=True)
-    variable = models.CharField(max_length=100)
+class Codigo_Sensor(models.Model):
+    id = models.AutoField(primary_key=True)
+    id_sensor = models.CharField(max_length=10)
+    sensor = models.ForeignKey(
+        'Sensor_Estacion', on_delete=models.SET_NULL, null=True, blank=True)
+    estacion = models.ForeignKey(
+        'Estacion', on_delete=models.SET_NULL, null=True, blank=True)
+    componente = models.ForeignKey(
+        'Componente_Estacion', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         """
         Cadena para representar el objeto MyModelName (en el sitio de Admin, etc.)
         """
-        return self.variable
+        return '%s (%s)' % (self.sensor, self.id_sensor)
 
 
 class Data(models.Model):
