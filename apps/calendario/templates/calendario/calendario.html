@@ -282,7 +282,7 @@
         var fecha_inicial;
         var fecha_final;
         var observaciones;
-        $.get('/api/Calendario_Salida_De_Campo/', function (result) {
+        $.get('/remo/api/Calendario_Salida_De_Campo/', function (result) {
           lista_calendario = result;
           console.log("Lista Calendario: ");
           console.log(lista_calendario);
@@ -301,7 +301,7 @@
         });
 
         var lista_estacion = "";
-        $.get('/api/Estacion/', function (result) {
+        $.get('/remo/api/Estacion/', function (result) {
           lista_estacion = result;
           console.log("Lista Estación: ");
           console.log(lista_estacion);
@@ -323,7 +323,7 @@
         });
 
         var lista_tipo = "";
-        $.get('/api/Tipo_Salida_De_Campo/', function (result) {
+        $.get('remo/api/Tipo_Salida_De_Campo/', function (result) {
 
           lista_tipo = result;
           console.log("Lista Salida: ");
@@ -354,10 +354,10 @@
           fecha_fin = convertir_fecha(fecha_fin);
           console.log(fecha_fin);
           // Estación
-          console.log("/api/Calendario_Salida_De_Campo/" + id_select);
+          console.log("/remo/api/Calendario_Salida_De_Campo/" + id_select);
           $.ajax({
             type: "PUT",
-            url: "/api/Calendario_Salida_De_Campo/" + id_select + "/",
+            url: "/remo/api/Calendario_Salida_De_Campo/" + id_select + "/",
             data: {
               "fecha_inicio": fecha_inicio,
               "fecha_fin": fecha_fin,
@@ -371,7 +371,7 @@
         $("#eliminar_salida").click(function () {
           $.ajax({
             type: "DELETE",
-            url: "/api/Calendario_Salida_De_Campo/" + id_select + "/",
+            url: "/remo/api/Calendario_Salida_De_Campo/" + id_select + "/",
           });
           location.reload();
         });

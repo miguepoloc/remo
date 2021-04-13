@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -83,18 +84,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'remo.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'remo',
-        'USER': 'admin',
-        'PASSWORD': 'Contrasena1!',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME',"postgres"),
+        'USER':os.environ.get('DB_USER',"postgres"),
+        'PASSWORD': os.environ.get('DB_PASSWORD',"postgres"),
+        'HOST':os.environ.get('DB_HOST',"localhost"),
+        'PORT':5432,
     }
 }
 
@@ -135,8 +135,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'remo/static')
+STATIC_URL = '/remo/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
@@ -144,7 +144,7 @@ STATICFILES_DIRS = [
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 LOGIN_REDIRECT_URL = '/'
-
+FORCE_SCRIPT_NAME ='/remo/'
 # Django Rest-Framework
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

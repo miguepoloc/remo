@@ -1,33 +1,36 @@
 version: "3"
 
 services:
+  remo_app:
+    build: .
+    command: "gunicorn --workers 3 --bind :8100 --chdir remo remo.wsgi:application"
+    environment: 
+      - DB_HOST=db
+      - DB_NAME=remo
+      - DB_USER=admin
+      - DB_PASSWORD=Contrasena1!
+    volumes:
+      - ./static:/code/static
+      - .:/code
+    depends_on:
+      - db
+
   db:
-    image: postgres
+    image: postgres:12
     environment:
       - POSTGRES_DB=remo
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=Contrasena1!
-    ports:
-    - 5432:5432
-
-  remo_app:
-    build: .
     volumes:
-      - static:/code/static
-      - .:/code
-    depends_on:
-      - db
-  
+      - ./postgres_data:/var/lib/postgresql/data/
+    ports: 
+      - 5432:5432
   nginx:
-    image: nginx:1.13
-    ports:
-      - 8100:80
-    volumes:
-      - ./config/nginx/conf.d:/etc/nginx/conf.d
-      - static:/code/static
-    depends_on:
-      - remo_app
-
-volumes:
-  .:
-  static:
+      image: nginx:1.13
+      ports:
+        - 8100:80
+      volumes:
+        - ./config/nginx/conf.d:/etc/nginx/conf.d
+        - ./static:/code/static
+      depends_on:
+        - remo_app

@@ -132,8 +132,8 @@ class Categoria_componente(models.Model):
 
 
 def datasheet_directorio_ruta(instance, filename):
-    # Ruta donde será cargada la imagen MEDIA_ROOT/static/img/componente_estacion/<filename>
-    return 'static/doc/datasheet/{0}.pdf'.format(instance.id)
+    # Ruta donde será cargada la imagen MEDIA_ROOT/remo/static/img/componente_estacion/<filename>
+    return 'remo/static/doc/datasheet/{0}.pdf'.format(instance.id)
 
 
 class Componente(models.Model):
@@ -166,7 +166,7 @@ class Componente(models.Model):
 
 def componentes_directorio_ruta(instance, filename):
     # Ruta donde será cargada la imagen MEDIA_ROOT/static/img/componente_estacion/<filename>
-    return 'static/img/componente_estacion/{0}.png'.format(instance.id)
+    return 'remo/static/img/componente_estacion/{0}.png'.format(instance.id)
 
 
 class Componente_Estacion(models.Model):
@@ -215,8 +215,8 @@ class Componente_Estacion(models.Model):
 
 
 def estaciones_directorio_ruta(instance, filename):
-    # Ruta donde será cargada la imagen MEDIA_ROOT/static/img/componente_estacion/<filename>
-    return 'static/img/estaciones/{0}.png'.format(instance.id_estacion)
+    # Ruta donde será cargada la imagen MEDIA_ROOT/remo/static/img/componente_estacion/<filename>
+    return 'remo/static/img/estaciones/{0}.png'.format(instance.id_estacion)
 
 
 class Estacion(models.Model):

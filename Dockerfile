@@ -1,11 +1,17 @@
-FROM python:3.6
+FROM python:3.8.5
+
 
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 
-WORKDIR /code
 COPY . /code/
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt 
-# RUN python manage.py migrate --settings=siam.settings.dev
-CMD ["gunicorn", "-c", "config/gunicorn/conf.py", "--bind", ":8100", "--chdir", "remo", "remo.wsgi:application"]
+WORKDIR /code
+
+
+# install dependencies
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
+# RUN python manage.py makemigrations --settings=remo.settings
+
+# RUN python manage.py collectstatic
+# CMD ["gunicorn", "-c", "config/gunicorn/conf.py", "--bind", ":8100", "--chdir", "remo", "remo.wsgi:application"]

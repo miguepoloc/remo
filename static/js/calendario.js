@@ -23,7 +23,7 @@ $("#nueva_salida").click(function () {
     // Estación
     $.ajax({
         type: "POST",
-        url: "/api/Calendario_Salida_De_Campo/",
+        url: "/remo/api/Calendario_Salida_De_Campo/",
         data: {
             "fecha_inicio": fecha_inicio,
             "fecha_fin": fecha_fin,

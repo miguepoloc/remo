@@ -17,7 +17,7 @@ $.ajaxSetup({
 // Adquiere el listado de los componentes, sensores y estaciones
 var lista_componentes_estacion = "";
 
-$.get('/api/Componente_Estacion/', function (result) {
+$.get('/remo/api/Componente_Estacion/', function (result) {
     lista_componentes_estacion = result;
     console.log("Lista Componentes Estación: ");
     console.log(lista_componentes_estacion);
@@ -25,7 +25,7 @@ $.get('/api/Componente_Estacion/', function (result) {
 
 var lista_componentes = "";
 
-$.get('/api/Componente/', function (result) {
+$.get('/remo/api/Componente/', function (result) {
     lista_componentes = result;
     console.log("Lista Componentes: ");
     console.log(lista_componentes);
@@ -33,7 +33,7 @@ $.get('/api/Componente/', function (result) {
 
 var lista_sensores_estacion = "";
 
-$.get('/api/Sensor_Estacion/', function (result) {
+$.get('/remo/api/Sensor_Estacion/', function (result) {
     lista_sensores_estacion = result;
     console.log("Lista Sensores Estación: ");
     console.log(lista_sensores_estacion);
@@ -42,7 +42,7 @@ $.get('/api/Sensor_Estacion/', function (result) {
 
 var lista_sensores = "";
 
-$.get('/api/Sensor/', function (result) {
+$.get('/remo/api/Sensor/', function (result) {
     lista_sensores = result;
     console.log("Lista Sensores: ");
     console.log(lista_sensores);
@@ -50,7 +50,7 @@ $.get('/api/Sensor/', function (result) {
 
 var lista_tipo = "";
 
-$.get('/api/Tipo_Salida_De_Campo/', function (result) {
+$.get('/remo/api/Tipo_Salida_De_Campo/', function (result) {
     lista_tipo = result;
     console.log("Lista Tipo de salida: ");
     console.log(lista_tipo);
@@ -263,7 +263,7 @@ $("#agregar").click(function () {
         console.log("Componente: " + document.getElementById('select_componente' + index).value);
         $.ajax({
             type: "POST",
-            url: "/api/Componente_Salida_De_Campo/",
+            url: "/remo/api/Componente_Salida_De_Campo/",
             data: {
                 "fecha": fecha,
                 "observaciones": document.getElementById('observaciones_componente' + index).value,
@@ -279,7 +279,7 @@ $("#agregar").click(function () {
         console.log("Sensores: " + document.getElementById('select_sensor' + index).value);
         $.ajax({
             type: "POST",
-            url: "/api/Sensor_Salida_De_Campo/",
+            url: "/remo/api/Sensor_Salida_De_Campo/",
             data: {
                 "fecha": fecha,
                 "observaciones": document.getElementById('observaciones_sensor' + index).value,
@@ -294,7 +294,7 @@ $("#agregar").click(function () {
     // Estación
     $.ajax({
         type: "POST",
-        url: "/api/Salida_De_Campo/",
+        url: "/remo/api/Salida_De_Campo/",
         data: {
             "fecha": fecha,
             "observaciones": document.getElementById('observaciones_estacion').value,

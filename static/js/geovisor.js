@@ -4,7 +4,7 @@ $(document).ready(function () {
     id_estacion = document.getElementById("id_estacion")
     //Obtiene los datos de la estacion de la API
     // console.log(id_estacion.text);
-    $.get('/api/Estacion/', function (result) {
+    $.get('/remo/api/Estacion/', function (result) {
         // Guarda en la variable estacion los resultados de la API
         estacion = result;
         console.log(estacion);
@@ -26,13 +26,13 @@ $(document).ready(function () {
         }).addTo(map);
         L.control.scale().addTo(map);
         var boyaIcon = L.icon({
-            iconUrl: '/static/img/boya.png',
+            iconUrl: '/remo/static/img/boya.png',
             iconSize: [11.9, 23.8], // size of the icon
             iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
             popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
         });
         var estacionIcon = L.icon({
-            iconUrl: '/static/img/estacion.png',
+            iconUrl: '/remo/static/img/estacion.png',
             iconSize: [15, 28], // size of the icon
             iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
             popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
