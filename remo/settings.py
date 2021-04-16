@@ -90,11 +90,11 @@ WSGI_APPLICATION = 'remo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME',"postgres"),
-        'USER':os.environ.get('DB_USER',"postgres"),
-        'PASSWORD': os.environ.get('DB_PASSWORD',"postgres"),
-        'HOST':os.environ.get('DB_HOST',"localhost"),
-        'PORT':5432,
+        'NAME': os.environ.get('DB_NAME', "remo"),
+        'USER': os.environ.get('DB_USER', "admin"),
+        'PASSWORD': os.environ.get('DB_PASSWORD', "Contrasena1!"),
+        'HOST': os.environ.get('DB_HOST', "localhost"),
+        'PORT': 5432,
     }
 }
 
@@ -144,7 +144,7 @@ STATICFILES_DIRS = [
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 LOGIN_REDIRECT_URL = '/'
-FORCE_SCRIPT_NAME ='/remo/'
+# FORCE_SCRIPT_NAME ='/remo/'
 # Django Rest-Framework
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

@@ -1,7 +1,14 @@
-// Almacena los datos
-var sensores;
-// Objeto que almacena las variables
-var objeto_variable = new Object();
+// Almacena los datos de la API
+var api_cod_sensor;
+var api_estacion;
+var api_sensor;
+var api_componente;
+var api_sensor_estacion;
+var api_componente_estacion;
+var api_data;
+
+// Objeto que almacena las sensors
+var objeto_sensor = new Object();
 // Objeto que almacena las unidades
 var objeto_unidades = new Object();
 // Objeto que almacena las fechas
@@ -11,16 +18,67 @@ var objeto_fecha_UNIX = new Object();
 // Almacena el html que se le anexará al código de las gráficas
 var html = "";
 
+var objeto_rango_valor = new Object();
+
+
+// 9000;12;1;0;15
+
+// # codvar; promedio; std; min; max 
+objeto_rango_valor["388850400"] = ["Clorofila", 1, 0.2, 0, 10];
+objeto_rango_valor["388850405"] = ["Conductividad", 45, 5, 0, 60];
+objeto_rango_valor["388850104"] = ["Dirección del viento", 340, 20, 0, 360];
+objeto_rango_valor["388850027"] = ["Humedad Relativa", 85, 5, 0, 100];
+objeto_rango_valor["388850407"] = ["Nivel del mar", 85, 5, 0, 100];
+objeto_rango_valor["388850402"] = ["Oxígeno disuelto", 0.1, 0.02, 0, 1];
+objeto_rango_valor["388850403"] = ["pH", 7.2, 0.2, 1, 14];
+objeto_rango_valor["388850240"] = ["Precipitación", 10, 1, 0, 20];
+objeto_rango_valor["388850255"] = ["Presión atmosférica", 1000, 5, 980, 1020];
+objeto_rango_valor["388850239"] = ["Radiación solar", 500, 200, 0, 1000];
+objeto_rango_valor["388850406"] = ["Salinidad", 34, 2, 10, 40];
+objeto_rango_valor["388850068"] = ["Temperatura del aire", 28, 3, 15, 40];
+objeto_rango_valor["388850404"] = ["Temperatura del agua", 28, 2, 20, 40];
+objeto_rango_valor["388850401"] = ["Turbidéz", 35, 10, 0, 60];
+objeto_rango_valor["388850103"] = ["Velocidad del viento", 5, 1, 0, 10];
+objeto_rango_valor["388859000"] = ["Voltaje", 12, 1, 0, 15];
 
 
 // Función de inicio
 $(document).ready(function () {
-    //Obtiene los datos de la CTD de la API
+    //Obtiene los datos de la API
+    $.get('/api/Codigo_Sensor/', function (result) {
+        api_cod_sensor = result;
+        console.log("API Código Sensor");
+        console.log(api_cod_sensor);
+    });
+    $.get('/api/Estacion/', function (result) {
+        api_estacion = result;
+        console.log("API Estación");
+        console.log(api_estacion);
+    });
+    $.get('/api/Sensor/', function (result) {
+        api_sensor = result;
+        console.log("API Sensor");
+        console.log(api_sensor);
+    });
+    $.get('/api/Componente/', function (result) {
+        api_componente = result;
+        console.log("API Componente");
+        console.log(api_componente);
+    });
+    $.get('/api/Sensor_Estacion/', function (result) {
+        api_sensor_estacion = result;
+        console.log("API Sensor Estación");
+        console.log(api_sensor_estacion);
+    });
+    $.get('/api/Componente_Estacion/', function (result) {
+        api_componente_estacion = result;
+        console.log("API Componente Estación");
+        console.log(api_componente_estacion);
+    });
     $.get('/api/Data/', function (result) {
-        // Guarda en la variable ctd los resultados de la API
-        sensores = result;
-        // Llama a la función gráfica
-        console.log(sensores);
+        api_data = result;
+        console.log("API Data");
+        console.log(api_data);
         control();
     });
 });
@@ -29,56 +87,69 @@ $(document).ready(function () {
 function control() {
     // Se crean los vectores de control
     vector_valor = [];
-    vector_variable_cod = [];
-    vector_variable = [];
+    vector_sensor_cod = [];
+    vector_sensor_remocod = [];
+    vector_sensor = [];
     vector_unidad = [];
     vector_fecha = [];
     // Se recorren todas las posiciones del vector de datos
-    for (i = 0; i < sensores.length; i++) {
-        // Guarda el código de la variable muestra de la posicón i del vector
-        codigo = String(sensores[i]["variable"]);
-        // En esta parte se va a llenar el vector con los códigos de las variables
-        // Para saber cuántos variables se tomaron y relacionar los datos
+    for (i = 0; i < api_data.length; i++) {
+        // Guarda el código de la sensor muestra de la posicón i del vector
+        codigo = String(api_data[i]["sensor"]);
+        // En esta parte se va a llenar el vector con los códigos de las sensors
+        // Para saber cuántos sensors se tomaron y relacionar los datos
         // A partir de este identificador
-        // Si aún no se ha añadido el código de la variable de la posición i
-        // En el vector de códigos de la variable
-        if (vector_variable_cod.includes(codigo) == false) {
-            // Se añade el código de la variable
-            vector_variable_cod.push(codigo);
+        // Si aún no se ha añadido el código de la sensor de la posición i
+        // En el vector de códigos de la sensor
+        if (vector_sensor_cod.includes(codigo) == false) {
+            // Se añade el código de la sensor
+            vector_sensor_cod.push(codigo);
         }
 
-        // Se realiza el mismo proceso anterior pero con el nombre de la variable
-        variable = String(sensores[i]["variable"]);
-        unidad = String(sensores[i]["variable"]);
-        if (vector_variable.includes(variable) == false) {
-            vector_variable.push(variable);
+        // Se realiza el mismo proceso anterior pero con el nombre de la sensor
+        for (j = 0; j < api_cod_sensor.length; j++) {
+            if (api_cod_sensor[j]["id"] == api_data[i]["sensor"]) {
+                sensor_remocod = String(api_cod_sensor[j]["sensor"]);
+                for (q = 0; q < api_sensor_estacion.length; q++) {
+                    if (api_sensor_estacion[q]["id"] == api_cod_sensor[j]["sensor"]) {
+                        for (w = 0; w < api_sensor.length; w++) {
+                            if (api_sensor[w]["id"] == api_sensor_estacion[q]["sensor"]) {
+                                sensor = String(api_sensor[w]["nombre"]);
+                                unidad = String(api_sensor[w]["unidad"]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (vector_sensor.includes(sensor) == false) {
+            vector_sensor_remocod.push(sensor_remocod);
+            vector_sensor.push(sensor);
             vector_unidad.push(unidad);
         }
-
-        // Se realiza el mismo proceso anterior pero con la unidad de la variable
-        // unidad = String(sensores[i]["unidad"]);
-        // if (vector_unidad.includes(unidad) == false) {
-        //     vector_unidad.push(unidad);
-        // }
-
         // Se realiza el mismo proceso anterior pero con la fecha
-        fecha = String(sensores[i]["fecha"]);
+        fecha = String(api_data[i]["fecha"]);
         if (vector_fecha.includes(fecha) == false) {
             vector_fecha.push(fecha);
         }
     }
 
-    console.log(vector_variable);
+    console.log("Vector Sensor Código");
+    console.log(vector_sensor_cod);
+    console.log("Vector Sensor Código Remo");
+    console.log(vector_sensor_remocod);
+    console.log("Vector Sensor");
+    console.log(vector_sensor);
+    console.log("Vector Unidad");
     console.log(vector_unidad);
-    console.log(vector_fecha);
 
-    // Se recorren todas las posiciones del vector que contiene a las variables
-    for (i = 0; i < vector_variable.length; i++) {
+    // Se recorren todas las posiciones del vector que contiene a las sensors
+    for (i = 0; i < vector_sensor_cod.length; i++) {
         // Se crea el contenedor de las gráficas
         html += '<div class="col-sm-6">';
         html += '<div class="card card-primary">';
         html += '<div class="card-header">';
-        html += '<h2 class="card-title"><b>' + vector_variable[i] + '</b></h2>';
+        html += '<h2 class="card-title"><b>' + vector_sensor[i] + '</b></h2>';
         html += '<div class="card-tools">';
         html += '<button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse">';
         html += '<i class="fas fa-minus"></i>';
@@ -90,7 +161,7 @@ function control() {
         html += '</div>';
         html += '<div class="card-body">';
         html += '<figure class="highcharts-figure tm-flex-center tm-flex-col">';
-        html += '<div id="container-' + vector_variable[i] + '" class="chart-container"></div>';
+        html += '<div id="container-' + vector_sensor_cod[i] + '" class="chart-container"></div>';
         html += '</figure>';
         html += '</div>';
         html += '<div class="card-footer">';
@@ -107,7 +178,7 @@ function control() {
         html += '<div class="col-sm-6">';
         html += '<div class="card card-primary">';
         html += '<div class="card-header">';
-        html += '<h2 class="card-title"><b>' + vector_variable[i] + '</b></h2>';
+        html += '<h2 class="card-title"><b>' + vector_sensor[i] + '</b></h2>';
         html += '<div class="card-tools">';
         html += '<button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse">';
         html += '<i class="fas fa-minus"></i>';
@@ -119,7 +190,7 @@ function control() {
         html += '</div>';
         html += '<div class="card-body">';
         html += '<figure class="highcharts-figure tm-flex-center tm-flex-col">';
-        html += '<div id="container-h-' + vector_variable[i] + '" class="chart-container"></div>';
+        html += '<div id="container-h-' + vector_sensor_cod[i] + '" class="chart-container"></div>';
         html += '</figure>';
         html += '</div>';
         html += '<div class="card-footer">';
@@ -134,115 +205,105 @@ function control() {
 
 
         // html += '<a onclick="descargar()" class="btn btn-block btn-success" id="descarga_boton" style=" display: flex; align-items: center; justify-content: center;color: white;margin-bottom: 16px;">';
-        // // html += '<a onclick="descargar_' + vector_variable[i] + '" class="btn btn-block btn-success" id="descarga_boton" style=" display: flex; align-items: center; justify-content: center;color: white;margin-bottom: 16px;">';
+        // // html += '<a onclick="descargar_' + vector_sensor[i] + '" class="btn btn-block btn-success" id="descarga_boton" style=" display: flex; align-items: center; justify-content: center;color: white;margin-bottom: 16px;">';
         // html += '<i class="nav-icon fa fa-download"></i> Descargar datos';
         // html += '</a>';
 
-        // Se añade un atributo al objeto de las variables que será una lista vacía
-        // que tendrá como nombre la variable de la posición i
-        objeto_variable[vector_variable[i]] = [];
+        // Se añade un atributo al objeto de las sensors que será una lista vacía
+        // que tendrá como nombre la sensor de la posición i
+        objeto_sensor[vector_sensor_cod[i]] = [];
 
         // Se añade un atributo al objeto de las unidades que será la unidad
-        // de la misma posición i que tendrá como nombre la variable de la posición i
-        objeto_unidades[vector_variable[i]] = vector_unidad[i];
+        // de la misma posición i que tendrá como nombre la sensor de la posición i
+        objeto_unidades[vector_sensor_cod[i]] = vector_unidad[i];
 
         // Igualmente con la fecha
-        objeto_fecha[vector_variable[i]] = [];
+        objeto_fecha[vector_sensor_cod[i]] = [];
         // Igualmente con la fecha UNIX
-        objeto_fecha_UNIX[vector_variable[i]] = [];
+        objeto_fecha_UNIX[vector_sensor_cod[i]] = [];
     }
 
-    console.log(objeto_variable);
+    console.log("Objeto Sensor");
+    console.log(objeto_sensor);
+    console.log("Objeto Unidades");
     console.log(objeto_unidades);
+    console.log("Objeto fecha");
     console.log(objeto_fecha);
+    console.log("Objeto fecha UNIX");
     console.log(objeto_fecha_UNIX);
     // Se anexa el contenedor de las gráficas al html
     $("#graficando").html(html);
 
-    // Se recorren todas las posiciones del vector de datos de la lista de sensores
-    for (i = 0; i < sensores.length; i++) {
-        // Se recorren todas las posiciones del vector de datos de la lista de variables
-        for (j = 0; j < vector_variable.length; j++) {
-            // Si el la variable de la lista sensores en la posición i es la misma que
-            // La variable del vector variable en la posición j
-            if (sensores[i].variable == vector_variable[j]) {
-                // Se añade el valor de la lista del sensor en la posición i al objeto variable en su 
-                // posición correspondiente a vector variable j
-                objeto_variable[vector_variable[j]].push(sensores[i]["valor"]);
+    // Se recorren todas las posiciones del vector de datos de la lista de api_data
+    for (i = 0; i < api_data.length; i++) {
+        // Se recorren todas las posiciones del vector de datos de la lista de sensors
+        for (j = 0; j < vector_sensor_cod.length; j++) {
+            // Si el la sensor de la lista api_data en la posición i es la misma que
+            // La sensor del vector sensor en la posición j
+            if (api_data[i].sensor == vector_sensor_cod[j]) {
+                // Se añade el valor de la lista del sensor en la posición i al objeto sensor en su 
+                // posición correspondiente a vector sensor j
+                objeto_sensor[vector_sensor_cod[j]].push(api_data[i]["valor"]);
 
                 // Se añade el valor de la fecha del sensor en la posición i al objeto fecha en su
-                // posición correspondiente al vector variable j
-                // ESTO CON EL FIN DE TENER UN VECTOR DEL MISMO TAMAÑO PARA CADA VALOR Y FECHA SEGÚN SU VARIABLE
-                objeto_fecha[vector_variable[j]].push(sensores[i]["fecha"]);
+                // posición correspondiente al vector sensor j
+                // ESTO CON EL FIN DE TENER UN VECTOR DEL MISMO TAMAÑO PARA CADA VALOR Y FECHA SEGÚN SU sensor
+                objeto_fecha[vector_sensor_cod[j]].push(api_data[i]["fecha"]);
 
                 //Pero para poder graficar se usa la fecha UNIX
                 // Convertir fecha a UNIX new Date('2020-6-8 18:9:32').getTime() / 1000
                 // Fecha actual 2017-03-09T23:40:00-05:00
 
-                anio = sensores[i]["fecha"].slice(0, 4);
-                mes = sensores[i]["fecha"].slice(5, 7);
+                anio = api_data[i]["fecha"].slice(0, 4);
+                mes = api_data[i]["fecha"].slice(5, 7);
                 mes = mes - 1;
-                dia = sensores[i]["fecha"].slice(8, 10);
-                hora = sensores[i]["fecha"].slice(11, 13);
-                minuto = sensores[i]["fecha"].slice(14, 16);
-                segundo = sensores[i]["fecha"].slice(17, 19);
-                objeto_fecha_UNIX[vector_variable[j]].push(Date.UTC(anio, mes, dia, hora, minuto, segundo));
+                dia = api_data[i]["fecha"].slice(8, 10);
+                hora = api_data[i]["fecha"].slice(11, 13);
+                minuto = api_data[i]["fecha"].slice(14, 16);
+                segundo = api_data[i]["fecha"].slice(17, 19);
+                objeto_fecha_UNIX[vector_sensor_cod[j]].push(Date.UTC(anio, mes, dia, hora, minuto, segundo));
             }
         }
     }
 
     iq = 0;
-    while (iq < vector_variable.length) {
-        grafica(vector_variable[iq]);
+    while (iq < vector_sensor_cod.length) {
+        grafica(vector_sensor[iq], vector_sensor_cod[iq]);
         iq = iq + 1;
     }
 }
 
 // Función encargada de graficar los datos
-function grafica(sx) {
+function grafica(sx, codigox) {
     // Vector que almacena los datos a graficar
+    console.log("Trabajando con el sensor: " + sx);
+    console.log("Trabajando con el codigo: " + codigox);
+
     vector_grafica = [];
 
-    var maxValue = objeto_variable[sx][0];
-    var minValue = objeto_variable[sx][0];
-    var promedio = 0;
-    for (i = 0; i < objeto_variable[sx].length; i++) {
-        vector_grafica.push([objeto_fecha_UNIX[sx][i], objeto_variable[sx][i]]);
-
-        var valor_menor = objeto_variable[sx][i];
-        if (valor_menor > maxValue) {
-            maxValue = valor_menor;
-        }
-
-        var valor_mayor = objeto_variable[sx][i];
-        if (valor_mayor < minValue) {
-            minValue = valor_mayor;
-        }
-
-        promedio = promedio + parseInt(objeto_variable[sx][i]);
+    for (i = 0; i < objeto_sensor[codigox].length; i++) {
+        vector_grafica.push([objeto_fecha_UNIX[codigox][i], objeto_sensor[codigox][i]]);
     }
     console.log(vector_grafica);
 
-    promedio = promedio / objeto_variable[sx].length;
-
     ultimo = [];
-    ultimo.push(objeto_variable[sx][objeto_variable[sx].length - 1]);
+    ultimo.push(objeto_sensor[codigox][objeto_sensor[codigox].length - 1]);
 
     // Gráfica de datos históricos
-    Highcharts.chart('container-h-' + sx, {
+    Highcharts.chart('container-h-' + codigox, {
         chart: {
             // type: 'spline',
             zoomType: 'x',
         },
         title: {
-            text: 'Histórico de datos'
+            text: 'Histórico de datos ' + sx
         },
         xAxis: {
             type: 'datetime'
         },
         yAxis: {
             title: {
-                text: sx
+                text: sx + " (" + objeto_unidades[codigox] + ")"
             }
         },
         legend: {
@@ -277,102 +338,19 @@ function grafica(sx) {
 
         series: [{
             type: 'spline',
-            name: sx,
+            name: codigox,
             data: vector_grafica,
         }]
     });
 
 
-    // GAUGE
-    // var gaugeOptions = {
-    //     chart: {
-    //         type: 'solidgauge'
-    //     },
-
-    //     title: sx,
-
-    //     pane: {
-    //         center: ['50%', '75%'],
-    //         size: '140%',
-    //         startAngle: -90,
-    //         endAngle: 90,
-    //         background: {
-    //             backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-    //             innerRadius: '60%',
-    //             outerRadius: '100%',
-    //             shape: 'arc'
-    //         }
-    //     },
-
-    //     exporting: {
-    //         enabled: true
-    //     },
-
-    //     tooltip: {
-    //         enabled: false
-    //     },
-
-    //     // the value axis
-    //     yAxis: {
-    //         stops: [
-    //             [0.1, '#3b83bd'], // green
-    //             [0.5, '#55BF3B'], // yellow
-    //             [0.9, '#DF5353'] // red
-    //         ],
-    //         lineWidth: 0,
-    //         tickWidth: 0,
-    //         minorTickInterval: null,
-    //         tickAmount: 2,
-    //         title: {
-    //             y: -70
-    //         },
-    //         labels: {
-    //             y: 16
-    //         }
-    //     },
-
-    //     plotOptions: {
-    //         solidgauge: {
-    //             dataLabels: {
-    //                 y: 5,
-    //                 borderWidth: 0,
-    //                 useHTML: true
-    //             }
-    //         }
-    //     }
-    // };
-
-
-    // // Gauge
-    // var chartTemp = Highcharts.chart('container' + sx, Highcharts.merge(gaugeOptions, {
-    //     yAxis: {
-    //         min: minValue - promedio / 2,
-    //         max: maxValue + promedio / 2,
-    //         title: {
-    //             text: sx
-    //         }
-    //     },
-
-    //     credits: {
-    //         enabled: false
-    //     },
-
-    //     series: [{
-    //         name: sx,
-    //         data: ultimo,
-    //         dataLabels: {
-    //             format: '<div style="text-align:center">' +
-    //                 '<span style="font-size:25px">' + trunc(objeto_variable[sx][objeto_variable[sx].length - 1], 2) + '</span><br/>' +
-    //                 '<span style="font-size:12px;opacity:0.4">' + objeto_unidades[sx] + '</span>' +
-    //                 '</div>'
-    //         },
-    //     }]
-
-    // }));
-
-
     // SPEED
-    Highcharts.chart('container-' + sx, {
+    promedio = objeto_rango_valor[codigox][1];
+    std = objeto_rango_valor[codigox][2];
+    min = objeto_rango_valor[codigox][3];
+    max = objeto_rango_valor[codigox][4];
+
+    Highcharts.chart('container-' + codigox, {
 
         chart: {
             type: 'gauge',
@@ -421,8 +399,8 @@ function grafica(sx) {
 
         // the value axis
         yAxis: {
-            min: 0,
-            max: 100,
+            min: min,
+            max: max,
 
             minorTickInterval: 'auto',
             minorTickWidth: 1,
@@ -440,30 +418,30 @@ function grafica(sx) {
                 rotation: 'auto'
             },
             title: {
-                text: '%'
+                text: objeto_unidades[codigox]
             },
             plotBands: [{
-                from: 0,
-                to: 20,
+                from: min,
+                to: promedio - std * 2,
                 color: '#DF5353' // green
             },
             {
-                from: 20,
-                to: 40,
+                from: promedio - std * 2,
+                to: promedio - std,
                 color: '#DDDF0D' // yellow
             },
             {
-                from: 40,
-                to: 60,
+                from: promedio - std,
+                to: promedio + std,
                 color: '#55BF3B' // green
             },
             {
-                from: 60,
-                to: 80,
+                from: promedio + std,
+                to: promedio + std * 2,
                 color: '#DDDF0D' // yellow
             }, {
-                from: 80,
-                to: 100,
+                from: promedio + std * 2,
+                to: max,
                 color: '#DF5353' // red
             }]
         },
@@ -472,7 +450,7 @@ function grafica(sx) {
             name: sx,
             data: ultimo,
             tooltip: {
-                valueSuffix: " " + sx
+                valueSuffix: " " + objeto_unidades[codigox]
             }
         }]
 
@@ -497,11 +475,9 @@ function grafica(sx) {
         // }
     );
 
-    console.log(trunc(objeto_variable[sx][objeto_variable[sx].length - 1], 2));
 }
 
 function trunc(x, posiciones = 0) {
-    console.log(x);
     var s = x.toString()
     var l = s.length
     var decimalLength = s.indexOf('.') + 1
