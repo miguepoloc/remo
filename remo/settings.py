@@ -147,7 +147,8 @@ LOGIN_REDIRECT_URL = '/'
 # FORCE_SCRIPT_NAME ='/remo/'
 # Django Rest-Framework
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10000
 }
 
 CORS_ORIGIN_ALLOW_ALL = True

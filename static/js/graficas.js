@@ -46,37 +46,38 @@ objeto_rango_valor["388859000"] = ["Voltaje", 12, 1, 0, 15];
 $(document).ready(function () {
     //Obtiene los datos de la API
     $.get('/api/Codigo_Sensor/', function (result) {
-        api_cod_sensor = result;
+        api_cod_sensor = result.results;
         console.log("API Código Sensor");
         console.log(api_cod_sensor);
     });
     $.get('/api/Estacion/', function (result) {
-        api_estacion = result;
+        api_estacion = result.results;
         console.log("API Estación");
         console.log(api_estacion);
     });
     $.get('/api/Sensor/', function (result) {
-        api_sensor = result;
+        api_sensor = result.results;
         console.log("API Sensor");
         console.log(api_sensor);
     });
     $.get('/api/Componente/', function (result) {
-        api_componente = result;
+        api_componente = result.results;
         console.log("API Componente");
         console.log(api_componente);
     });
     $.get('/api/Sensor_Estacion/', function (result) {
-        api_sensor_estacion = result;
+        api_sensor_estacion = result.results;
         console.log("API Sensor Estación");
         console.log(api_sensor_estacion);
     });
     $.get('/api/Componente_Estacion/', function (result) {
-        api_componente_estacion = result;
+        api_componente_estacion = result.results;
         console.log("API Componente Estación");
         console.log(api_componente_estacion);
     });
     $.get('/api/Data/', function (result) {
-        api_data = result;
+        console.log(result.next)
+        api_data = result.results;
         console.log("API Data");
         console.log(api_data);
         control();
@@ -289,6 +290,13 @@ function grafica(sx, codigox) {
     ultimo = [];
     ultimo.push(objeto_sensor[codigox][objeto_sensor[codigox].length - 1]);
 
+    ultima_fecha = [];
+    fechax = objeto_fecha[codigox][objeto_fecha[codigox].length - 1].split("T");
+    horax = fechax[1].split("-");
+    horax = horax[0]
+    fechax = fechax[0]
+    ultima_fecha.push(fechax + " " + horax);
+
     // Gráfica de datos históricos
     Highcharts.chart('container-h-' + codigox, {
         chart: {
@@ -361,7 +369,7 @@ function grafica(sx, codigox) {
         },
 
         title: {
-            text: sx
+            text: sx + " " + ultima_fecha
         },
 
         pane: {
@@ -447,7 +455,7 @@ function grafica(sx, codigox) {
         },
 
         series: [{
-            name: sx,
+            name: sx + " " + ultima_fecha,
             data: ultimo,
             tooltip: {
                 valueSuffix: " " + objeto_unidades[codigox]

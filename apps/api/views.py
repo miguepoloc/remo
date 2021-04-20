@@ -20,7 +20,7 @@ class Codigo_SensorViewSet(viewsets.ModelViewSet):
 
 class DataViewSet(viewsets.ModelViewSet):
 
-    queryset = Data.objects.all().order_by('id')
+    queryset = Data.objects.all().order_by('-fecha')
     serializer_class = DataSerializer
 
 
