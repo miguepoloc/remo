@@ -128,12 +128,17 @@ function control() {
             vector_sensor.push(sensor);
             vector_unidad.push(unidad);
         }
-        // Se realiza el mismo proceso anterior pero con la fecha
+
+    }
+
+    for (i = (api_data.length - 1); i > -1; i--) {
+        // Se realiza el mismo proceso anterior pero con la fecha al revés para poder graficarla
         fecha = String(api_data[i]["fecha"]);
         if (vector_fecha.includes(fecha) == false) {
             vector_fecha.push(fecha);
         }
     }
+
 
     console.log("Vector Sensor Código");
     console.log(vector_sensor_cod);
@@ -236,7 +241,7 @@ function control() {
     $("#graficando").html(html);
 
     // Se recorren todas las posiciones del vector de datos de la lista de api_data
-    for (i = 0; i < api_data.length; i++) {
+    for (i = (api_data.length - 1); i > -1; i--) {
         // Se recorren todas las posiciones del vector de datos de la lista de sensors
         for (j = 0; j < vector_sensor_cod.length; j++) {
             // Si el la sensor de la lista api_data en la posición i es la misma que
@@ -298,59 +303,132 @@ function grafica(sx, codigox) {
     ultima_fecha.push(fechax + " " + horax);
 
     // Gráfica de datos históricos
-    Highcharts.chart('container-h-' + codigox, {
+    // Highcharts.chart('container-h-' + codigox, {
+    //     chart: {
+    //         // type: 'spline',
+    //         zoomType: 'x',
+    //     },
+    //     title: {
+    //         text: 'Histórico de datos ' + sx
+    //     },
+    //     xAxis: {
+    //         type: 'datetime'
+    //     },
+    //     yAxis: {
+    //         title: {
+    //             text: sx + " (" + objeto_unidades[codigox] + ")"
+    //         }
+    //     },
+    //     legend: {
+    //         enabled: false
+    //     },
+    //     plotOptions: {
+    //         area: {
+    //             fillColor: {
+    //                 linearGradient: {
+    //                     x1: 0,
+    //                     y1: 0,
+    //                     x2: 0,
+    //                     y2: 1
+    //                 },
+    //                 stops: [
+    //                     [0, Highcharts.getOptions().colors[0]],
+    //                     [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+    //                 ]
+    //             },
+    //             marker: {
+    //                 radius: 2
+    //             },
+    //             lineWidth: 1,
+    //             states: {
+    //                 hover: {
+    //                     lineWidth: 1
+    //                 }
+    //             },
+    //             threshold: null
+    //         }
+    //     },
+
+    //     series: [{
+    //         type: 'spline',
+    //         name: codigox,
+    //         data: vector_grafica,
+    //     }]
+    // });
+
+
+    // Create a timer
+    var start = +new Date();
+    Highcharts.stockChart('container-h-' + codigox, {
         chart: {
-            // type: 'spline',
-            zoomType: 'x',
+            events: {
+                load: function () {
+                    if (!window.TestController) {
+                        this.setTitle(null, {
+                            text: 'Built chart in ' + (new Date() - start) + 'ms'
+                        });
+                    }
+                }
+            },
+            zoomType: 'x'
         },
-        title: {
-            text: 'Histórico de datos ' + sx
+
+        rangeSelector: {
+
+            buttons: [{
+                type: 'day',
+                count: 3,
+                text: '3d'
+            }, {
+                type: 'week',
+                count: 1,
+                text: '1w'
+            }, {
+                type: 'month',
+                count: 1,
+                text: '1m'
+            }, {
+                type: 'month',
+                count: 6,
+                text: '6m'
+            }, {
+                type: 'year',
+                count: 1,
+                text: '1y'
+            }, {
+                type: 'all',
+                text: 'All'
+            }],
+            selected: 3
         },
-        xAxis: {
-            type: 'datetime'
-        },
+
         yAxis: {
             title: {
                 text: sx + " (" + objeto_unidades[codigox] + ")"
             }
         },
-        legend: {
-            enabled: false
+
+        title: {
+            text: 'Histórico de datos ' + sx
         },
-        plotOptions: {
-            area: {
-                fillColor: {
-                    linearGradient: {
-                        x1: 0,
-                        y1: 0,
-                        x2: 0,
-                        y2: 1
-                    },
-                    stops: [
-                        [0, Highcharts.getOptions().colors[0]],
-                        [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                    ]
-                },
-                marker: {
-                    radius: 2
-                },
-                lineWidth: 1,
-                states: {
-                    hover: {
-                        lineWidth: 1
-                    }
-                },
-                threshold: null
-            }
+
+        subtitle: {
+            text: 'Built chart in ...' // dummy text to reserve space for dynamic subtitle
         },
 
         series: [{
-            type: 'spline',
             name: codigox,
             data: vector_grafica,
+            type: 'spline',
+            // pointStart: data.pointStart,
+            // pointInterval: data.pointInterval,
+            tooltip: {
+                valueDecimals: 2,
+                valueSuffix: objeto_unidades[codigox]
+            }
         }]
-    });
 
+    });
 
     // SPEED
     promedio = objeto_rango_valor[codigox][1];
