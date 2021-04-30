@@ -6,6 +6,8 @@ var api_componente;
 var api_sensor_estacion;
 var api_componente_estacion;
 var api_data;
+var api_data2;
+var api_data_n = [];
 
 // Objeto que almacena las sensors
 var objeto_sensor = new Object();
@@ -18,6 +20,8 @@ var objeto_fecha_UNIX = new Object();
 // Almacena el html que se le anexará al código de las gráficas
 var html = "";
 
+var next;
+var sensor;
 var objeto_rango_valor = new Object();
 
 
@@ -47,45 +51,74 @@ $(document).ready(function () {
     //Obtiene los datos de la API
     $.get('/api/Codigo_Sensor/', function (result) {
         api_cod_sensor = result.results;
-        console.log("API Código Sensor");
-        console.log(api_cod_sensor);
+        // console.log("API Código Sensor");
+        // console.log(api_cod_sensor);
     });
     $.get('/api/Estacion/', function (result) {
         api_estacion = result.results;
-        console.log("API Estación");
-        console.log(api_estacion);
+        // console.log("API Estación");
+        // console.log(api_estacion);
     });
     $.get('/api/Sensor/', function (result) {
         api_sensor = result.results;
-        console.log("API Sensor");
-        console.log(api_sensor);
+        // console.log("API Sensor");
+        // console.log(api_sensor);
     });
     $.get('/api/Componente/', function (result) {
         api_componente = result.results;
-        console.log("API Componente");
-        console.log(api_componente);
+        // console.log("API Componente");
+        // console.log(api_componente);
     });
     $.get('/api/Sensor_Estacion/', function (result) {
         api_sensor_estacion = result.results;
-        console.log("API Sensor Estación");
-        console.log(api_sensor_estacion);
+        // console.log("API Sensor Estación");
+        // console.log(api_sensor_estacion);
     });
     $.get('/api/Componente_Estacion/', function (result) {
         api_componente_estacion = result.results;
-        console.log("API Componente Estación");
-        console.log(api_componente_estacion);
+        // console.log("API Componente Estación");
+        // console.log(api_componente_estacion);
     });
+
     $.get('/api/Data/', function (result) {
-        console.log(result.next)
         api_data = result.results;
         console.log("API Data");
         console.log(api_data);
-        control();
+        control(api_data);
     });
+
+    var next = '/api/Data/';
+    var start = +new Date();
+    async function fetchDataJSON() {
+        while (next) {
+            const response = await fetch(next);
+            data = await response.json();
+            api_data2 = data.results;
+            for (j = 0; j < api_data2.length; j++) {
+                api_data_n.push(api_data2[j]);
+            }
+            next = data.next;
+            console.log(data.next)
+        }
+        console.log(api_data_n)
+        texto = 'Tardó ' + (new Date() - start) + 'ms'
+        console.log(texto)
+        control(api_data_n);
+        texto2 = 'Tardó ' + (new Date() - start) + 'ms'
+        console.log(texto2)
+
+        // $("#graficando").html(texto);
+        return data;
+    }
+
+    fetchDataJSON().then(data => {
+        data;
+    });
+
 });
 
 // Función que controla los datos obtenidos
-function control() {
+function control(datax) {
     // Se crean los vectores de control
     vector_valor = [];
     vector_sensor_cod = [];
@@ -94,9 +127,9 @@ function control() {
     vector_unidad = [];
     vector_fecha = [];
     // Se recorren todas las posiciones del vector de datos
-    for (i = 0; i < api_data.length; i++) {
+    for (i = 0; i < datax.length; i++) {
         // Guarda el código de la sensor muestra de la posicón i del vector
-        codigo = String(api_data[i]["sensor"]);
+        codigo = String(datax[i]["sensor"]);
         // En esta parte se va a llenar el vector con los códigos de las sensors
         // Para saber cuántos sensors se tomaron y relacionar los datos
         // A partir de este identificador
@@ -109,7 +142,7 @@ function control() {
 
         // Se realiza el mismo proceso anterior pero con el nombre de la sensor
         for (j = 0; j < api_cod_sensor.length; j++) {
-            if (api_cod_sensor[j]["id"] == api_data[i]["sensor"]) {
+            if (api_cod_sensor[j]["id"] == datax[i]["sensor"]) {
                 sensor_remocod = String(api_cod_sensor[j]["sensor"]);
                 for (q = 0; q < api_sensor_estacion.length; q++) {
                     if (api_sensor_estacion[q]["id"] == api_cod_sensor[j]["sensor"]) {
@@ -131,9 +164,9 @@ function control() {
 
     }
 
-    for (i = (api_data.length - 1); i > -1; i--) {
+    for (i = (datax.length - 1); i > -1; i--) {
         // Se realiza el mismo proceso anterior pero con la fecha al revés para poder graficarla
-        fecha = String(api_data[i]["fecha"]);
+        fecha = String(datax[i]["fecha"]);
         if (vector_fecha.includes(fecha) == false) {
             vector_fecha.push(fecha);
         }
@@ -240,33 +273,33 @@ function control() {
     // Se anexa el contenedor de las gráficas al html
     $("#graficando").html(html);
 
-    // Se recorren todas las posiciones del vector de datos de la lista de api_data
-    for (i = (api_data.length - 1); i > -1; i--) {
+    // Se recorren todas las posiciones del vector de datos de la lista de datax
+    for (i = (datax.length - 1); i > -1; i--) {
         // Se recorren todas las posiciones del vector de datos de la lista de sensors
         for (j = 0; j < vector_sensor_cod.length; j++) {
-            // Si el la sensor de la lista api_data en la posición i es la misma que
+            // Si el la sensor de la lista datax en la posición i es la misma que
             // La sensor del vector sensor en la posición j
-            if (api_data[i].sensor == vector_sensor_cod[j]) {
+            if (datax[i].sensor == vector_sensor_cod[j]) {
                 // Se añade el valor de la lista del sensor en la posición i al objeto sensor en su 
                 // posición correspondiente a vector sensor j
-                objeto_sensor[vector_sensor_cod[j]].push(api_data[i]["valor"]);
+                objeto_sensor[vector_sensor_cod[j]].push(datax[i]["valor"]);
 
                 // Se añade el valor de la fecha del sensor en la posición i al objeto fecha en su
                 // posición correspondiente al vector sensor j
                 // ESTO CON EL FIN DE TENER UN VECTOR DEL MISMO TAMAÑO PARA CADA VALOR Y FECHA SEGÚN SU sensor
-                objeto_fecha[vector_sensor_cod[j]].push(api_data[i]["fecha"]);
+                objeto_fecha[vector_sensor_cod[j]].push(datax[i]["fecha"]);
 
                 //Pero para poder graficar se usa la fecha UNIX
                 // Convertir fecha a UNIX new Date('2020-6-8 18:9:32').getTime() / 1000
                 // Fecha actual 2017-03-09T23:40:00-05:00
 
-                anio = api_data[i]["fecha"].slice(0, 4);
-                mes = api_data[i]["fecha"].slice(5, 7);
+                anio = datax[i]["fecha"].slice(0, 4);
+                mes = datax[i]["fecha"].slice(5, 7);
                 mes = mes - 1;
-                dia = api_data[i]["fecha"].slice(8, 10);
-                hora = api_data[i]["fecha"].slice(11, 13);
-                minuto = api_data[i]["fecha"].slice(14, 16);
-                segundo = api_data[i]["fecha"].slice(17, 19);
+                dia = datax[i]["fecha"].slice(8, 10);
+                hora = datax[i]["fecha"].slice(11, 13);
+                minuto = datax[i]["fecha"].slice(14, 16);
+                segundo = datax[i]["fecha"].slice(17, 19);
                 objeto_fecha_UNIX[vector_sensor_cod[j]].push(Date.UTC(anio, mes, dia, hora, minuto, segundo));
             }
         }
@@ -303,59 +336,6 @@ function grafica(sx, codigox) {
     ultima_fecha.push(fechax + " " + horax);
 
     // Gráfica de datos históricos
-    // Highcharts.chart('container-h-' + codigox, {
-    //     chart: {
-    //         // type: 'spline',
-    //         zoomType: 'x',
-    //     },
-    //     title: {
-    //         text: 'Histórico de datos ' + sx
-    //     },
-    //     xAxis: {
-    //         type: 'datetime'
-    //     },
-    //     yAxis: {
-    //         title: {
-    //             text: sx + " (" + objeto_unidades[codigox] + ")"
-    //         }
-    //     },
-    //     legend: {
-    //         enabled: false
-    //     },
-    //     plotOptions: {
-    //         area: {
-    //             fillColor: {
-    //                 linearGradient: {
-    //                     x1: 0,
-    //                     y1: 0,
-    //                     x2: 0,
-    //                     y2: 1
-    //                 },
-    //                 stops: [
-    //                     [0, Highcharts.getOptions().colors[0]],
-    //                     [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-    //                 ]
-    //             },
-    //             marker: {
-    //                 radius: 2
-    //             },
-    //             lineWidth: 1,
-    //             states: {
-    //                 hover: {
-    //                     lineWidth: 1
-    //                 }
-    //             },
-    //             threshold: null
-    //         }
-    //     },
-
-    //     series: [{
-    //         type: 'spline',
-    //         name: codigox,
-    //         data: vector_grafica,
-    //     }]
-    // });
-
 
     // Create a timer
     var start = +new Date();
@@ -417,7 +397,7 @@ function grafica(sx, codigox) {
         },
 
         series: [{
-            name: codigox,
+            name: sx,
             data: vector_grafica,
             type: 'spline',
             // pointStart: data.pointStart,
