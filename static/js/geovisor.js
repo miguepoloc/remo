@@ -4,9 +4,9 @@ $(document).ready(function () {
     id_estacion = document.getElementById("id_estacion")
     //Obtiene los datos de la estacion de la API
     // console.log(id_estacion.text);
-    $.get('/remo/api/Estacion/', function (result) {
+    $.get('/api/Estacion/', function (result) {
         // Guarda en la variable estacion los resultados de la API
-        estacion = result;
+        estacion = result.results;
         console.log(estacion);
         for (let index = 0; index < estacion.length; index++) {
             if (estacion[index].id == parseInt(id_estacion.text)) {

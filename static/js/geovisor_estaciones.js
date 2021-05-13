@@ -25,9 +25,9 @@ $(document).ready(function () {
         iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
         popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
     });
-    $.get('remo/api/Estacion/', function (result) {
+    $.get('api/Estacion/', function (result) {
         // Guarda en la variable estacion los resultados de la API
-        estacion = result;
+        estacion = result.results;
         console.log(estacion);
         for (let index = 0; index < estacion.length; index++) {
             latitud = estacion[index].latitud;

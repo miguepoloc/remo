@@ -10,7 +10,7 @@ class Data(generic.ListView):
     # paginate_by = 5
     # El nombre con el que se trabajará en la plantilla html
     context_object_name = 'data_list'
-    queryset = Data.objects.order_by('id')
+    queryset = Data.objects.order_by('fecha')[:100]
     # Especifica la localicación del template
     template_name = 'data/data.html'
 
